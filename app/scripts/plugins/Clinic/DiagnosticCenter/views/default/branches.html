@@ -1,0 +1,79 @@
+<!-- TABLE -->
+<div class="appointment-block pad-63">
+    <div class="container-fluid">
+        <div class="col-md-12 table-block">
+            <div class="appointment-header">
+                <h1 class="">{{'My Branches'|translate}}
+                    <span class="pull-right search-table-field">
+                        <a href="diagnostic_center/branch/add" class="btn btn-green btn-animate text-right">
+                            <i class="fa fa-plus-circle fa-fw"></i>{{'Add Branch'|translate}}</a>
+                    </span>
+                </h1>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th width="500">{{'Branch'|translate}}</th>
+                            <th width="500">{{'Open'|translate}}</th>
+                            <th width="500">{{'Close'|translate}}</th>
+                            <th width="500">{{'Address'|translate}}</th>
+                            <th width="500">{{'Phone'|translate}}</th>
+                            <th width="500">{{'Region'|translate}}</th>
+                            <th width="500">{{'Area'|translate}}</th>
+                            <th width="500" ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Common/Payment') > -1">{{'Consultation Fee'|translate}}</th>
+                            <th width="500">{{'Status'|translate}}</th>
+                            <th width="500">{{'Action'|translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="branch in branches" ng-show="dataLength">
+                            <td><a href="diagnostic/branches/{{branch.id}}/{{branch.name | slugify}}" class="text-right">{{branch.name |translate}}</a></td>
+                            <td>{{branch.open_time |translate}}</td>
+                            <td>{{branch.close_time |translate}}</td>
+                            <td>{{branch.address |translate}}</td>
+                            <td>{{branch.phone_number |translate}}</td>
+                            <td>{{branch.state.name |translate}}</td>
+                            <td>{{branch.city.name |translate}}</td>
+                            <td ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Common/Payment') > -1">{{branch.consultation_fee}}</td>
+                            <td>
+                                <a ng-click='changeStatus(branch.id, 0)' ng-if="branch.is_active == '1'" href="javascript:;" title="Active">
+                                    <i class="fa fa-thumbs-o-up text-success" aria-hidden="true"></i>
+                                </a>
+                                <a ng-click='changeStatus(branch.id, 1)' ng-if="branch.is_active != '1'" href="javascript:;" title="Inactive">
+                                    <i class="fa fa-thumbs-o-down text-danger" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                            <td class="action-btn">
+                                <a href="diagnostic/branch/edit/{{branch.id}}" title="{{'Edit'| translate}}" class="btn green">
+                                    <i class="fa fa-pencil"></i>{{'Edit' | translate}}</a>
+                               <a href="diagnostic/branch/lab_tests/{{branch.id}}" title="{{'Manage Lab Tests' | translate}}" class="btn blue">
+                                    <i class="fa fa-user-md"></i>{{'Manage Lab Tests' | translate}}</a>
+                               <a href="diagnostic/branch/users/{{branch.id}}" title="{{'Manage Users' | translate}}" class="btn text-success">
+                                    <i class="fa fa-user-o"></i>{{'Manage Users' | translate}}</a>
+                               <sms-notifications ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Clinic/SMS') > - 1"></sms-notifications>       
+                            </td>
+                        </tr>
+                        <tr ng-show="!dataLength && !loader">
+                            <td colspan="9">
+                                <p class="hor-space alert alert-danger">{{'No Record Found'|translate}}</p>
+                            </td>
+                        </tr>
+                         <tr ng-show="loader">
+                            <td colspan="9">
+                                 <div ng-include="'views/loader.html'"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+             <div class="paging clearfix text-center" ng-show="totalRecords > 0">
+                <uib-pagination previous-text="<" next-text=">" total-items="totalRecords" ng-model="currentPage" max-size="maxSize"
+                    class="pagination-sm" boundary-link-numbers="true" rotate="false" items-per-page="Perpage" ng-click="paginate_search('#userTop', currentPage)"></uib-pagination>
+            </div>
+        </div>
+    </div>
+    <!-- END:Table -->
+</div>
+</div>
+<!-- table -->

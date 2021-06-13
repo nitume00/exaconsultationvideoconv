@@ -1,0 +1,95 @@
+<!-- TABLE -->
+<div class="appointment-block pad-40 appointment-background" ng-controller="PatientAppointmentsController">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="pat-dash">{{'My Prescriptions and Medical Records' | translate}}</h1>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="col-md-12 table-block">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-list">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="set-size">{{'Appointment.No' | translate}}</div>
+                                </th>
+                                <th>
+                                    <div class="set-size">{{'Doctor' | translate}}</div>
+                                </th>
+                                <th>
+                                    <div class="set-size">{{'Hospital/Clinic'| translate}}</div>
+                                </th>
+                                <th>
+                                    <span>{{'Appointment' | translate}}</span>
+                                    <span>{{'Date & Time' | translate}}</span>
+                                </th>
+                                <th ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Clinic/Prescription') > -1">{{'Prescription' | translate}}</th>
+                                <th>{{'Medical Records' | translate}}</th>
+                                <th>{{'Status' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-if="loader">
+                                <td class="text-center" colspan="8">
+                                    <div ng-include="'views/loader.html'"></div>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="appointment in appointments" ng-if="isShown && !loader">
+                                <td class="text-capitalize">
+                                    <a href="appointment/{{appointment.id}}/{{appointment.appointment_token}}" class="btn btn-green">{{appointment.appointment_token}}</a>
+                                </td>
+
+                                <td class="text-capitalize">{{'Dr' | translate}}. {{appointment.provider_user.user_profile.first_name}} {{appointment.provider_user.user_profile.last_name}}
+                                </td>
+                                <td class="text-capitalize">
+                                    {{appointment.clinic_user.user_profile.display_name}}
+                                </td>
+                                <td>{{appointment.appointment_date | dateFormat}}
+                                    <span>
+                                        <time>{{appointment.appointment_time}}</time>
+                                    </span>
+                                </td>
+                                <td ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Clinic/Prescription') > -1">
+                                    <a href="prescription/{{appointment.prescription.id}}/{{appointment.appointment_token}}"  ng-if="appointment.is_prescription_added == 1"><i class="fa fa-eye fa-2x"></i></a>
+
+                                    <a href="{{appointment.prescription_url}}" ng-if="appointment.is_prescription_added == 1" target="_blank"><i class="fa fa-file-pdf-o fa-2x"></i></a>
+
+                                    <a href="#" class="btn btn-success" ng-if="appointment.is_prescription_added != 1">{{'Not yet'| translate}}</a>
+                                </td>
+                                <td ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Clinic/Prescription') > -1">
+                                    <a href="users/medical_record/view/{{appointment.user_id}}/{{appointment.specialty_id}}/{{appointment.id}}"  ng-if="appointment.is_prescription_added == 1"><i class="fa fa-eye fa-2x"></i></a>
+                                    <a href="#" class="btn btn-success" ng-if="appointment.is_prescription_added != 1">{{'Not yet'| translate}}</a>
+                                </td>
+                                <td class="text-capitalize">
+                                    <span class="label label-{{ConstStatusColor[appointment.appointment_status_id]}}">{{appointment.appointment_status.name | translate}} </span>
+                                </td>
+                            </tr>
+                            <tr ng-show="!isShown && !loader && (appointments | filter: { appointment_date: appointment_date_search }).length != 0">
+                                <td colspan="9">
+                                    <div class="text-center text-danger">
+                                        <h4 class="ng-binding text-center">{{'No Records Found' |translate}}</h4>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-show="(appointments | filter: { appointment_date: appointment_date_search }).length == 0">
+                                <td colspan="9">
+                                    <div class="text-center text-danger">
+                                        <h4 class="ng-binding text-center">{{'No Records Found' |translate}}</h4>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="paging clearfix text-center" ng-show="totalRecords > 0">
+                    <uib-pagination previous-text="<" next-text=">" total-items="totalRecords" ng-model="currentPage" max-size="maxSize" class="pagination-sm"
+                        boundary-link-numbers="true" rotate="false" items-per-page="Perpage" ng-click="paginate_search('#userTop', currentPage)"></uib-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END:Table -->
+</div>
+<!-- table -->

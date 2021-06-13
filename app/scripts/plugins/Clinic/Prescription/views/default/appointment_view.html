@@ -1,0 +1,226 @@
+<div class="appointment-block pad-63 my_appoinment">
+    <div class="container">
+        <div class="page-head">
+            <h1>{{'Appointment Details' | translate }}</h1>
+        </div>
+        <div class="table-block">
+            <div class="search-loading-div" id="search-loading-div">
+                <div id="loading" class="loadAng">
+                    <div class="bar"></div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>{{'The appointment is scheduled at' | translate }}</th>
+                            <th>{{appointment.appointment_date | dateFormat}} {{appointment.appointment_time}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{'Branch' | translate }}</td>
+                            <td>
+                                <a href="branches/{{appointment.branch.id}}/{{appointment.branch.name | slugify}}">
+                                    {{appointment.branch.name}}
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Doctor' | translate }}</td>
+                            <td>
+                                <a href="users/{{appointment.provider_user.id}}/{{doctorSlug}}">
+                                    {{appointment.provider_user.user_profile.first_name}} {{appointment.provider_user.user_profile.last_name}}
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Patient Name' | translate }}</td>
+                            <td>{{appointment.user.user_profile.first_name}} {{appointment.user.user_profile.last_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Patient Address' | translate }}</td>
+                            <td>{{appointment.user.user_profile.address}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Email'| translate}}</td>
+                            <td class="clsRemoveTextCap">{{appointment.user.email}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Phone'| translate}}</td>
+                            <td>{{appointment.user.user_profile.phone}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Gender' | translate }}</td>
+                            <td>{{appointment.user.user_profile.gender.name}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Where' | translate }}</td>
+                            <td>
+                                {{appointment.user.user_profile.address}} {{appointment.user.user_profile.city.name}}, {{appointment.user.user_profile.country.name}},
+                                {{appointment.user.user_profile.postal_code}} </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Patient Note' | translate }}</td>
+                            <td>
+                                <span ng-if="appointment.patient_note">{{appointment.customer_note}}</span>
+                                <span ng-if="!appointment.patient_note">--</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Doctor Note' | translate }}</td>
+                            <td>
+                                <span ng-if="appointment.doctor_note">{{appointment.provider_note}}</span>
+                                <span ng-if="!appointment.doctor_note">--</span>
+                            </td>
+                        </tr>
+                        <span>
+                            <tr>
+                                <td>{{'Patient Status' | translate }}</td>
+                                <td>
+                                    <span ng-if="appointment.is_seen_before == 1"> {{'Already Seen' | translate }} </span>
+                                    <span ng-if="appointment.is_seen_before == 0"> {{'New Patient' | translate }} </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'Reason for visit' | translate }}</td>
+                                <td>
+                                    {{appointment.specialty_disease.name}}
+                                </td>
+                            </tr>
+                            <tr class="hide">
+                                <td>{{'Service Duration' | translate }}</td>
+                                <td>
+                                    <span ng-if="appointment.specialty_disease.service_duration">{{appointment.specialty_disease.service_duration}}</span>
+                                    <span ng-if="!appointment.specialty_disease.service_duration">--</span>
+                                </td>
+                            </tr>
+                        </span>
+                        <tr>
+                            <td>{{'Appointment Status' | translate }}</td>
+                            <td>
+                                <span class="label label-warning">{{appointment.appointment_status.name | translate}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Appointment Cancel' | translate }}</td>
+                            <td>
+                                <span class="label label-warning">{{appointment.appointment_status.name | translate}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Patient Medical History' | translate }}</td>
+                            <td>
+                                <a href="users/medical_record/view/{{appointment.user_id}}/{{appointment.specialty_id}}/{{appointment.id}}" class="btn btn-green btn-animate">{{'Click Here' | translate }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div ng-if="(appointment.family_friend_id != '')">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th>{{'Guest Patient Details' | translate }}</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <td>{{'Guest name' | translate }}</td>
+                                                        <td>{{appointment.guest_first_name}} {{appointment.guest_last_name}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{'Guest email' | translate }}</td>
+                                                        <td>{{appointment.guest_email}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{'Guest Dob' | translate }}</td>
+                                                        <td>{{appointment.guest_dob}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{'Guest Gender' | translate }}</td>
+                                                        <td>
+                                                            <span ng-if="appointment.guest_gender_id == 1">{{'Male' | translate }}</span>
+                                                            <span ng-if="appointment.guest_gender_id == 2">{{'Female' | translate }}</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div ng-if="form_submission.length > 0">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th colspan="2">{{'Patient Specialty Details' | translate }}</th>
+                        </tr>
+                        <tr ng-repeat="data in form_submission">
+                            <td>{{data.FormField.data[0].name}}</td>
+                            <td>
+                                <span ng-if="data.response != 'fileupload'">{{data.response}}</span>
+                                <a class="clsRemoveTextCap" ng-if="data.response == 'fileupload'" href="{{data.attachments.thumb[0].url}}" download>{{data.attachments.thumb[0].url}}</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div>
+                    <div>
+                        <span ng-if="appointment.appointment_status_id == ConstAppointmentStatus.PendingApproval && confirm_app">
+                            <button ng-click="changeappointstatus('confirm')" class="btn btn-green btn-animate">
+                                {{'Confirm Appointment' | translate }}
+                            </button>
+                            <br>
+                            <br>
+                        </span>
+                    </div>
+                    <div>
+                        <span ng-if="appointment.appointment_status_id == ConstAppointmentStatus.PendingApproval && decline_app">
+                            <button ng-click="changeappointstatus('decline')" class="btn btn-danger btn-animate">
+                                {{'Decline Appointment' | translate }}
+                            </button>
+                            <br>
+                            <br>
+                        </span>
+                    </div>
+                    <div>
+                        <span ng-if="appointment.appointment_status_id != ConstAppointmentStatus.Present && present_app">
+                            <button ng-click="changeappointstatus('present')" class="btn btn-danger btn-animate">
+                                {{'Change Consulting' | translate }}
+                            </button>
+                            <br>
+                            <br>
+                        </span>
+                    </div>
+                    <div>
+                        <span ng-if="closed_app">
+                            <button ng-click="changeappointstatus('close')" class="btn btn-red btn-animate">
+                                {{'Change Closed' | translate }}
+                            </button>
+                            <br>
+                            <br>
+                            <button ng-click="changeappointstatus('expiry')" class="btn btn-red btn-animate">
+                                {{'Change Expired' | translate }}
+                            </button>
+                            <br>
+                            <br>
+                        </span>
+                    </div>
+                </div>
+                <div ng-if="$root.auth.role_id == ConstUserType.User" class="js-cancel-button">
+                    <div ng-if="appointmentDateTime >= todayDateTime &&  appointment.appointment_status_id != ConstAppointmentStatus.Cancelled">
+                        <button ng-click="changeappointstatus('cancel')" class="btn btn-danger btn-animate"> {{'Cancel Appointment' | translate }} </button>
+                        <span class="js-time-display" ng-if="appointment_cancellation"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    

@@ -1,0 +1,43 @@
+<section class="branch-details " ng-controller="NewsFeedsController">
+  <div class="container news-feeds">
+    <div class="row">
+      <div class="col-md-8">
+        <h2>{{'Add News Feeds'|translate}}</h2>
+        <form class="newsfeeds-form" role="form" name="newsfeedsFrm" novalidate>
+          <div class="form-group">
+            <label>{{'Title'|translate}}
+              <span class="req-color">*</span>
+            </label>
+            <input type="text" ng-model="data.title" class="form-control" id="title" placeholder="Title" name="title" required="true">
+            <span class="error" ng-show="(newsfeedsFrm.$submitted || newsfeedsFrm.title.$touched) && (newsfeedsFrm.title.$pristine || newsfeedsFrm.title.$invalid) && (newsfeedsFrm.title.$error.required)">
+              {{'Required'| translate }} </span>
+          </div>
+          <div class="form-group">
+            <label>{{'Content'|translate}}</label>
+            <div text-angular id="content" placeholder="{{'Content'| translate}}" ng-model="data.content"></div>
+            <span class="error" ng-show="(newsfeedsFrm.$submitted || newsfeedsFrm.content.$touched) && (newsfeedsFrm.content.$pristine || newsfeedsFrm.content.$invalid) && (newsfeedsFrm.content.$error.required)">
+              {{'Required'| translate }} </span>
+          </div>
+          <div class="form-group">
+            <button title="Submit" type="submit" ng-click="newsFeedsAdd(newsfeedsFrm.$valid, data)" class="btn btn-green btn-animate  ng-binding"
+              ng-show="!save_btn">{{'Add'|translate}}</button>
+            <a href="clinic/news_feeds" title="Cancel" type="submit" class="btn btn-danger btn-animate">{{'Cancel'|translate}}</a>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-4">
+        <div class="post-project">
+          <div class="bg-primary">
+            <h4 class="text-center no-mar">{{"News Feeds"|translate}}</h4>
+          </div>
+          <ul class="list-unstyled clearfix">
+            <li>
+              <i class="fa fa-check" aria-hidden="true"></i>
+              <span class="menu-content"> {{'Hospital/Clinic News Feeds'|translate}}. </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

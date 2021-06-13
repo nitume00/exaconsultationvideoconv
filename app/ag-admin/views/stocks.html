@@ -1,0 +1,109 @@
+<div class="row">
+	<div class="col-lg-12">
+		<content-top>
+			<div class="content-top clearfix">
+				<h1 class="al-title ng-binding">Stocks</h1>
+			</div>
+		</content-top>
+	</div>
+</div>
+<div class="row" id="create-view">
+	<div class="clearfix well-sm panel animated zoomIn">
+		<div class="panel-heading">
+			<ul class="list-inline top-mspace text-center project-lists text-center">
+				<li class="cursor btn btn-primary" ng-click="getStocks('all','','')" title="All"> 
+					<p class="no-mar">{{'All'| translate}}</p>          
+				</li>
+				<li class="cursor btn btn-primary" ng-click="getStocks('today','','')" title="Today">
+					<p class="no-mar">{{'Today' | translate}}</p> 
+				</li>
+				<li class="cursor btn btn-primary" ng-click="getStocks('this_week','','')" title="This Week"> 
+					<p class="no-mar">{{'This Week'| translate}}</p>          
+				</li>
+				<li class="cursor btn btn-primary" ng-click="getStocks('this_month','','')" title="This Month">
+					<p class="no-mar">{{'This Month' | translate}}</p>
+				</li>
+				<li class="cursor btn btn-primary" ng-click="customDateForm()" title="Custom Date">
+					<p class="no-mar">{{'Custom Date' | translate}}</p>
+				</li>
+			</ul>
+			<div class="hide js-date">
+				<form class="proj-form row" role="form" name="customFilter" novalidate>
+					<div class="col-sm-6">
+						<div class="form-group"> 
+							<label>{{'From Date'|translate}}</label> 
+							<input type="text" name="from_date" class="form-control" uib-datepicker-popup="{{format}}" ng-model="from_date" is-open="popup1.opened" datepicker-options="dateOptions"
+					close-text="Close" alt-input-formats="altInputFormats" ng-focus="open1()" ng-required="true" /> <span class="error" ng-show="(customFilter.$submitted || customFilter.from_date.$touched) && (customFilter.from_date.$pristine || customFilter.from_date.$invalid) && (customFilter.from_date.$error.required)">{{'Required'| translate }}</span>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group"> 
+								<label>{{'To Date'|translate}}</label> 
+								<input type="text" name="to_date" class="form-control" uib-datepicker-popup="{{format}}" ng-model="to_date" is-open="popup2.opened" datepicker-options="dateOptions"
+						close-text="Close" alt-input-formats="altInputFormats" ng-focus="open2()" ng-required="true" /> <span class="error" ng-show="(customFilter.$submitted || customFilter.to_date.$touched) && (customFilter.to_date.$pristine || customFilter.to_date.$invalid) && (customFilter.to_date.$error.required)">{{'Required'| translate }}</span>
+						</div>
+					</div>
+					<div class="col-xs-12">
+						<div class="form-group"> 
+							<button title="Filter" type="submit" ng-click="filterDate(customFilter.$valid)" class="btn btn-danger">{{'Filter'|translate}}</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="add-wallet-table">
+				<div class="table-responsive pg-table">
+					<table class="table table-striped table-bordered no-mar">
+						<thead>
+							<tr>
+								<th>{{'No.' |translate}}</th>
+								<th>{{'Date' |translate}}</th>
+								<th>{{'Medicine'|translate}}</th>
+								<th>{{'Medicine Type'|translate}}</th>
+								<th>{{'Sell Price'|translate}}({{settings.SITE_CURRENCY_CODE}})</th>
+								<th>{{'Purchase Price'|translate}}({{settings.SITE_CURRENCY_CODE}})</th>
+								<th>{{'In Qty'|translate}}</th>
+								<th>{{'Sold Qty'|translate}}</th>
+								<th>{{'Stock'|translate}}</th>
+								<th>{{'Stock Sell Price'|translate}}({{settings.SITE_CURRENCY_CODE}})</th>
+								<th>{{'Stock Purchase Price'|translate}}({{settings.SITE_CURRENCY_CODE}})</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="stock in stocks" ng-if="stocks.length > 0">
+								<td>{{$index+1}}</td>
+								<td>{{stock.created_at | date_format : 'medium'}}</td>
+								<td>{{stock.medicine.name}}</td>
+								<td>{{stock.medicine.medicine_type.name}}</td>
+								<td>{{stock.medicine.sell_price}}</td>
+								<td>{{stock.medicine.manufacturer_price}}</td>
+								<td>{{stock.quantity}}</td>
+								<td>{{stock.sold_quantity}}</td>
+								<td>{{stock.quantity-stock.sold_quantity}}</td>
+								<td>{{stock.medicine.sell_price * stock.stock}}</td>
+								<td>{{stock.medicine.manufacturer_price * stock.stock}}</td>
+							</tr>
+							<tr ng-if="stocks.length > 0">
+								<td colspan="6" class="text-right">Grand Total:</td>
+								<td>{{total_qty}}</td>
+								<td>{{total_sold_qty}}</td>
+								<td>{{total_stock}}</td>
+								<td>{{total_stock_sell_price}}</td>
+								<td>{{total_stock_purchase_price}}</td>
+							</tr>
+							<tr ng-if="!stocks.length" class="text-center">
+								<td colspan="11" class="text-danger"> {{'No Records Available'|translate}} </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-center" ng-hide="(stocks.length > itemsPerPage) && currentPage==1">
+						<uib-pagination ng-hide="!stocks.length" previous-text="Previous" next-text="Next" total-items="totalItems" num-pages="numPages" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true"
+							rotate="false" items-per-page="itemsPerPage" ng-change="paginate_transaction()"></uib-pagination>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+           

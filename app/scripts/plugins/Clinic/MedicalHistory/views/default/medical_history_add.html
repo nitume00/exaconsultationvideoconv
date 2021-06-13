@@ -1,0 +1,117 @@
+<section class="user-view clearfix pad-63">
+  <div class="container-fluid">
+      <div class="page-head clearfix">
+          <h1 class="pull-left">{{'Patient Info'| translate}} -  {{user.username}} </h1>
+      </div>
+    <div class="row">
+      <div class="col-md-4 col-lg-3">
+          <div ng-include="'views/user_profile_left_side_menu.html'"></div>
+      </div>   
+      <div class="col-md-9">
+        <div class="page-head clearfix">
+            <h1 class="pull-left">{{'Add Medical Record'| translate}}</h1>
+        </div>
+        <form class="branch-form" role="form" name="medicalHistoryFrm" ng-submit="medicalHistoryAdd(medicalHistoryFrm.$valid)" novalidate>
+          <div class="panel panel-primary post-project">
+            <div class="panel-heading text-uppercase">{{'Medical Info'| translate}}</div>
+              <div class="panel-body">
+                <!-- <div ng-class="{ 'has-error' : (medicalHistoryFrm.$submitted || medicalHistoryFrm.specialty_id.$touched) && (medicalHistoryFrm.specialty_id.$pristine || medicalHistoryFrm.specialty_id.$invalid) && (medicalHistoryFrm.specialty_id.$error.required)}">
+
+                  <div class="dynamic-data" ng-if="formFieldData">
+                      <div ng-repeat="userFormData in userFormDatas">
+                          <div class="form-group" ng-if="userFormData.form_field_type_id == 1">
+                              <label>{{userFormData.label}} <span class="req-color" ng-if="(userFormData.is_required == 1) ? true : false">*</span></label>
+                              <input class="form-control" type="hidden" ng-model="data[$index].id" ng-init="data[$index].id=userFormData.id"
+                              />
+                              <input class="form-control" type="text" name="{{userFormData.name}}" ng-model="data[$index].name" ng-required="(userFormData.is_required == 1) ? true : false"
+                              />
+                              <span class="info" ng-if="userFormData.info">{{userFormData.info}}</span>
+                          </div>
+                          <div class="form-group" ng-if="userFormData.form_field_type_id == 2">
+                              <label>{{userFormData.label}} <span class="req-color" ng-if="(userFormData.is_required == 1) ? true : false">*</span></label>
+                              <input class="form-control" type="hidden" ng-model="data[$index].id" ng-init="data[$index].id=userFormData.id"
+                              />
+                              <textarea class="form-control" name="{{userFormData.name}}" ng-model="data[$index].name" ng-required="(userFormData.is_required == 1) ? true : false"></textarea>
+                              <span class="info" ng-if="userFormData.info">{{userFormData.info}}</span>
+                          </div>
+                          <div class="form-group" ng-if="userFormData.form_field_type_id == 3">
+                              <label>{{userFormData.label}} <span class="req-color" ng-if="(userFormData.is_required == 1) ? true : false">*</span></label>
+                              <input class="form-control" type="hidden" ng-model="data[$index].id" ng-init="data[$index].id=userFormData.id"
+                              />
+                              <input name="file" class="input-file" type="file" ng-model="data[$index].files" multiple base-sixty-four-input
+                                  ng-required="(userFormData.is_required == 1) ? true : false" />
+                              <span class="info" ng-if="userFormData.info">{{userFormData.info}}</span>
+                          </div>
+                          <div class="form-group" ng-if="userFormData.form_field_type_id == 4">
+                              <label>{{userFormData.label}} <span class="req-color" ng-if="(userFormData.is_required == 1) ? true : false">*</span></label>
+                              <input class="form-control" type="hidden" ng-model="data[$index].id" ng-init="data[$index].id=userFormData.id"
+                              />
+                              <select class="form-control" ng-model="data[$index].name" ng-options="x for x in userFormData.option_array">
+                                  <option value="">select {{userFormData.name}}</option>
+                                  <div ng-if="(userFormData.is_required == 1) ? true : false">
+                                      <option ng-value="" value="">None</option>
+                                  </div>
+                              </select>
+                              <span class="info" ng-if="userFormData.info">{{userFormData.info}}</span>
+                          </div>
+                          <div class="form-group" ng-if="userFormData.form_field_type_id == 5">
+                              <label>{{userFormData.label}} <span class="req-color" ng-if="(userFormData.is_required == 1) ? true : false">*</span></label>
+                              <input class="form-control" type="hidden" ng-model="data[$index].id" ng-init="data[$index].id=userFormData.id"
+                              />
+                              <ul class="list-unstyled">
+                                  <li ng-if="(userFormData.is_required == 1) ? true : false">
+                                      <input type="radio" ng-model="data[$parent].name" ng-value="" value="">                                        None
+                                  </li>
+                                  <li ng-repeat="obj in userFormData.option_array">
+                                      <input type="radio" ng-model="data[$parent].name" ng-value="obj" value="{{obj}}">                                        {{obj}}
+                                  </li>
+                              </ul>
+                              <span class="info" ng-if="userFormData.info">{{userFormData.info}}</span>
+                          </div>
+                      </div>
+                  </div>
+
+                </div> -->
+                <div ng-class="{ 'has-error' : (medicalHistoryFrm.$submitted || medicalHistoryFrm.description.$touched) && (medicalHistoryFrm.description.$pristine || medicalHistoryFrm.description.$invalid) && (medicalHistoryFrm.description.$error.required)}">
+                  <div class="form-group">
+                      <label>{{'Medical History Details'|translate}}
+                      <span class="req-color">*</span>
+                      </label>
+                      <textarea ng-model="data.description" name="description" ng-if='text_box' rows="6" cols="50" class="form-control"
+                      ng-required="true"></textarea>
+                      <span class="error" ng-show="(medicalHistoryFrm.$submitted || medicalHistoryFrm.description.$touched) && (medicalHistoryFrm.description.$pristine || medicalHistoryFrm.description.$invalid) && (medicalHistoryFrm.description.$error.required)">
+                      {{'Required'| translate }} </span>
+                  </div>
+                </div>  
+                <div ng-class="{ 'has-error' : (medicalHistoryFrm.$submitted || medicalHistoryFrm.years.$touched) && (medicalHistoryFrm.years.$pristine || medicalHistoryFrm.years.$invalid) && (medicalHistoryFrm.years.$error.required)}">
+                  <div class="form-group">
+                      <label>{{'Treatment Year'|translate}}
+                          <span class="req-color">*</span>
+                      </label>
+                          <div year-select start="year.start" end ="year.end" ng-model="data.years"></div>
+                          <span class="error" ng-show="(medicalHistoryFrm.$submitted || medicalHistoryFrm.years.$touched) && (medicalHistoryFrm.years.$pristine || medicalHistoryFrm.years.$invalid) && (medicalHistoryFrm.years.$error.required)">{{'Required'| translate }} 
+                          </span>
+                  </div>
+                </div>   
+                <div class="form-group">
+                  <label>{{'Upload Reports'|translate}}
+                    <span class="req-color">*</span>
+                  </label>
+                  <multi-image-upload form-name='medicalHistoryFrm' type='Upload' max-size="5" required="true" object-name="attachment"> </multi-image-upload>
+                  <div>
+                      <span class="error bot-space" ng-if="error">{{'Required'| translate }}</span>
+                  </div>
+                </div>
+            
+                <div class="form-group">
+                  <button title="Submit" type="submit"  class="btn btn-green btn-animate  ng-binding"
+                    ng-show="!save_btn">{{'Add'|translate}}</button>
+                  <a href="medical_history/{{$root.state_params.id}}/{{$root.state_params.slug}}?info=medical_history" title="Cancel" type="submit" class="btn btn-danger btn-animate">{{'Cancel'|translate}}</a>
+                </div>
+              </div>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

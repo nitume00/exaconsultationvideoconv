@@ -1,0 +1,1 @@
+angular.module('abs').requires.push('abs.teleconsultation.chat');

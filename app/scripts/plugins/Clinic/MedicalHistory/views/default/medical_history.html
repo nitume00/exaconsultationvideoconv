@@ -1,0 +1,60 @@
+<section class="clearfix pad-63 appmt-table">
+    <div class="container-fluid">
+        <div class="page-head clearfix">
+            <h1 class="pull-left">{{'Patient Info'| translate}} -  {{user.username}} </h1>
+        </div>
+        <div class="row pad-20">
+            <div class="col-md-4 col-lg-3">
+                <div ng-include="'views/user_profile_left_side_menu.html'"></div>
+            </div>   
+            <div class="col-md-9">
+                <div class="page-head clearfix">
+                    <h1 class="pull-left">{{'Medical Records '| translate}}</h1>
+                    <a href="medical_history/add/{{$root.state_params.id}}/{{$root.state_params.slug}}?info=medical_history" class="btn btn-green pull-right" ng-if="param_user_id == $root.user.id"><i class="fa fa-plus-circle fa-fw"></i>{{'Add Medical Record'| translate}}</a>
+                </div>
+                <div growl></div>
+                <div class="table-block">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>{{'Treatment Year'| translate}}</th>
+                                    <th>{{'Reports'| translate}}</th>
+                                    <th>{{'Info'| translate}}</th>
+                                    <th>{{'Action'| translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="history in medicalHistories" >
+                                    <td>{{history.years}}</td>
+                                    <td>
+                                        <div ng-repeat="report in history.attachment" class="pad-20">
+                                            <file-download attachment="{{report}}" downloadlable="<i class='fa fa-download fa-2x'> </i>"></file-download>
+                                        </div>    
+                                    </td>
+                                    <td>{{history.description}}</td>
+                                    <td class="action-btn">  
+                                        <!-- <a href="medical_history/edit/{{history.id}}" title="{{'Edit'| translate}}" class="btn green"><i class="fa fa-pencil"></i></a> -->
+                                        <a ng-click='MedicalHistoryDelete(history.id)' title="{{'Delete' | translate}}" class="btn red"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                <tr ng-if="!dataLength">
+                                    <td colspan="7">
+                                        <div class="text-center text-danger">
+                                                <h4 class="ng-binding text-center">{{'No Records Found' |translate}}</h4>
+                                            </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+                <!-- <div class="paging clearfix text-center" ng-show="totalRecords > 0">
+                        <uib-pagination previous-text="<" next-text=">" total-items="totalRecords" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true" rotate="false" items-per-page="Perpage" ng-click="paginate_search('#userTop', currentPage)"></uib-pagination>
+                    </div> -->
+            </div>
+        </div>
+        
+    </div>
+</section>

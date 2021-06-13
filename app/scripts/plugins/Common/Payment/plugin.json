@@ -1,0 +1,10 @@
+{
+	"name": "Payment", 
+	"class": "fa fa-2x fa-file-text",
+	"description": "Payment",
+	"dependencies": "Common",
+	"module_id": "",
+	"module_hash": "",
+	"display_order": "4",
+	"plugin_name":"Common/Payment"
+}

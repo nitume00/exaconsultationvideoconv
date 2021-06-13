@@ -1,0 +1,71 @@
+<section class="branch-details question-answer">
+  <div class="container-fluid news-feeds">
+    <div class="row">
+      <div class="col-md-12">
+        <form class="branch-form" role="form" name="medicalHistoryFrm" novalidate>
+            <div class="panel panel-primary post-project">
+              <div class="panel-heading text-14">{{'Update Medical History'|translate}}</div>
+              <div class="panel-body">
+                <div ng-class="{ 'has-error' : (medicalHistoryFrm.$submitted || medicalHistoryFrm.specialty_id.$touched) && (medicalHistoryFrm.specialty_id.$pristine || medicalHistoryFrm.specialty_id.$invalid) && (medicalHistoryFrm.specialty_id.$error.required)}">
+                  <div class="form-group">
+                    <label>{{'Specialty'|translate}}
+                      <span class="req-color">*</span>
+                    </label>
+                    <select chosen ng-model="data.specialty_id" class="form-control" name="specialty_id" convert-to-number ng-required="true">
+                      <option value="">{{'Search a Specialty'| translate}}</option>
+                      <option ng-repeat="specialty in specialties" value="{{specialty.id}}">{{specialty.name|translate}}</option>
+                    </select>
+                    <span class="error" ng-show="(medicalHistoryFrm.$submitted || medicalHistoryFrm.specialty_id.$touched) && (medicalHistoryFrm.specialty_id.$pristine || medicalHistoryFrm.specialty_id.$invalid) && (medicalHistoryFrm.specialty_id.$error.required)">
+                      {{'Required'| translate }} </span>
+                  </div>
+                </div>
+                <div ng-class="{ 'has-error' : (medicalHistoryFrm.$submitted || medicalHistoryFrm.description.$touched) && (medicalHistoryFrm.description.$pristine || medicalHistoryFrm.description.$invalid) && (medicalHistoryFrm.description.$error.required)}">
+                  <div class="form-group">
+                      <label>{{'Medical History Details'|translate}}
+                      <span class="req-color">*</span>
+                      </label>
+                      <textarea ng-model="data.description" name="description" placeholder="Medical History Details" ng-if='text_box' rows="6" cols="50" class="form-control"
+                      ng-required="true"></textarea>
+                      <span class="error" ng-show="(medicalHistoryFrm.$submitted || medicalHistoryFrm.description.$touched) && (medicalHistoryFrm.description.$pristine || medicalHistoryFrm.description.$invalid) && (medicalHistoryFrm.description.$error.required)">
+                      {{'Required'| translate }} </span>
+                  </div>
+                </div>  
+                <div ng-class="{ 'has-error' : (medicalHistoryFrm.$submitted || medicalHistoryFrm.description.$touched) && (medicalHistoryFrm.description.$pristine || medicalHistoryFrm.description.$invalid) && (medicalHistoryFrm.description.$error.required)}">
+                  <div class="form-group">
+                      <label>{{'Treatment Year'|translate}}
+                          <span class="req-color">*</span>
+                      </label>
+                          <div year-select start="year.start" end ="year.end" ng-model="data.years"></div>
+                          <span class="error" ng-show="(medicalHistoryFrm.$submitted || medicalHistoryFrm.years.$touched) && (medicalHistoryFrm.years.$pristine || medicalHistoryFrm.years.$invalid) && (medicalHistoryFrm.years.$error.required)">{{'Required'| translate }} 
+                          </span>
+                  </div>
+                </div>   
+
+                <div class="form-group">
+                    <label>{{'Upload Reports'|translate}}
+                      <span class="req-color">*</span>
+                    </label>
+                    <div>
+                      <div ng-repeat="medicalReport in data.attachment">
+                          <file-download attachment="{{medicalReport}}" downloadlable="<i class='fa fa-download fa-2x'> </i>"></file-download>
+                          <i class="fa fa-times-circle" ng-click="RemoveMedicalReport(medicalReport.id)"></i>
+                      </div>  
+                      <div>
+                        <multi-image-upload form-name='medicalHistoryFrm' type='Upload' max-size="5" required="true" object-name="attachment"> </multi-image-upload>
+                        <span>{{'Allowed extensions: jpg, jpeg, gif, png'|translate}}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                <div class="form-group">
+                  <button title="Submit" type="submit" ng-click="medicalHistoryUpdate(medicalHistoryFrm.$valid, data)" class="btn btn-green btn-animate  ng-binding"
+                    ng-show="!save_btn">{{'Update'|translate}}</button>
+                  <a href="medical_history" title="Cancel" type="submit" class="btn btn-danger btn-animate">{{'Cancel'|translate}}</a>
+                </div>
+              </div>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,64 @@
+<section class="clearfix pad-63 appmt-form">
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3 appointment-changes">
+            <div ng-if="ShowMessageDiv">
+                <div class="page-head">
+                    <h1>{{'Specify non availability days & timeslots'| translate}}</h1>
+                </div>
+                <div class="form-body text-center text-danger">
+                    {{"Go and Update Your Appointment Setttings Until Not able to modifiied your Settings" | translate }}
+                </div>
+            </div>
+            <div class="page-head">
+                <h1> {{'Specify non availability days & timeslots'| translate}} </h1>
+            </div>
+            <div class="form-content">
+                <form name="settingValue" method="post" ng-submit="saveAppoinmentModification(data)" novalidate ng-if="!ShowMessageDiv">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label>{{'Change Your Calender Settings'| translate}}</label>
+                            <input class="form-control" ng-model="data.appoint_date"
+                                data-date-format="yyyy-MM-dd" data-start-date="{{date|date:'yyyy-MM-dd'}}" data-autoclose="1"
+                                name="date2" bs-datepicker type="text" required="required" placeholder="{{'From Date'| translate}}">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" ng-model="data.appoint_date_end"
+                                data-date-format="yyyy-MM-dd" data-start-date="{{date|date:'yyyy-MM-dd'}}" data-autoclose="1"
+                                name="date2" bs-datepicker type="text" required="required" placeholder="{{'To Date'| translate}}">
+                        </div>
+                        <!--  -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="checkbox-field1">
+                                        <input type="checkbox" class="hide" name="type" ng-model="data.type" ng-click="changeType(type)" />
+                                        <span></span>{{'Make a day off'| translate}}
+                                    </label>
+                                </div>
+                                <div class="form-group" ng-if="!type">
+                                    <label>{{'Choose your Available Time'| translate}}</label>
+                                    <select class="form-control" chosen single-backstroke-delete="true" display-disabled-options="true" multiple ng-model="data.appt_time"
+                                        ng-options="time for time in timeSlot">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <div class="form-group">
+                                    <label>{{'Active' | translate}} / {{'In Active' | translate}}</label>
+                                    <div class="switch-option">
+                                        <switch id="enabled" name="enabled" ng-model="data.is_active" on="Yes" off="No" class="green"></switch>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="form-footer">
+                        <button class="btn btn-green btn-animate btn-block" type="submit">{{'Add'| translate }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

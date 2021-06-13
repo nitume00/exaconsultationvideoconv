@@ -1,0 +1,57 @@
+<div class="section user-education">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="form-group">
+                <label>{{'Educations'|translate}}
+                    <span class="req-color">*</span>
+                </label>
+            </div>
+            <table class="table no-borders table-hover">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th>#</th>
+                        <th class="text-center">Education</th>
+                        <th class="text-center">Organization</th>
+                        <th class="text-center">Location</th>
+                        <th class="text-center">Certification Date</th>
+                        <th class="text-center">
+                            <a class="btn btn-success" href="javascript:void(0)" ng-click="addUserEducation()">
+                                <i class="fa fa-plus blue" aria-hidden="true"></i>
+                            </a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user_education in user_educations">
+                        <td>{{user_educations.indexOf(user_education) + 1}}</td>
+                        <td>
+                            <input type="text" ng-model="user_education.education" class="form-control" id="education" name="education" required="true"
+                                placeholder="Professional certificate or award" autofocus>
+                        </td>
+                        <td>
+                            <input type="text" ng-model="user_education.organization" class="form-control" id="organization" name="organization" required="true"
+                                placeholder="Conferring organization" autofocus>
+                        </td>
+                        <td>
+                            <input type="text" ng-model="user_education.location" class="form-control" id="location" name="location" placeholder="Location"
+                                required="true" autofocus>
+                        </td>
+                        <td>
+                            <input class="form-control" ng-blur="setDateFormattedFilterFrom(user_education.certification_date,'user_profile.certification_date')"
+                                ng-model="user_education.certification_date" data-date-format="yyyy-MM-dd" data-start-date="{{date|date:'yyyy-MM-dd'}}"
+                                data-max-date="{{dateBlockeBefore}}" data-autoclose="1" name="certificationDate" bs-datepicker
+                                type="text" required="true" placeholder="{{'yyyy-mm-dd'| translate}}">
+
+                        </td>
+                        <td ng-if="$index !== 0">
+                            <a class="btn btn-info pull-right navbar-btn" href="javascript:void(0)" ng-click="deleteUserEducation(user_education.id, $index)">
+                                <i class="fa fa-times blue" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,106 @@
+<section class="clearfix branch-details setting-page" id="friendtop">
+    <div class="container">
+        <div class="edit-profile-page clearfix">
+            <div class="col-md-12">
+                <div class="row">
+                    <h2>{{"Add Education" | translate }}</h2>
+                    <div class="form-content">
+                        <div class="form-body">
+                            <form name="userEducations" method="post" ng-submit="userEducation(userEducations.$valid,data)" novalidate>
+                                <div class="clearfix">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group" ng-class="{ 'has-error' : (userEducations.$submitted || userEducations.education.$touched) && (userEducations.education.$pristine || userEducations.education.$invalid) && (userEducations.education.$error.required)}">
+                                            <label>{{"Educational Institution" | translate }}
+                                                <span class="req-color">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" name="education" id="education" ng-required="true" ng-model="data.education">
+                                            <span class="error" ng-show="(userEducations.$submitted || userEducations.education.$touched) && (userEducations.education.$pristine || userEducations.education.$invalid) && (userEducations.education.$error.required)">{{"Required" | translate }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6" ng-class="{ 'has-error' : (userEducations.$submitted || userEducations.location.$touched) && (userEducations.location.$pristine || userEducations.location.$invalid) && (userEducations.location.$error.required)}">
+                                        <div class="form-group">
+                                            <label>{{"Location" | translate }}
+                                                <span class="req-color">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" name="location" id="location" ng-required="true" ng-model="data.location">
+                                            <span class="error" ng-show="(userEducations.$submitted || userEducations.location.$touched) && (userEducations.location.$pristine || userEducations.location.$invalid) && (userEducations.location.$error.required)">{{"Required" | translate }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="col-md-6" ng-class="{ 'has-error' : (userEducations.$submitted || userEducations.organization.$touched) && (userEducations.organization.$pristine || userEducations.organization.$invalid) && (userEducations.organization.$error.required)}">
+                                        <div class="form-group">
+                                            <label>{{"Certificate Awarded" | translate }}
+                                                <span class="req-color">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" name="organization" id="organization" ng-required="true" ng-model="data.organization">
+                                            <span class="error" ng-show="(userEducations.$submitted || userEducations.organization.$touched) && (userEducations.organization.$pristine || userEducations.organization.$invalid) && (userEducations.organization.$error.required)">{{"Required" | translate }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group" ng-class="{ 'has-error' : (userEducations.$submitted || userEducations.certification_date.$touched) && (userEducations.certification_date.$pristine || userEducations.certification_date.$invalid) && (userEducations.certification_date.$error.required)}">
+                                            <label>{{"Certification Date" | translate }}
+                                                <span class="req-color">*</span>
+                                            </label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar fa-fw"></i>
+                                                </span>
+                                                <input class="form-control" ng-model="data.certification_date" data-date-format="yyyy-MM-dd" data-max-date="{{dateBlockeBefore}}"
+                                                    data-autoclose="1" name="certification_date" bs-datepicker type="text" ng-required="true"
+                                                    placeholder="Date" ng-model="certification_date" autocomplete="off">
+                                            </div>
+                                            <span class="error" ng-show="(userEducations.$submitted || userEducations.certification_date.$touched) && (userEducations.certification_date.$pristine || userEducations.certification_date.$invalid) && (userEducations.certification_date.$error.required)">{{"Required" | translate }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-footer appmt-btn">
+                                    <button class="btn btn-green btn-animate" ng-if="typeid == 1" type="submit">{{"Save" | translate }}</button>
+                                    <button class="btn btn-green btn-animate" ng-if="typeid == 2" type="submit">{{"Update" | translate }}</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="created-block">
+                            <div class="page-head">
+                                <h1>{{"My Education" | translate }}</h1>
+                            </div>
+                            <div class="created-family">
+                                <div class="row whole-list" ng-if="noRecords" ng-repeat="my_education in my_educations">
+                                    <div class="col-sm-4">
+                                        <p>{{my_education.education}}</p>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <p>{{my_education.location | capitalize}}</p>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <p>{{my_education.organization | capitalize}}</p>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <p>{{my_education.certification_date}}</p>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <a href="javascript:void(0)" class="pull-left" ng-click="editUsereducation(my_education.id)">{{"Edit" | translate }}</a>
+                                        <a href="javascript:void(0)" class="pull-right" ng-click="removeUsereducation(my_education.id)">
+                                            <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="paging clearfix text-center" ng-if="noRecords">
+                                    <uib-pagination total-items="_metadata.total" num-pages="_metadata.total_pages" ng-model="currentPage" max-size="maxSize"
+                                        boundary-links="true" boundary-link-numbers="true" rotate="false" items-per-page="_metadata.per_page"
+                                        previous-text="&#xf104;" next-text="&#xf105;" ng-change="paginate(currentPage)"></uib-pagination>
+                                </div>
+                                <div class="error-sapce">
+                                    <div class="col-sm-12" ng-if="!noRecords">
+                                        <div class="hor-space alert alert-danger">{{"No Education Added" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

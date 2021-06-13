@@ -1,0 +1,89 @@
+<section class="branch-details">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h2>{{'Edit User'|translate}}</h2>
+        <form class="branch-form" role="form" name="userFrm" novalidate>
+          <div class="form-group">
+            <label>{{'Name'|translate}}
+              <span class="req-color">*</span>
+            </label>
+            <input type="text" ng-model="userData.name" class="form-control" id="username" name="username" required="true" autofocus>
+            <span class="error" ng-show="(userFrm.$submitted || userFrm.username.$touched) && (userFrm.username.$pristine || userFrm.username.$invalid) && (userFrm.username.$error.required)">
+            {{'Required'| translate }} </span>
+          </div>
+
+          <div class="form-group">
+            <label>{{'Email'|translate}}
+              <span class="req-color">*</span>
+            </label>
+            <input type="email" ng-model="userData.email" class="form-control" id="useremail" name="useremail" required="true" autofocus>
+            <span class="error" ng-show="(userFrm.$submitted || userFrm.useremail.$touched) && (userFrm.useremail.$pristine || userFrm.useremail.$invalid) && (userFrm.useremail.$error.required)">
+            {{'Required'| translate }} </span>
+            <span class="error" ng-show="(userFrm.$submitted || userFrm.useremail.$touched) && (userFrm.useremail.$pristine || userFrm.useremail.$invalid) && (userFrm.useremail.$error.required)">{{'Please enter your email'| translate }}</span>
+            <span class="error" ng-show="(userFrm.$submitted || userFrm.useremail.$touched) && (userFrm.useremail.$pristine || userFrm.useremail.$invalid) && (userFrm.useremail.$error.email)">{{'Enter valid email'| translate }}</span>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-3 no-padright">
+              <label>{{'Country Code'|translate}}
+                    <span class="req-color">*</span>
+                  </label>
+              <select ng-model="userData.mobile_code" name="mobile_code" id="mobile_code" class="form-control" ng-options="country.phone_code as (country.phone_code + ' (' + country.name  + ' )' ) for country in countries"
+                disabled>
+                    <option value="">{{'Country(code)'| translate }}</option>
+                </select>
+            </div>
+            <div class="col-sm-9 no-padleft">
+              <label>{{'Mobile Number'|translate}}
+                    <span class="req-color">*</span>
+                  </label>
+              <input type="text" ng-model="userData.mobile" class="form-control" id="mobile" placeholder="{{'Mobile Number' | translate}}"
+                name="mobile" ng-minlength="8" ng-maxlength="12" ng-pattern="/^[0-9]*$/" readonly>
+            </div>
+          </div>
+        <!--  <div class="form-group">
+            <label>{{'Mobile Number'|translate}}</label>
+            <input type="text" ng-model="userData.mobile" class="form-control" id="mobile" placeholder="{{'Mobile Number' | translate}}"
+              name="mobile" ng-minlength="8" ng-maxlength="12" ng-pattern="/^[0-9]*$/" readonly>
+          </div>-->
+
+          <div class="form-group">
+            <label>{{'Country'|translate}}
+              <span class="req-color">*</span>
+            </label>
+            <div class="frm-select job-cat-select">
+              <select class="form-control" id="country_id" name="country_id" ng-model="userData.country_id" class="form-control" required="true"
+                autofocus>
+                <option value="{{country.id}}">{{'Please Select'|translate}}</option>
+                <option value="{{country.id}}" ng-repeat="country in countries">{{country.name|translate}}</option>
+                <span class="error" ng-show="(userFrm.$submitted || userFrm.country_id.$touched) && (userFrm.country_id.$error.required)">{{'Required'| translate }} </span>
+              </select>
+              <span class="error" ng-show="(userFrm.$submitted || userFrm.country_id.$touched) && (userFrm.country_id.$error.required)">{{'Required'| translate }} </span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>{{'Permissions'|translate}}
+              <span class="req-color">*</span>
+            </label>
+            <div class="form-body clearfix">
+              <div class="form-group" ng-repeat="permission in permissions">
+                <label class="checkbox-field">
+                  <input type="checkbox" name="permission_select" checklist-model="userData.user_permissions" checklist-value="permission.name"
+                    ng-change="check(permission.name, checked)">
+                  <span>{{permission.name}}</span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <button title="Submit" type="submit" ng-click="updateUser(userFrm.$valid, userData)" class="btn btn-green btn-animate ng-binding">{{'Update'|translate}}</button>
+            <a href="branch/users/{{userData.branch_id}}" title="Cancel" type="submit" class="btn btn-danger btn-animate">{{'Cancel'|translate}}</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

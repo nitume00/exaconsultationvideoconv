@@ -1,0 +1,40 @@
+<section class="branch-details" ng-controller="NewsFeedsController">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!--  -->
+                <div class="row">
+                    <div class="col-md-9">
+                        <h2>{{'News Feeds'|translate}}</h2>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="appointment-list text-right">
+                            <a href="clinic/news_feeds" class="btn btn-primary btn-green">{{'Back' | translate}}</a>
+                        </div>
+                    </div>
+                </div>
+                <!--  -->
+                <div class="tab-content">
+                    <div class="tab-pane fade in active">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="row space">
+                                    <div class="col-md-12">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <h4 class="media-heading">{{newsfeed.title}} </h4>
+                                                <div class="language">
+                                                    <p class="doc-desc" ng-bind-html="newsfeed.content"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

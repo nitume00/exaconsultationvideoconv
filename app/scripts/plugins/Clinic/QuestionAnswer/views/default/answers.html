@@ -1,0 +1,59 @@
+<section class="clearfix appointment-block pad-63 appmt-table">
+	<!-- TABLE -->
+    <div class="container">
+         <div class="row">
+              <div class="col-md-12" role="navigation">
+                   <div class="appointment-header clearfix">
+                   		<h1 class="pull-left">{{'Question and Answer'|translate}}</h1>
+                        <span class="pull-right search-table-field">
+                            <a href="answers" class="btn btn-green btn-animate">
+                                <i class="fa fa-list fa-fw"></i>{{'Answers'|translate}}</a>
+                            <a href="doctors/answers" class="btn btn-green btn-success">
+                                <i class="fa fa-plus-circle fa-fw"></i>{{'Questions'|translate}}</a>
+                        </span>    
+                   </div>
+              </div>
+            <div class="col-md-12 table-block">
+               <div class="table-responsive">
+                    <table class="table table-hover">
+                         <thead>
+                              <tr>
+                                   <th>{{'Specialty'| translate}}</th>
+                                   <th width="450">{{'Question'| translate}}</th>
+                                   <th>{{'Answer'| translate}}</th>
+                                   <th width="250">{{'Action'| translate}}</th>
+                              </tr>
+                         </thead>
+                         <tbody>
+                              <tr ng-repeat="answerR in answers">
+                                   <td>{{answerR.question.specialty.name}}</td>
+                                   <td>{{answerR.question.question}}</td>
+                                   <td>{{answerR.answer}}</td>
+                                   <td class="action-btn">
+                                        <a href="answers/edit/{{answerR.id}}" class="btn green"><i class="fa fa-edit"></i> {{'Edit' |translate}}</a>
+                                   </td>
+                              </tr>
+                              <tr ng-show="!dataLength && !loader">
+                                   <td colspan="4" class="text-center">
+                                    <div class="alert alert-danger">
+                                        <h4 class="ng-binding text-center">{{'No Answers Added' |translate}}</h4>
+                                    </div>
+                                   </td>
+                              </tr>
+                               <tr ng-show="loader">
+                                <td colspan="5">
+                                   <div ng-include="'views/loader.html'"></div>
+                                </td>
+                            </tr>
+                         </tbody>
+                    </table>
+               </div>
+                <div class="paging clearfix text-center" ng-show="totalRecords > 0">
+                    <uib-pagination previous-text="<" next-text=">" total-items="totalRecords" ng-model="currentPage" max-size="maxSize"
+                        class="pagination-sm" boundary-link-numbers="true" rotate="false" items-per-page="Perpage" ng-click="paginate_search('#userTop', currentPage)"></uib-pagination>
+                </div>
+            </div>
+    	</div>
+    </div>
+</section>
+<!-- TABLE -->

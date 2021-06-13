@@ -1,0 +1,229 @@
+<!--START:APPOIMENT-DETAILS-->
+<div class="appoiment-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h3>{{'Prescription' | translate}}</h3>
+            </div>
+           
+
+            <div class="col-md-4">
+                <a href="{{prescription.pres_url}}" class="btn btn-info pull-right" target="_blank"><i class="fa fa-download fa-fw" aria-hidden="true"></i>{{'Download'| translate}}</a>
+                
+                <a class="btn btn-success pull-right right-mspace" ng-click="enableDeliveryFrm()" ng-if="!prescription.is_delivered"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>{{'Deliver'| translate}}</a>
+
+                <a href="#/medicine_delivery_logs/list" class="btn btn-success pull-right right-mspace" ng-if="prescription.is_delivered"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>{{'Delivered'| translate}}</a>
+            </div>
+        </div>
+        <br>
+        <form class="form-horizontal adminpg-form" role="form" name="medicineFrm" ng-submit="dispatch(medicineFrm.$valid, medicineFrm)"  novalidate>
+            <div class="table-block" ng-if="isEnabledForm">
+                <div class="table-responsive">
+                        <h3>{{'Delivery Medicine' | translate}}</h3>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>{{'Name' | translate}}</th>
+                                <th>{{'Dose Regme' | translate}}</th>
+                                <th>{{'Dosage Unit' | translate}}</th>
+                                <th>{{'Days' | translate}}</th>
+                                <th>{{'Quantity' | translate}}</th>
+                                <th>{{'Type' | translate}}</th>
+                                <th>{{'Price' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="added_prescription in added_prescriptions">
+                                <td>{{added_prescription.name}}</td>
+                                <td>{{added_prescription.dosage}}</td>
+                                <td>{{added_prescription.dosage_unit}}</td>
+                                <td>{{added_prescription.usage_days}}</td>
+                                <td>
+                                    <input type="number" ng-model="added_prescription.quantity" class="form-control" id="quantity{{$index}}" placeholder="{{'Count' | translate}}" name="quantity{{$index}}"
+                                    min="1" ng-pattern="/^[0-9]*$/" required="true">
+                                    <span class="error" ng-show="(medicineFrm.$submitted || medicineFrm.quantity{{$index}}.$touched) && (medicineFrm.quantity{{$index}}.$pristine || medicineFrm.quantity{{$index}}.$invalid) && (medicineFrm.quantity{{$index}}.$error.required)">{{'Required'| translate }} </span>
+                                </td>
+                                <td>{{added_prescription.medicine_type}}</td>
+                                <td>
+                                    <input type="number" ng-model="added_prescription.amount" class="form-control" id="amount{{$index}}" placeholder="{{'Price' | translate}}" name="amount{{$index}}"
+                                    min="1" ng-pattern="/^[0-9]*$/">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6"></td>
+                                <td>
+                                    <button class="btn btn-primary" title="{{'Save'|translate}}" type="submit">{{'Dispatch'|translate}}</button> 
+                                    <button type="button" class="btn btn-danger" ng-click="enableDeliveryFrm()" title="{{'Cancel'|translate}}">{{'Cancel'|translate}}</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+        
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        {{'Appointment Date'|translate}}: {{prescription.appointment.appointment_date}}   
+                    </div>
+                    <div class="col-md-3">
+                        {{'Appointment Time'|translate}}: {{prescription.appointment.appointment_time}}   
+                    </div>
+                    <div class="col-md-3">
+                        {{'Rx#'|translate}}: {{prescription.rx_number}}   
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h2>{{prescription.doctor_user.user_profile.first_name}} {{prescription.doctor_user.user_profile.last_name}}</h2> 
+                        <p>{{prescription.doctor_user.user_profile.dr_title}}</p> 
+                        <p>{{'Email' | translate}}: {{prescription.doctor_user.email}}</p> 
+                        <p>{{'Phone' | translate}}: {{prescription.doctor_user.mobile_code}} {{prescription.doctor_user.mobile}}</p> 
+                    </div>
+                    <div class="col-md-4" ng-if="prescription.doctor_user.is_individual == 0">
+                        <h2>{{prescription.clinic_user.user_profile.display_name}}</h2> 
+                        <p>{{prescription.clinic_user.user_profile.address}}</p> 
+                        <p>{{prescription.clinic_user.user_profile.city.name}}, {{prescription.clinic_user.user_profile.state.name}}, {{prescription.clinic_user.user_profile.country.name}}</p> 
+                        <p>{{'Phone' | translate}}: {{prescription.clinic_user.mobile_code}} {{prescription.clinic_user.mobile}}</p>  
+                    </div>
+                    <div class="col-md-4" ng-if="prescription.doctor_user.is_individual == 1">
+                        <h2>Location</h2> 
+                        <p>{{prescription.doctor_user.user_profile.address}}</p> 
+                        <p>{{prescription.doctor_user.user_profile.city.name}}, {{prescription.doctor_user.user_profile.state.name}}, {{prescription.doctor_user.user_profile.country.name}}</p> 
+                    </div>
+            </div>
+        </div>  
+        
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        {{'Name'|translate}}: {{prescription.appointment.user.user_profile.first_name}}  {{prescription.appointment.user.user_profile.last_name}}
+                    </div>
+                    <div class="col-md-2">
+                        {{'Age'|translate}}: 
+                        <span ng-if="prescription.appointment.user.user_profile.dob != null" >{{prescription.appointment.user.user_profile.dob | ageFilter}} </span> 
+                        <span ng-if="prescription.appointment.user.user_profile.dob == null" >{{'Not Mentioned' | translate}} </span> 
+                    </div>
+                    <div class="col-md-2">
+                        {{'Sex'|translate}}: <span ng-if="prescription.user.user_profile.gender_id == 1">{{'Male' | translate }}</span>
+                        <span ng-if="prescription.user.user_profile.gender_id == 2">{{'Female' | translate }}</span> 
+                    </div>
+                    <div class="col-md-2">
+                        {{'Patient ID'|translate}}: {{prescription.appointment.user.patient_id}} 
+                    </div>
+                    <div class="col-md-3">
+                        {{'Appointment Token'|translate}}: {{prescription.appointment.appointment_token}} 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h2>{{'Patient Condition' | translate}}</h2>
+        <div class="table-block">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>{{'Condition' | translate}}</th>
+                            <th>{{'Weight' | translate}}</th>
+                            <th>{{'BP' | translate}}</th>
+                            <th>{{'Pulse' | translate}}</th>
+                            <th>{{'Temperature(C/F)' | translate}}</th>
+                            <th>{{'Diagnosis' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{prescription.patient_condition}}</td>
+                            <td>{{prescription.weight}}</td>
+                            <td>{{prescription.blood_pressure}}</td>
+                            <td>{{prescription.pulse}}</td>
+                            <td>{{prescription.temperature}}</td>
+                            <td>{{prescription.rx_number}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <h2>{{'Medicines' | translate}}</h2>
+        <div class="table-block">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>{{'Type' | translate}}</th>
+                            <th>{{'Name' | translate}}</th>
+                            <th>{{'Dose Regme' | translate}}</th>
+                            <th>{{'Dosage' | translate}}</th>
+                            <th>{{'Days' | translate}}</th>
+                            <th>{{'Notes' | translate}}</th>
+                            <th>{{'Usage' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="medicine in prescription.prescription_medicine">
+                            <td>{{medicine.medicine_type.name}}</td>
+                            <td>{{medicine.name}}</td>
+                            <td>{{medicine.dosage_unit}}</td>
+                            <td>{{medicine.dosage}}</td>
+                            <td>{{medicine.usage_days}}</td>
+                            <td>{{medicine.description}}</td>
+                            <td>{{medicine.is_morning}} - {{medicine.is_noon}} - {{medicine.is_night}} (<span ng-if="medicine.is_before_food == 1"> {{'Before Food'}}</span><span ng-if="medicine.is_after_food == 1"> {{'After Food'}}</span>)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <h2>{{'Tests' | translate}}</h2>
+        <div class="table-block">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>{{'Name' | translate}}</th>
+                            <th>{{'Notes' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="test in prescription.prescription_test">
+                            <td>{{test.name}}</td>
+                            <td>{{test.description}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <h2>Advices</h2>
+        <div class="table-block">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>{{'Notes' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="advice in prescription.prescription_note">
+                            <td>{{advice.description}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row pad-top-20  pad-bot-20">
+            <div class="col-md-2 pull-right">------------------------------<br><span><b>Signature</b></span></div>
+        </div>
+        
+    </div>
+</div>    

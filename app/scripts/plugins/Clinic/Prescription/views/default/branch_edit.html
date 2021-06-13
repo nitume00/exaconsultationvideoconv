@@ -1,0 +1,148 @@
+<section class="branch-details">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h2>{{'Edit Branch'|translate}} - {{data.name}}</h1>
+          <form class="branch-form" role="form" name="branchFrm" novalidate>
+
+            <div class="form-group">
+              <label>{{'Branch Name'|translate}}
+                <span class="req-color">*</span>
+              </label>
+              <input type="text" ng-model="data.name" class="form-control" id="branchname" name="branchname"
+                required="true">
+              <span class="error" ng-show="(branchFrm.$submitted || branchFrm.branchname.$touched) && (branchFrm.branchname.$pristine || branchFrm.branchname.$invalid) && (branchFrm.branchname.$error.required)">
+                {{'Required'| translate }} </span>
+            </div>
+
+            <div class="form-group">
+              <label>{{'Branch Details'|translate}}</label>
+              <textarea ng-model="data.description" name="description" placeholder="Branch Details" ng-if='text_box' rows="6" cols="50"
+                class="form-control"></textarea>
+              <span class="error" ng-show="(branchFrm.$submitted || branchFrm.description.$touched) && (branchFrm.description.$pristine || branchFrm.description.$invalid) && (branchFrm.description.$error.required)">
+                {{'Required'| translate }} </span>
+            </div>
+
+            <div class="form-group">
+              <label>{{'Phone Number'|translate}}</label>
+              <input type="text" ng-model="data.phone_number" class="form-control" id="phone_number" placeholder="{{'Phone Number' | translate}}"
+                name="phone_number" ng-minlength="8" ng-maxlength="12" ng-pattern="/^[0-9]*$/">
+              <span class="error" ng-show="(branchFrm.$submitted || branchFrm.phone_number.$touched) && (branchFrm.phone_number.$pristine || branchFrm.phone_number.$invalid) && (branchFrm.phone_number.$error.maxlength)">{{ 'Maximum length is 12' | translate }}</span>
+              <span class="error" ng-show="(branchFrm.$submitted || branchFrm.phone_number.$touched) && (branchFrm.phone_number.$pristine || branchFrm.phone_number.$invalid) && (branchFrm.phone_number.$error.minlength)">{{ 'Minimum length is 8' | translate }}</span>
+              <span class="error" ng-show="(branchFrm.$submitted || branchFrm.phone_number.$touched) && (branchFrm.phone_number.$pristine || branchFrm.phone_number.$invalid) && (branchFrm.phone_number.$error.pattern)">{{'Enter Valid Phone Number Without Character'| translate }} </span>
+            </div>
+
+            <div class="form-group">
+              <label>{{'Location'|translate}}
+                <span class="req-color">*</span>
+              </label>
+              <div class="frm-select job-cat-select">
+                    <select class="form-control" id="inputCategory" name="location_id" ng-model="data.location_id" ng-selected="location.id == data.location_id" ng-required="true" ng-options="location.id as location.location for location in locations | orderBy:'location'"></select>
+                <span class="error" ng-show="(branchFrm.$submitted || branchFrm.location_id.$touched) && (branchFrm.location_id.$error.required)">{{'Required'| translate }} </span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>{{'Specialties'|translate}}
+                <span class="req-color">*</span>
+              </label>
+              <tags-input name="specialty_select" ng-model="data.specialty_select" placeholder="Choose Your Specialties" add-from-autocomplete-only="true"
+                on-tag-added="tagAdded($tag)" on-tag-removed="tagRemoved($tag)" replace-spaces-with-dashes="false" ng-required="true"
+                add-on-enter="true">
+                <auto-complete min-length="1" debounce-delay="0" source="loadSpecialties($query)"></auto-complete>
+              </tags-input>
+              <span class="error" ng-show="(branchFrm.$submitted || branchFrm.specialty_select.$touched) && (branchFrm.specialty_select.$pristine || branchFrm.specialty_select.$invalid) && (branchFrm.specialty_select.$error.required)">
+                {{'Required'| translate }} </span>
+            </div>
+
+            <div class="form-group">
+              <label>{{'Insurances'|translate}}</label>
+              <tags-input name="insurance_select" ng-model="data.insurance_select" placeholder="Choose Your Insurances" on-tag-added="tagAdded($tag)"
+                on-tag-removed="tagRemoved($tag)" replace-spaces-with-dashes="false" add-on-enter="true">
+                <auto-complete min-length="1" debounce-delay="0" source="loadInsurances($query)"></auto-complete>
+              </tags-input>
+            </div>
+            <div class="form-group">
+              <label>{{'Branch Images'|translate}}
+                <span class="req-color">*</span>
+              </label>
+              <div>
+                <ul class="list-inline"> <!--ng-if="imagedata == undefined"-->
+                  <li ng-repeat="branchimage in data.attachment" class="list-inline">
+                    <img ng-src="{{branchimage.image}}">
+                    <div>
+                      <a ng-click='RemoveBranchImages(branchimage.id)' title="{{'Remove'| translate}}" class="btn danger">{{'Remove' | translate}}</a>
+                    </div>
+                  </li>
+                </ul>
+                <div>
+                  <multi-image-upload form-name='branchname' type='Upload' max-size="5" required="true" object-name="attachment"> </multi-image-upload>
+                  <span>{{'Allowed extensions: jpg, jpeg, gif, png'|translate}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-group">
+                <label>{{'Address'|translate}}</label>
+                <input type="text" g-places-autocomplete ng-model="data.address" autocomplete="off" class="form-control" id="inputFullAddress3"
+                  name="inputFullAddress3" placeholder="" ng-required="true">
+                <span class="help-block">{{'Please select address from autocomplete'| translate}}</span>
+                <span class="error" ng-if="(branchFrm.$submitted || branchFrm.inputFullAddress3.$touched) && (branchFrm.inputFullAddress3.$pristine || branchFrm.inputFullAddress3.$invalid) && (branchFrm.inputFullAddress3.$error.required)">
+                  {{' Required'| translate }} </span>
+                <span class='error' ng-if="(branchFrm.inputFullAddress3.$invalid && !branchFrm.inputFullAddress3.$error.required)">
+                  {{'You must select address from autocomplete'|translate}} </span>
+                <span class="error" ng-show="(branchFrm.$submitted || branchFrm.inputFullAddress3.$touched) && (branchFrm.inputFullAddress3.$pristine || branchFrm.inputFullAddress3.$invalid) && (branchFrm.inputFullAddress3.$error.required)">
+                  {{'Required'| translate }}</span>
+              </div>
+              <div class="form-group">
+                <label>{{'City'|translate}}</label>
+                <input class="form-control" autocomplete="off" type="text" ng-model="data.city.name" id="city_name" name="city_name" placeholder="{{'City'|translate}}"
+                  required min="1">
+                <span class="error" ng-if="(branchFrm.$submitted || branchFrm.city_name.$touched) && (branchFrm.city_name.$invalid) && (branchFrm.city_name.$error.required)">
+                  {{'Required'| translate }} </span>
+              </div>
+              <div class="form-group">
+                <label>{{'State'|translate}}</label>
+                <input class="form-control" autocomplete="off" type="text" ng-model="data.state.name" id="state_name" name="state_name" placeholder="{{'State'|translate}}"
+                  required min="1">
+                <span class="error" ng-if="(branchFrm.$submitted || branchFrm.state_name.$touched) && (branchFrm.state_name.$invalid) && (branchFrm.state_name.$error.required)">
+                  {{'Required'| translate }} </span>
+              </div>
+              <div class="form-group">
+                <label>{{'Country'|translate}}</label>
+                <input class="form-control" autocomplete="off" type="text" ng-model="data.country.iso2" id="country_name" name="country_name"
+                  placeholder="{{'Country'|translate}}" required min="1">
+                <span class="error" ng-if="(branchFrm.$submitted || branchFrm.country_name.$touched) && (branchFrm.country_name.$invalid) && (branchFrm.country_name.$error.required)">
+                  {{'Required'| translate }} </span>
+              </div>
+              <div class="form-group" ng-show="disable_zip === 'false'">
+                <label>{{'Postal Code'|translate}}</label>
+                <input type="text" name="postal_code" ng-model="data.postal_code" class="form-control" id="inputZip3" placeholder="{{'Postal Code'|translate}}">                </div>
+            </div>
+            <div class="form-group">
+              <button title="Update" type="submit" ng-click="updateBranch(branchFrm.$valid, data)" class="btn btn-green btn-animate  ng-binding"
+                ng-show="!save_btn">{{'Update'|translate}}</button>
+              <button title="Cancel" type="submit" class="btn btn-danger btn-animate">{{'Cancel'|translate}}</button>
+            </div>
+          </form>
+      </div>
+      <div class="col-md-4">
+        <div class="post-project">
+          <div class="bg-primary">
+            <h4 class="text-center no-mar">{{"Add your branch"|translate}}</h4>
+          </div>
+          <ul class="list-unstyled clearfix">
+            <li>
+              <i class="fa fa-check" aria-hidden="true"></i>
+              <span class="menu-content"> {{'Get bid from skilled freelancer in minutes'|translate}}. </span>
+            </li>
+            <li>
+              <i class="fa fa-check" aria-hidden="true"></i>
+              <span class="menu-content"> {{'View freelancer profiles and feedback and choose best freelancer'|translate}}.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

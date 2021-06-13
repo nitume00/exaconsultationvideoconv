@@ -1,0 +1,35 @@
+<div id="translate-language">
+	<div class="panel panel-default">
+		<div class="clearfix panel-heading">
+			<h3>{{'Verify Certificate - ID - Address Proof'|translate}}</h3>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="page-header"><h4><span>{{'Download Certificate' | translate}}</span></h4></div>
+					<div class="alert alert-success" role="alert" ng-repeat="doctor_proof in user.doctor_proof">
+						<file-download attachment="{{doctor_proof}}" downloadlable="<i class='fa fa-download fa-2x'> </i>"></file-download>
+					</div>
+				</div>
+			 
+				<div class="col-sm-4">
+					<div class="page-header"><h4><span>{{'Download ID Proof' | translate}}</span></h4></div>
+					<div class="alert alert-success" role="alert" ng-repeat="id_proof in user.id_proof">
+						<file-download attachment="{{id_proof}}" downloadlable="<i class='fa fa-download fa-2x'> </i>"></file-download>
+					</div>
+				</div>
+			 
+				<div class="col-sm-4">
+					<div class="page-header"><h4><span>{{'Download Address Proof' | translate}}</span></h4></div>
+					<div class="alert alert-success" role="alert" ng-repeat="address_proof in user.address_proof">
+						<file-download attachment="{{address_proof}}" downloadlable="<i class='fa fa-download fa-2x'> </i>"></file-download>
+					</div>
+				</div>
+				<div class="col-md-7 col-md-offset-5">
+					<button type="button" class="btn btn-primary" ng-click="verified();"><span class="glyphicon glyphicon-ok"></span> {{'Verify Document'|translate}}</button>
+				</div>
+			</div>
+
+		</div>
+	</div>		
+</div>

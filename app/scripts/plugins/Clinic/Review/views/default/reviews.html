@@ -1,0 +1,60 @@
+<div class="col-md-12">
+  <div class="panel panel-primary post-project">
+      <div class="panel-heading text-uppercase">{{'Patient Reviews For'| translate}} {{name}}</div>
+      <div class="panel-body">
+        <div class="row for-border" ng-repeat="review in reviews" ng-if="!loader">
+          <div class="col-md-6">
+            <h4 class="text-left">{{review.created_at | dateFormat}}</h4>
+            <p class="text-muted text-left">{{'by' | translate}} {{review.user.user_profile.first_name}} {{review.user.user_profile.last_name}} ({{'Verified Patient' | translate}})</p>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-4">
+                <h4 class="text-center">{{'Overall Rating' | translate}}</h4>
+                <div class="star-rating text-center">
+                  <input-stars max="5" allow-half icon-base="fa fa-fw" icon-empty="fa-star-o" icon-half="fa-star-half-o" icon-full="fa-star checked"
+                    icon-hover-full="fa-star" ng-model="review.rating" readonly="true" class="list-inline"></input-stars>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <h4 class="text-center">{{'Bedside Manner' | translate}}</h4>
+                <div class="star-rating text-center">
+                  <input-stars max="5" allow-half icon-base="fa fa-fw" icon-empty="fa-star-o" icon-half="fa-star-half-o" icon-full="fa-star checked"
+                    icon-hover-full="fa-star" ng-model="review.bedside_rate" readonly="true" class="list-inline"></input-stars>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <h4 class="text-center">{{'Wait Time' | translate}}</h4>
+                <div class="star-rating text-center">
+                  <input-stars max="5" allow-half icon-base="fa fa-fw" icon-empty="fa-star-o" icon-half="fa-star-half-o" icon-full="fa-star checked"
+                    icon-hover-full="fa-star" ng-model="review.waittime_rate" readonly="true" class="list-inline"></input-stars>
+                </div>
+              </div>
+            </div>
+            <div class="row for-padd">
+              <div class="col-md-12">
+                <p class="doc-review">{{review.message}}</p>
+              </div>
+            </div>
+          </div>
+          <hr>
+        </div>
+
+        <div class="col-xs-12 text-center bot-20-mar">
+          <button title="{{'View More Reviews'| translate}}" class="btn btn-primary btn-green text-uppercase" ng-click="loadMore()"
+            ng-hide="lastpage==currentpage || !dataLength">{{'View More Reviews'| translate}} </button>
+        </div>
+        <div class="text-center text-danger navbar-btn" ng-if="loader">
+          <div class="col-sm-12 text-center">
+            <i class="fa fa-spinner fa-spin fa-3x"></i>
+          </div>
+        </div>
+        <div class="col-xs-12 text-center bot-20-mar">
+          <div class="text-center text-danger show-alert" ng-show="!dataLength">
+            <h4>{{'No reviews added yet'|translate}}</h4>
+          </div>
+        </div>
+
+      </div>
+  </div>
+</div>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/app/">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+     <link type="text/css" rel="stylesheet" href="styles/animate-loader.css">
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap.css">
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/angular-growl-v2/build/angular-growl.css" />
+    <link rel="stylesheet" href="../bower_components/angular-ui-switch/angular-ui-switch.css" />
+    <link rel="stylesheet" href="../bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css" />
+    <link rel="stylesheet" href="../bower_components/sweetalert/lib/sweet-alert.css" />
+    <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="../bower_components/chosen/chosen.css" />
+    <link rel="stylesheet" href="../bower_components/angular-ui-select/dist/select.css" />
+    <link rel="stylesheet" href="../bower_components/ngGallery/src/css/ngGallery.css" />
+    <link rel="stylesheet" href="../bower_components/morris.js/morris.css" />
+    <link rel="stylesheet" href="../bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css" />
+    <link rel="stylesheet" href="../bower_components/ng-tags-input/ng-tags-input.min.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-select/bootstrap-select.css" />
+    <link rel="stylesheet" href="../bower_components/Croppie/croppie.css" />
+    <link rel="stylesheet" href="../bower_components/textAngular/dist/textAngular.css" />
+    <link rel="stylesheet" href="../bower_components/angular-socialshare/angular-socialshare.css" />
+    <link rel="stylesheet" href="../bower_components/angular-loading-bar/build/loading-bar.css" />
+    <link rel="stylesheet" href="../bower_components/slick-carousel/slick/slick.css" />
+    <link rel="stylesheet" href="../bower_components/slick-carousel/slick/slick-theme.css" />
+    <link rel="stylesheet" href="../bower_components/angular-google-places-autocomplete/src/autocomplete.css" />
+    <link rel="stylesheet" href="../bower_components/angular-multiple-date-picker/dist/multipleDatePicker.css" />
+    <link rel="stylesheet" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="../bower_components/owl.carousel/dist/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="../bower_components/owl.carousel/dist/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../bower_components/flag-icon-css/css/flag-icon.min.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <script>
+        var theme = "";
+    </script>
+    <!-- google fonts -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,300,400,500,600,700,800" rel="stylesheet">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link href="favicon.ico" type="image/x-icon" rel="icon" />
+    <link href="favicon.ico" type="image/x-icon" rel="shortcut icon" />
+    <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png" />
+
+    <meta property="og:title" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:app_id" content="" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:url" content="" />
+    <meta property="fb:app_id" content="" />
+    <meta property="fb:admins" content="" />
+
+    <!-- Twiiter Open Graph start-->
+    <meta name="twitter:creator" content="">
+    <meta name="twitter:site" content="">
+    <meta name="twitter:card" content="">
+    <meta name="twitter:title" content="">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image:src" content="">
+    <!-- Twiiter Open Graph end-->
+
+    <!-- Twitter tags start -->
+    <meta name="twitter:app:id:iphone" content="">
+    <meta name="twitter:app:id:ipad" content="">
+    <meta name="twitter:app:url:iphone" content="">
+    <meta name="twitter:app:url:ipad" content="">
+    <meta name="twitter:app:id:googleplay" content="">
+    <meta name="twitter:app:url:googleplay" content="">
+    <!-- Twitter tags end -->
+
+    <!-- Facebook Applinks tags  start -->
+    <meta property="al:ios:app_store_id" content="" />
+    <meta property="al:ios:url" content="" />
+    <meta property="al:ipad:app_store_id" content="" />
+    <meta property="al:ipad:url" content="" />
+    <meta property="al:android:package" content="" />
+    <meta property="al:android:url" content="" />
+    <meta property="al:windows_phone:app_id" content="" />
+    <meta property="al:windows_phone:url" content="" />
+    <!-- Facebook Applinks tags  end -->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+</head>
+
+<body scroll ng-class="{scroll:boolChangeClass}" class="{{innerPage}} site-loading">
+    <div class="content">
+        <div class="content-inside">
+            <!--START: WRAPPER -->
+            <!-- Script load before show loader end -->
+            <div class="loader">
+                <img src="images/abs-loader.gif" alt="[]">
+            </div>
+
+            <div ng-controller="MainController">
+                <title ng-bind="pageTitle"></title>
+                <!-- Header Start -->
+                <div ng-include="'views/header.html'"></div>
+                <div growl limit-messages="1"></div>
+                <div class="content">
+                    <div ui-view autoscroll="true"></div>
+                </div>
+
+                <div id="scrollUpContent">
+                    <a ng-click="scrollMoveTop()" class="scrolltop">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+      <!--  -->
+    </div>
+    <!--END: WRAPPER -->
+    <!-- Footer Start -->
+    <div ng-include="'views/footer.html'"></div>
+    <div id="fb-root"></div>
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+        <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBvXPoR4YXSSib7aucIvrYHrmMknzMEaHM"></script>
+        <!-- build:js(.) scripts/vendor.js -->
+        <!-- bower:js -->
+        <script src="../bower_components/jquery/dist/jquery.js"></script>
+        <script src="../bower_components/angular/angular.js"></script>
+        <script src="../bower_components/mocha/mocha.js"></script>
+        <script src="../bower_components/angular-resource/angular-resource.js"></script>
+        <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="../bower_components/angular-animate/angular-animate.js"></script>
+        <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="../bower_components/angular-messages/angular-messages.js"></script>
+        <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="../bower_components/angular-jwt/dist/angular-jwt.js"></script>
+        <script src="../bower_components/satellizer/satellizer.js"></script>
+        <script src="../bower_components/angular-growl-v2/build/angular-growl.js"></script>
+        <script src="../bower_components/angular-translate/angular-translate.js"></script>
+        <script src="../bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+        <script src="../bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+        <script src="../bower_components/angular-translate-storage-local/angular-translate-storage-local.js"></script>
+        <script src="../bower_components/angular-translate-handler-log/angular-translate-handler-log.js"></script>
+        <script src="../bower_components/angular-slugify/angular-slugify.js"></script>
+        <script src="../bower_components/SHA-1/sha1.js"></script>
+        <script src="../bower_components/angulartics/src/angulartics.js"></script>
+        <script src="../bower_components/angulartics-facebook-pixel/dist/angulartics-facebook-pixel.min.js"></script>
+        <script src="../bower_components/angulartics-google-analytics/lib/angulartics-google-analytics.js"></script>
+        <script src="../bower_components/angular-recaptcha/release/angular-recaptcha.js"></script>
+        <script src="../bower_components/ng-file-upload-shim/angular-file-upload-shim.js"></script>
+        <script src="../bower_components/ng-file-upload/ng-file-upload.js"></script>
+        <script src="../bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
+        <script src="../bower_components/angular-strap/dist/angular-strap.js"></script>
+        <script src="../bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+        <script src="../bower_components/angular-ui-switch/angular-ui-switch.js"></script>
+        <script src="../bower_components/moment/moment.js"></script>
+        <script src="../bower_components/angular-moment/angular-moment.js"></script>
+        <script src="../bower_components/ng-tags-input/ng-tags-input.js"></script>
+        <script src="../bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
+        <script src="../bower_components/angular-read-more/dist/readmore.min.js"></script>
+        <script src="../bower_components/angular-paging/dist/paging.js"></script>
+        <script src="../bower_components/sweetalert/lib/sweet-alert.js"></script>
+        <script src="../bower_components/angular-sweetalert/SweetAlert.js"></script>
+        <script src="../bower_components/checklist-model/checklist-model.js"></script>
+        <script src="../bower_components/angular-input-stars/angular-input-stars.js"></script>
+        <script src="../bower_components/chosen/chosen.jquery.js"></script>
+        <script src="../bower_components/angular-chosen-localytics/dist/angular-chosen.js"></script>
+        <script src="../bower_components/angular-ui-select/dist/select.js"></script>
+        <script src="../bower_components/ngGallery/src/js/ngGallery.js"></script>
+        <script src="../bower_components/eve-raphael/eve.js"></script>
+        <script src="../bower_components/raphael/raphael.min.js"></script>
+        <script src="../bower_components/morris.js/morris.js"></script>
+        <script src="../bower_components/angular-morris-chart/src/angular-morris-chart.min.js"></script>
+        <script src="../bower_components/jquery-mousewheel/jquery.mousewheel.js"></script>
+        <script src="../bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js"></script>
+        <script src="../bower_components/ng-scrollbars/dist/scrollbars.min.js"></script>
+        <script src="../bower_components/bootstrap-select/bootstrap-select.js"></script>
+        <script src="../bower_components/angular-bootstrap-select/build/angular-bootstrap-select.js"></script>
+        <script src="../bower_components/Croppie/croppie.min.js"></script>
+        <script src="../bower_components/rangy/rangy-core.js"></script>
+        <script src="../bower_components/rangy/rangy-classapplier.js"></script>
+        <script src="../bower_components/rangy/rangy-highlighter.js"></script>
+        <script src="../bower_components/rangy/rangy-selectionsaverestore.js"></script>
+        <script src="../bower_components/rangy/rangy-serializer.js"></script>
+        <script src="../bower_components/rangy/rangy-textrange.js"></script>
+        <script src="../bower_components/textAngular/dist/textAngular.js"></script>
+        <script src='../bower_components/textAngular/dist/textAngular-rangy.min.js'></script>
+        <script src="../bower_components/textAngular/dist/textAngular-sanitize.js"></script>
+        <script src="../bower_components/textAngular/dist/textAngularSetup.js"></script>
+        <script src="../bower_components/angular-socialshare/angular-socialshare.js"></script>
+        <script src="../bower_components/ngmap/build/scripts/ng-map.js"></script>
+        <script src="../bower_components/angular-loading-bar/build/loading-bar.js"></script>
+        <script src="../bower_components/slick-carousel/slick/slick.min.js"></script>
+        <script src="../bower_components/angular-slick/dist/slick.js"></script>
+        <script src="../bower_components/angular-touch/angular-touch.js"></script>
+        <script src="../bower_components/angular-form-builder/dist/angular-form-builder.js"></script>
+        <script src="../bower_components/angular-form-builder/dist/angular-form-builder-components.js"></script>
+        <script src="../bower_components/angular-validator/dist/angular-validator.js"></script>
+        <script src="../bower_components/angular-validator/dist/angular-validator-rules.js"></script>
+        <script src="../bower_components/angular-google-places-autocomplete/src/autocomplete.js"></script>
+        <script src="../bower_components/angular-multiple-date-picker/dist/multipleDatePicker.js"></script>
+        <script src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script src="../bower_components/angular-daterangepicker/js/angular-daterangepicker.js"></script>
+        <script src="../bower_components/angular-md5/angular-md5.js"></script>
+        <script src="../bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
+        <script src="../bower_components/angular-deferred-bootstrap/angular-deferred-bootstrap.min.js"></script>
+        <script src="../bower_components/angular-http-auth/src/http-auth-interceptor.js" type="text/javascript"></script>
+        <!-- endbower -->
+        <!-- endbuild -->
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/services/site_deferred_bootstap.js"></script>
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/constants.js"></script>
+        <script src="scripts/controllers/home.js"></script>
+        <script src="scripts/controllers/page_view.js"></script>
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/controllers/register.js"></script>
+        <script src="scripts/controllers/forget_password.js"></script>
+        <script src="scripts/controllers/change_password.js"></script>
+        <script src="scripts/controllers/contact.js"></script>
+        <script src="scripts/controllers/user.js"></script>
+        <script src="scripts/controllers/users_logout.js"></script>
+        <script src="scripts/controllers/user_profile.js"></script>
+        <script src="scripts/controllers/user_notification.js"></script>
+        <script src="scripts/controllers/user_listing.js"></script>
+        <script src="scripts/controllers/user_activate.js"></script>
+        <script src="scripts/controllers/search.js"></script>
+        <script src="scripts/controllers/my_specialties.js"></script>
+        <script src="scripts/controllers/my_services.js"></script>
+        <script src="scripts/controllers/my_languages.js"></script>
+        <script src="scripts/controllers/my_insurances.js"></script>
+        <script src="scripts/controllers/my_calender.js"></script>
+        <script src="scripts/controllers/dashboard.js"></script>
+        <script src="scripts/controllers/booking.js"></script>
+        <script src="scripts/controllers/appointments.js"></script>
+        <script src="scripts/controllers/appointment_settings.js"></script>
+        <script src="scripts/controllers/appointment_modification.js"></script>
+        <script src="scripts/controllers/patient_appointments.js"></script>
+        <script src="scripts/controllers/doctor_appointments.js"></script>
+        <script src="scripts/controllers/family_friends.js"></script>
+        <script src="scripts/controllers/labtests.js"></script>
+        <script src="scripts/controllers/translations.js"></script>
+        <script src="scripts/controllers/permissions.js"></script>
+        <script src="scripts/controllers/sub_appointments.js"></script>
+        <script src="scripts/controllers/sub_doctors.js"></script>
+        <script src="scripts/controllers/sub_accounts.js"></script>
+        <script src="scripts/controllers/subaccount_doctor_dashboard.js"></script>
+        <script src="scripts/controllers/payment_accounts.js"></script>
+        <script src="scripts/controllers/transactions.js"></script>
+        <script src="scripts/controllers/money_transfer_account.js"></script>
+        <script src="scripts/controllers/user_verify.js"></script>
+        <script src="scripts/services/token_service.js"></script>
+        <script src="scripts/services/growl.js"></script>
+        <script src="scripts/services/home.js"></script>
+        <script src="scripts/services/contact.js"></script>
+        <script src="scripts/services/page.js"></script>
+        <script src="scripts/services/users.js"></script>
+        <script src="scripts/services/search.js"></script>
+        <script src="scripts/services/appointment.js"></script>
+        <script src="scripts/services/refresh_token.js"></script>
+        <script src="scripts/services/money_transfer_account.js"></script>
+        <script src="scripts/services/transaction.js"></script>
+        <script src="scripts/directives/dashboard_settings.js"></script>
+        <script src="scripts/directives/geo_location.js"></script>
+        <script src="scripts/directives/popular-specialties.js"></script>
+        <script src="scripts/directives/popular-clinics.js"></script>
+        <script src="scripts/directives/profile.js"></script>
+        <script src="scripts/directives/appointment.js"></script>
+        <script src="scripts/directives/multi_image_upload.js"></script>
+        <script src="scripts/directives/report_download.js"></script>
+        <script src="scripts/directives/appointment_booking.js"></script>
+        <!-- endbuild -->
+        <!-- build:js scripts/plugins.js -->
+        <!-- Clinic -->
+        <script src="scripts/plugins/Clinic/Clinic/app.js"></script>
+        <script src="scripts/plugins/Clinic/Clinic/controllers/branches.js"></script>
+        <script src="scripts/plugins/Clinic/Clinic/controllers/branches_add.js"></script>
+        <script src="scripts/plugins/Clinic/Clinic/controllers/branches_edit.js"></script>
+        <script src="scripts/plugins/Clinic/Clinic/controllers/branch_doctors.js"></script>
+        <script src="scripts/plugins/Clinic/Clinic/controllers/branch_doctors_add.js"></script>
+        <script src="scripts/plugins/Clinic/Clinic/controllers/branch_doctors_edit.js"></script>
+        <script src="scripts/plugins/Clinic/Clinic/controllers/branch_users.js"></script>
+        <script src="scripts/plugins/Clinic/Clinic/controllers/branch_users_add.js"></script>
+        <script src="scripts/plugins/Clinic/Clinic/controllers/branch_users_edit.js"></script>
+        <script src="scripts/plugins/Clinic/Clinic/controllers/clinic_profile.js"></script>
+        <script src="scripts/plugins/Clinic/Clinic/controllers/clinic_appointments.js"></script>
+        <script src="scripts/plugins/Clinic/Clinic/controllers/clinic_dashboard.js"></script>
+        <script src="scripts/plugins/Clinic/Clinic/controllers/clinic_dashboard.js"></script>
+        <script src="scripts/plugins/Clinic/Clinic/controllers/news_feeds.js"></script>
+        <script src="scripts/plugins/Clinic/Clinic/services/branch.js"></script>
+        <!-- DiagnosticCenter -->
+        <script src="scripts/plugins/Clinic/DiagnosticCenter/app.js"></script>
+        <script src="scripts/plugins/Clinic/DiagnosticCenter/controllers/branches.js"></script>
+        <script src="scripts/plugins/Clinic/DiagnosticCenter/controllers/branches_add.js"></script>
+        <script src="scripts/plugins/Clinic/DiagnosticCenter/controllers/branches_edit.js"></script>
+        <script src="scripts/plugins/Clinic/DiagnosticCenter/controllers/lab_tests.js"></script>
+        <script src="scripts/plugins/Clinic/DiagnosticCenter/controllers/lab_test_add.js"></script>
+        <script src="scripts/plugins/Clinic/DiagnosticCenter/controllers/lab_test_edit.js"></script>
+        <script src="scripts/plugins/Clinic/DiagnosticCenter/controllers/branch_users.js"></script>
+        <script src="scripts/plugins/Clinic/DiagnosticCenter/controllers/branch_users_add.js"></script>
+        <script src="scripts/plugins/Clinic/DiagnosticCenter/controllers/branch_users_edit.js"></script>
+        <script src="scripts/plugins/Clinic/DiagnosticCenter/controllers/diagnostic_profile.js"></script>
+        <script src="scripts/plugins/Clinic/DiagnosticCenter/controllers/diagnostic_appointments.js"></script>
+        <script src="scripts/plugins/Clinic/DiagnosticCenter/controllers/diagnostic_labtests.js"></script>
+        <script src="scripts/plugins/Clinic/DiagnosticCenter/controllers/diagnostic_payment.js"></script>
+        <script src="scripts/plugins/Clinic/DiagnosticCenter/controllers/choose_tests.js"></script>
+        <script src="scripts/plugins/Clinic/DiagnosticCenter/services/diagnostic_center.js"></script>
+        
+        <!-- Pharmacy -->
+        <script src="scripts/plugins/Clinic/Pharmacy/app.js"></script>
+        <script src="scripts/plugins/Clinic/Pharmacy/controllers/pharmacy.js"></script>
+        <script src="scripts/plugins/Clinic/Pharmacy/services/pharmacy.js"></script>
+        <!-- Prescription -->
+        <script src="scripts/plugins/Clinic/Prescription/app.js"></script>
+        <script src="scripts/plugins/Clinic/Prescription/controllers/prescription.js"></script>
+        <script src="scripts/plugins/Clinic/Prescription/services/prescription.js"></script>
+        <!-- Review -->
+        <script src="scripts/plugins/Clinic/Review/app.js"></script>
+        <script src="scripts/plugins/Clinic/Review/controllers/reviews.js"></script>
+        <script src="scripts/plugins/Clinic/Review/services/review.js"></script>
+        <script src="scripts/plugins/Clinic/Review/directives/review.js"></script>
+        <!-- QuestionAnswer -->
+        <script src="scripts/plugins/Clinic/QuestionAnswer/app.js"></script>
+        <script src="scripts/plugins/Clinic/QuestionAnswer/controllers/questions.js"></script>
+        <script src="scripts/plugins/Clinic/QuestionAnswer/controllers/answers.js"></script>
+        <script src="scripts/plugins/Clinic/QuestionAnswer/services/question_answer.js"></script>
+        <!-- MedicalHistory -->
+        <script src="scripts/plugins/Clinic/MedicalHistory/app.js"></script>
+        <script src="scripts/plugins/Clinic/MedicalHistory/controllers/medical_history.js"></script>
+        <script src="scripts/plugins/Clinic/MedicalHistory/services/medical_history.js"></script>
+        <!-- SMS -->
+        <script src="scripts/plugins/Clinic/SMS/app.js"></script>
+        <script src="scripts/plugins/Clinic/SMS/directives/sms_notifications.js"></script>
+        <script src="scripts/plugins/Clinic/SMS/services/sms_notifications.js"></script>
+        <!-- Contacts -->
+        <script src="scripts/plugins/Common/Contacts/app.js"></script>
+        <!-- Subscriptions -->
+        <script src="scripts/plugins/Common/Subscriptions/app.js"></script>
+        <script src="scripts/plugins/Common/Subscriptions/controllers/subscriptions.js"></script>
+        <script src="scripts/plugins/Common/Subscriptions/services/subscriptions.js"></script>
+        <script src="scripts/plugins/Common/Subscriptions/directives/subscriptions_plans.js"></script>
+        <!-- Currency -->
+        <script src="scripts/plugins/Common/Currency/app.js"></script>
+        <!-- Pages -->
+        <script src="scripts/plugins/Common/Pages/app.js"></script>
+        <!-- Payment -->
+        <script src="scripts/plugins/Common/Payment/app.js"></script>
+        <!-- PayPal -->
+        <script src="scripts/plugins/Common/PayPal/app.js"></script>
+        <!-- Translations -->
+        <script src="scripts/plugins/Common/Translations/app.js"></script>
+        <!-- UserEducations -->
+        <script src="scripts/plugins/Common/UserEducations/app.js"></script>
+        <script src="scripts/plugins/Common/UserEducations/services/user_education.js"></script>
+        <script src="scripts/plugins/Common/UserEducations/controllers/user_educations.js"></script>
+        <!-- UserFavorites -->
+        <script src="scripts/plugins/Common/UserFavorites/app.js"></script>
+        <script src="scripts/plugins/Common/UserFavorites/services/user_favorites.js"></script>
+        <script src="scripts/plugins/Common/UserFavorites/controllers/user_favorites.js"></script>
+        <!-- Wallet -->
+        <script src="scripts/plugins/Common/Wallet/app.js"></script>
+        <script src="scripts/plugins/Common/Wallet/controllers/wallet.js"></script>
+        <script src="scripts/plugins/Common/Wallet/services/wallet.js"></script>
+        <!-- Withdrawal -->
+        <script src="scripts/plugins/Common/Withdrawal/app.js"></script>
+        <script src="scripts/plugins/Common/Withdrawal/services/cash_withdrawals.js"></script>
+        <script src="scripts/plugins/Common/Withdrawal/controllers/cash_withdrawals.js"></script>
+        <!--Payment-->
+        <script src="scripts/plugins/Common/Payment/app.js"></script>
+        <script src="scripts/plugins/Common/Payment/controllers/appointment_payment.js"></script>
+        <script src="scripts/plugins/Common/Payment/services/gateway_service.js"></script>
+        <!-- RaveByFlutterwave -->
+        <script src="scripts/plugins/Common/RaveByFlutterwave/app.js"></script>
+        <script src="scripts/plugins/Common/RaveByFlutterwave/services/RaveByFlutterwave.js"></script>
+        <script src="scripts/plugins/Common/RaveByFlutterwave/directives/RaveByFlutterwave.js"></script>
+        <!-- Plugin (must be at last) -->
+        <script src="scripts/plugins.cache.js"></script>
+        <!-- endbuild -->
+    </body>
+</html>

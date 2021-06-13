@@ -1,0 +1,10 @@
+{
+	"name": "Subscriptions", 
+	"class": "fa fa-2x fa-file-text",
+	"description": "Subscriptions",
+	"dependencies": "Common",
+	"module_id": "",
+	"module_hash": "",
+	"display_order": "5",
+	"plugin_name":"Common/Subscriptions"
+}

@@ -1,0 +1,67 @@
+<!-- TABLE -->
+<div class="appointment-block pad-63">
+    <div class="container">
+        <div class="col-md-12 table-block">
+            <div class="appointment-header">
+                <h1 class="">{{'My Doctors'|translate}}</h1>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th width="500">{{'Branch'|translate}}</th>
+                            <th width="500">{{'Address'|translate}}</th>
+                            <th width="500">{{'Phone'|translate}}</th>
+                            <th width="500">{{'Country'|translate}}</th>
+                            <th width="500">{{'City'|translate}}</th>
+                            <th width="500">{{'Status'|translate}}</th>
+                            <th width="500">{{'Action'|translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="my_doctor in doctors" ng-show="dataLength && !loader">
+                            <td> <a href="branches/{{branch.id}}/{{branch.name | slugify}}" class="text-right">{{my_doctor.branch.name |translate}}</a></td>
+                            <td>{{my_doctor.branch.address |translate}}</td>
+                            <td>{{my_doctor.branch.phone_number |translate}}</td>
+                            <td>{{my_doctor.branch.country.name |translate}}</td>
+                            <td>{{my_doctor.branch.city.name |translate}}</td>
+                            <td>
+                                <a ng-click='changeStatus(my_doctor.branch.id, 0)' ng-if="my_doctor.branch.is_active == '1'" href="javascript:;" title="Active">
+                                    <i class="fa fa-thumbs-o-up text-success" aria-hidden="true"></i>
+                                </a>
+                                <a ng-click='changeStatus(my_doctor.branch.id, 1)' ng-if="my_doctor.branch.is_active != '1'" href="javascript:;" title="Inactive">
+                                    <i class="fa fa-thumbs-o-down text-danger" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                            <td class="action-btn">
+                                <a href="doctors/edit/{{my_doctor.user.id}}" title="{{'Edit'| translate}}" class="btn green"><i class="fa fa-pencil"></i>{{'Edit' | translate}}</a>
+                                <a ng-click='removeDoctor(my_doctor.user.id)' title="{{'Remove'| translate}}" class="btn danger"><i class="fa fa-times"></i>{{'Remove' | translate}}</a>
+                                <a href="branch/doctor/{{my_doctor.branch.id}}/{{my_doctor.user.id}}/{{my_doctor.appointment_settings.id}}/appoinmentsettings"
+                                    title="{{'Consultation Settings' | translate}}" class="btn blue"><i class="fa fa-calendar-check-o"></i>{{'Consultation Settings' | translate}}</a>
+                                <a href="branch/doctor/{{my_doctor.branch.id}}/{{my_doctor.user.id}}/{{my_doctor.appointment_settings.id}}/appoinmentmodification"
+                                    title="{{'Availability' | translate}}" class="btn text-success"><i class="fa fa-calendar-plus-o"></i>{{'Availability' | translate}}</a>
+                            </td>
+                        </tr>
+                        <tr ng-show="!dataLength && !loader">
+                            <td colspan="8">
+                                <p class="hor-space text-center text-danger">{{'No Records Found'|translate}}</p>
+                            </td>
+                        </tr>
+                        <tr ng-show="loader">
+                            <td colspan="8">
+                             <div ng-include="'views/loader.html'"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="paging clearfix text-center" ng-show="totalRecords > 0">
+                <uib-pagination previous-text="<" next-text=">" total-items="totalRecords" ng-model="currentPage" max-size="maxSize"
+                    class="pagination-sm" boundary-link-numbers="true" rotate="false" items-per-page="Perpage" ng-click="paginate_search('#userTop', currentPage)"></uib-pagination>
+            </div>
+        </div>
+    </div>
+    <!-- END:Table -->
+</div>
+</div>
+<!-- table -->

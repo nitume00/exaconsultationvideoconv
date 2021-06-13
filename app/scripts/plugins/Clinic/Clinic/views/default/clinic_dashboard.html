@@ -1,0 +1,267 @@
+<div class="clinicdashboard">
+    <div class="container">
+        <h3>{{'Book Appointment' | translate}}</h3>
+        <div class="row space-here">
+            <div class="col-md-3 state">
+                <h4>{{'Doctors' | translate}}</h4>
+                <ul class="list-unstyled scrolled" id="scroll">
+                    <li ng-repeat="doctor in doctors" ng-click="GetAppointmentSlots(doctor.appointment_settings.id,doctor.branch_id,doctor.user_id)" style="cursor:pointer">
+                        <div class="media" ng-class="(doctor.appointment_settings.id == active_id)? 'active' : 'activenone'">
+                            <a class="pull-left" href="#">
+                                <img ng-src="{{doctor.user.user_image}}" class="media-object img-circle" alt="{{'Dr.' | translate}} {{doctor.user.user_profile.first_name}} {{doctor.user.user_profile.last_name}}">
+                            </a>
+                            <div class="media-body">
+                                <h5 class="media-heading">{{'Dr.' | translate}} {{doctor.user.user_profile.first_name}} {{doctor.user.user_profile.last_name}}</h5>
+                                <p>{{doctor.user.primary_speciality.name}}</p>
+                                <p>{{doctor.branch.name}}</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--START:CALENDAR-->
+            <div class="col-md-9 pull-right">
+                <!-- carousel -->
+                <div class="appmt-details">
+                    <h2 class="text-center">{{ 'Book appointment' | translate }} </h2>
+                    <div class="search-responsive">
+                        <div class="search-result">
+                            <div class="week-hender">
+                                <ul class="search-week-ul list-inline text-center">
+                                    <li class="search-left-arrow pad-top-20">
+                                        <a href="javascript:void(0)" ng-click="prevWeek(appointmentlists.apt_set_id, $index)">
+                                            <i class="fa fa-caret-left fa-5x"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <ul class="list-unstyled">
+                                            <li>{{appointmentlists.days.today.day}}</li>
+                                            <li>{{appointmentlists.days.today.date}}</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <ul class="list-unstyled">
+                                            <li>{{appointmentlists.days.day2.day}}</li>
+                                            <li>{{appointmentlists.days.day2.date}}</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <ul class="list-unstyled">
+                                            <li>{{appointmentlists.days.day3.day}}</li>
+                                            <li>{{appointmentlists.days.day3.date}}</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <ul class="list-unstyled">
+                                            <li>{{appointmentlists.days.day4.day}}</li>
+                                            <li>{{appointmentlists.days.day4.date}}</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <ul class="list-unstyled">
+                                            <li>{{appointmentlists.days.day5.day}}</li>
+                                            <li>{{appointmentlists.days.day5.date}}</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <ul class="list-unstyled">
+                                            <li>{{appointmentlists.days.day6.day}}</li>
+                                            <li>{{appointmentlists.days.day6.date}}</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <ul class="list-unstyled">
+                                            <li>{{appointmentlists.days.day7.day}}</li>
+                                            <li>{{appointmentlists.days.day7.date}}</li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="search-right-arrow pad-top-20">
+                                        <a href="javascript:void(0)" ng-click="nextWeek(appointmentlists.apt_set_id, $index)">
+                                            <i class="fa fa-caret-right fa-5x"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div ng-include="'views/loader.html'"></div>
+                            <div class="doctor-list clearfix" ng-if="!loader">
+                                <div class="doctor-booking-details">
+                                    <ul class="search-week-ul list-inline text-center" ng-if="appointmentlists.timeslots.length != 0">
+                                        <li>
+                                            <ul class="list-unstyled" ui-if="!!appointmentlists.timeslots[appointmentlists.days.today.day].length">
+                                                <li ng-repeat="todaySlot in appointmentlists.timeslots[appointmentlists.days.today.day] track by $index">
+                                                    <span ng-show="todaySlot != '--'">
+                                                        <span ng-if="$index < appointmentlists.appointmentLoadMore">
+                                                            <a href="#" class="btn" ng-click="$root.appointmentNow(appointmentlists.branch_id,appointmentlists.doctor_user_id,appointmentlists.days.today.date, todaySlot)">{{todaySlot}}</a>
+                                                        </span>
+                                                        <span ng-if="$index >= appointmentlists.appointmentLoadMore" class="hide showmore">
+                                                            <a href="#" class="btn" ng-click="$root.appointmentNow(appointmentlists.branch_id,appointmentlists.doctor_user_id,appointmentlists.days.today.date, todaySlot)">{{todaySlot}}</a>
+                                                        </span>
+                                                    </span>
+                                                    <span ng-show="todaySlot == '--'">
+                                                        <span ng-if="$index < appointmentlists.appointmentLoadMore">
+                                                            <a href="javascript:void(0)" class="btn">{{todaySlot}}</a>
+                                                        </span>
+                                                        <span ng-if="$index >= appointmentlists.appointmentLoadMore" class="hide showmore">
+                                                            <a href="javascript:void(0)" class="btn">{{todaySlot}}</a>
+                                                        </span>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li>
+                                            <ul class="list-unstyled" ui-if="!!appointmentlists.timeslots[appointmentlists.days.day2.day].length">
+                                                <li ng-repeat="Day2 in appointmentlists.timeslots[days.day2.day] track by $index">
+                                                    <span ng-show="Day2 != '--'">
+                                                        <span ng-if="$index < appointmentlists.appointmentLoadMore">
+                                                            <a href="#" class="btn" ng-click="$root.appointmentNow(appointmentlists.branch_id,appointmentlists.doctor_user_id,appointmentlists.days.day2.date, Day2)">{{Day2}}</a>
+                                                        </span>
+                                                        <span ng-if="$index >= appointmentlists.appointmentLoadMore" class="hide showmore">
+                                                            <a href="#" class="btn" ng-click="$root.appointmentNow(appointmentlists.branch_id,appointmentlists.doctor_user_id,appointmentlists.days.day2.date, Day2)">{{Day2}}</a>
+                                                        </span>
+                                                    </span>
+                                                    <span ng-show="Day2 == '--'">
+                                                        <span ng-if="$index < appointmentlists.appointmentLoadMore">
+                                                            <a href="javascript:void(0)" class="btn">{{Day2}}</a>
+                                                        </span>
+                                                        <span ng-if="$index >= appointmentlists.appointmentLoadMore" class="hide showmore">
+                                                            <a href="javascript:void(0)" class="btn">{{Day2}}</a>
+                                                        </span>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul class="list-unstyled" ui-if="!!appointmentlists.timeslots[appointmentlists.days.day3.day].length">
+                                                <li ng-repeat="Day3 in appointmentlists.timeslots[appointmentlists.days.day3.day] track by $index">
+                                                    <span ng-show="Day3 != '--'">
+                                                        <span ng-if="$index < appointmentlists.appointmentLoadMore">
+                                                            <a href="#" class="btn" ng-click="$root.appointmentNow(appointmentlists.branch_id,appointmentlists.doctor_user_id,appointmentlists.days.day3.date, Day3)">{{Day3}}</a>
+                                                        </span>
+                                                        <span ng-if="$index >= appointmentlists.appointmentLoadMore" class="hide showmore">
+                                                            <a href="#" class="btn" ng-click="$root.appointmentNow(appointmentlists.branch_id,appointmentlists.doctor_user_id,appointmentlists.days.day3.date, Day3)">{{Day3}}</a>
+                                                        </span>
+                                                    </span>
+                                                    <span ng-show="Day3 == '--'">
+                                                        <span ng-if="$index < appointmentlists.appointmentLoadMore">
+                                                            <a href="javascript:void(0)" class="btn">{{Day3}}</a>
+                                                        </span>
+                                                        <span ng-if="$index >= appointmentlists.appointmentLoadMore" class="hide showmore">
+                                                            <a href="javascript:void(0)" class="btn">{{Day3}}</a>
+                                                        </span>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul class="list-unstyled" ui-if="!!appointmentlists.timeslots[appointmentlists.days.day4.day].length">
+                                                <li ng-repeat="Day4 in appointmentlists.timeslots[appointmentlists.days.day4.day] track by $index">
+                                                    <span ng-show="Day4 != '--'">
+                                                        <span ng-if="$index < appointmentlists.appointmentLoadMore">
+                                                            <a href="#" class="btn" ng-click="$root.appointmentNow(appointmentlists.branch_id,appointmentlists.doctor_user_id,appointmentlists.days.day4.date, Day4)">{{Day4}}</a>
+                                                        </span>
+                                                        <span ng-if="$index >= appointmentlists.appointmentLoadMore" class="hide showmore">
+                                                            <a href="#" class="btn" ng-click="$root.appointmentNow(appointmentlists.branch_id,appointmentlists.doctor_user_id,appointmentlists.days.day4.date, Day4)">{{Day4}}</a>
+                                                        </span>
+                                                    </span>
+                                                    <span ng-show="Day4 == '--'">
+                                                        <span ng-if="$index < appointmentlists.appointmentLoadMore">
+                                                            <a href="javascript:void(0)" class="btn">{{Day4}}</a>
+                                                        </span>
+                                                        <span ng-if="$index >= appointmentlists.appointmentLoadMore" class="hide showmore">
+                                                            <a href="javascript:void(0)" class="btn">{{Day4}}</a>
+                                                        </span>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul class="list-unstyled" ui-if="!!appointmentlists.timeslots[appointmentlists.days.day5.day].length">
+                                                <li ng-repeat="Day5 in appointmentlists.timeslots[appointmentlists.days.day5.day] track by $index">
+                                                    <span ng-show="Day5 != '--'">
+                                                        <span ng-if="$index < appointmentlists.appointmentLoadMore">
+                                                            <a href="#" class="btn" ng-click="$root.appointmentNow(appointmentlists.branch_id,appointmentlists.doctor_user_id,appointmentlists.days.day5.date, Day5)">{{Day5}}</a>
+                                                        </span>
+                                                        <span ng-if="$index >= appointmentlists.appointmentLoadMore" class="hide showmore">
+                                                            <a href="#" class="btn" ng-click="$root.appointmentNow(appointmentlists.branch_id,appointmentlists.doctor_user_id,appointmentlists.days.day5.date, Day5)">{{Day5}}</a>
+                                                        </span>
+                                                    </span>
+                                                    <span ng-show="Day5 == '--'">
+                                                        <span ng-if="$index < appointmentlists.appointmentLoadMore">
+                                                            <a href="javascript:void(0)" class="btn">{{Day5}}</a>
+                                                        </span>
+                                                        <span ng-if="$index >= appointmentlists.appointmentLoadMore" class="hide showmore">
+                                                            <a href="javascript:void(0)" class="btn">{{Day5}}</a>
+                                                        </span>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul class="list-unstyled" ui-if="!!appointmentlists.timeslots[appointmentlists.days.day6.day].length">
+                                                <li ng-repeat="Day6 in appointmentlists.timeslots[appointmentlists.days.day6.day] track by $index">
+                                                    <span ng-show="Day6 != '--'">
+                                                        <span ng-if="$index < appointmentlists.appointmentLoadMore">
+                                                            <a href="#" class="btn" ng-click="$root.appointmentNow(appointmentlists.branch_id,appointmentlists.doctor_user_id,appointmentlists.days.day6.date, Day6)">{{Day6}}</a>
+                                                        </span>
+                                                        <span ng-if="$index >= appointmentlists.appointmentLoadMore" class="hide showmore">
+                                                            <a href="#" class="btn" ng-click="$root.appointmentNow(appointmentlists.branch_id,appointmentlists.doctor_user_id,appointmentlists.days.day6.date, Day6)">{{Day6}}</a>
+                                                        </span>
+                                                    </span>
+                                                    <span ng-show="Day6 == '--'">
+                                                        <span ng-if="$index < appointmentlists.appointmentLoadMore">
+                                                            <a href="javascript:void(0)" class="btn">{{Day6}}</a>
+                                                        </span>
+                                                        <span ng-if="$index >= appointmentlists.appointmentLoadMore" class="hide showmore">
+                                                            <a href="javascript:void(0)" class="btn">{{Day6}}</a>
+                                                        </span>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul class="list-unstyled" ui-if="!!appointmentlists.timeslots[appointmentlists.days.day7.day].length">
+                                                <li ng-repeat="Day7 in appointmentlists.timeslots[appointmentlists.days.day7.day] track by $index">
+                                                    <span ng-show="Day7 != '--'">
+                                                        <span ng-if="$index < appointmentlists.appointmentLoadMore">
+                                                            <a href="#" class="btn" ng-click="$root.appointmentNow(appointmentlists.branch_id,appointmentlists.doctor_user_id,appointmentlists.days.day7.date, Day7)">{{Day7}}</a>
+                                                        </span>
+                                                        <span ng-if="$index >= appointmentlists.appointmentLoadMore" class="hide showmore">
+                                                            <a href="#" class="btn" ng-click="$root.appointmentNow(appointmentlists.branch_id,appointmentlists.doctor_user_id,appointmentlists.days.day7.date, Day7)">{{Day7}}</a>
+                                                        </span>
+                                                    </span>
+                                                    <span ng-show="Day7 == '--'">
+                                                        <span ng-if="$index < appointmentlists.appointmentLoadMore">
+                                                            <a href="javascript:void(0)" class="btn">{{Day7}}</a>
+                                                        </span>
+                                                        <span ng-if="$index >= appointmentlists.appointmentLoadMore" class="hide showmore">
+                                                            <a href="javascript:void(0)" class="btn">{{Day7}}</a>
+                                                        </span>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <div class="showlessmore" ng-if="appointmentlists.timeslots[appointmentlists.days.today.day].length > appointmentlists.appointmentLoadMore || appointmentlists.timeslots[appointmentlists.days.day1.day].length > appointmentlists.appointmentLoadMore || appointmentlists.timeslots[appointmentlists.days.day2.day].length > appointmentlists.appointmentLoadMore || appointmentlists.timeslots[appointmentlists.days.day3.day].length > appointmentlists.appointmentLoadMore || appointmentlists.timeslots[appointmentlists.days.day4.day].length > appointmentlists.appointmentLoadMore || appointmentlists.timeslots[appointmentlists.days.day5.day].length > appointmentlists.appointmentLoadMore || appointmentlists.timeslots[appointmentlists.days.day6.day].length > appointmentlists.appointmentLoadMore || appointmentlists.timeslots[appointmentlists.days.day7.day].length > appointmentLoadMore">
+                                        <span class="showmore_btn show">
+                                            <button ng-click="loadMore()" class="btn btn-info">{{'More' | translate}}&nbsp;
+                                                <i class="fa fa-angle-down"></i>
+                                            </button>
+                                        </span>
+                                        <span class="showless_btn hide">
+                                            <button ng-click="showLess()" class="btn btn-info">{{'Less' | translate}}&nbsp;
+                                                <i class="fa fa-angle-up"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--:CALENDAR-->
+    </div>
+</div>

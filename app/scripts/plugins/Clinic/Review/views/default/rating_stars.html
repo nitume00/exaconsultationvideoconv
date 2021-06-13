@@ -1,0 +1,37 @@
+<form role="form" class="form-horizontal clearfix review-form" name="reviewForm" method="post" ng-class="col-xs-8" ng-submit="postReviewRating(data.$valid); reviewForm.$setPristine()">
+    <div class="form-body">
+        <div class="form-group">
+            <div class="col-xs-12 clearfix">
+                <label>{{'Bedside Manner'| translate}}
+                    <span>:</span>
+                </label>
+                <input-stars max="5" icon-base="fa fa-fw" icon-empty="fa-star" icon-hover="hover" icon-full="fa-star-o" ng-model="data.bedside_rate"
+                    class="list-inline checked"></input-stars>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-12 clearfix">
+                <label>{{'Wait Time'| translate}}
+                    <span>:</span>
+                </label>
+                <input-stars max="5" icon-base="fa fa-fw" icon-empty="fa-star" icon-hover="hover" icon-full="fa-star-o" ng-model="data.waittime_rate"
+                    class="list-inline"></input-stars>
+            </div>
+        </div>
+        <input type="hidden" value="{{userId}}" name="doctor_user_id" ng-model="data.doctor_user_id">
+        <div class="form-group" ng-class="{ 'has-error' : reviewForm.message.$invalid && reviewForm.message.$dirty }">
+            <div class="col-xs-12">
+                <textarea rows="3" class="form-control" id="message" name="message" ng-model="data.message" placeholder="{{'Review'| translate}}"
+                    required autofocus></textarea>
+                <div class="help-block text-danger" ng-if="reviewForm.message.$dirty" ng-messages="reviewForm.message.$error">
+                    <div ng-message="required">{{'Please Enter Your Review'| translate}}.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-footer education-btn">
+        <button class="btn btn-animate btn-primary" type="submit">{{'Add Review'| translate }}</button>
+        <!--<a href="#/doctor/{{$root.auth.username}}" class="btn btn-danger btn-animate">{{'Cancel'| translate }}</a>-->
+    </div>
+</form>

@@ -1,0 +1,587 @@
+<section class="clearfix pad-63">
+    <div class="container">
+        <div class="page-head">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 text-left">
+                    <h1>Dr. {{user.username}}{{' \'s Consultation Settings'| translate}}</h1>
+                </div>
+                <div class="col-md-6 col-sm-6 text-right">
+                    <h1>{{'Branch:' | translate}}{{branch.name |translate}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="form-content calendar-settings">
+            <form name="settingForm" ng-submit="settingUpdate(settingForm.$valid)" novalidate>
+                <div class="form-body row">
+                    <div class="clearfix">
+                        <div class="col-md-5 date-section m-t-0">
+                            <div class="form-group">
+                                <label class="checkbox-field">
+                                    <input class="hide" type="checkbox" ng-model="settingValue.is_today_first_day" ng-checked="settingValue.is_today_first_day === 1"
+                                        name="is_today_first_day" />
+                                    <span class="custom-check"></span>
+                                    <span>{{'Always show today as fist day on my calendar '| translate}}</span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-7 select-opt">
+                                <select class="form-control" name="calendar_slot_id" ng-model="settingValue.calendar_slot_id">
+                                    <option value="">{{'Show Calendar Slots of'| translate}}</option>
+                                    <option ng-repeat="calendar_slot in calendarSlots" value="{{calendar_slot.id}}" ng-selected="settingValue.calendar_slot_id == calendar_slot.id">{{calendar_slot.name|translate}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group col-md-12">
+                                <label class="checkbox-field">
+                                    <input class="hide" type="checkbox" name="is_two_session" ng-model="settingValue.is_two_session" ng-checked="settingValue.is_two_session === 1"
+                                    />
+                                    <span class="custom-check"></span>
+                                    <span>{{'Practice operates in two sessions'| translate}}</span>
+                                </label>
+                            </div>
+                            <div class="col-md-12 session-block">
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-4">{{'Practice Open'| translate}}</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" size="8" ng-model="settingValue.practice_open" name="practice_open" bs-timepicker data-time-type="time"
+                                            data-default-time="false" data-time-format="HH:mm" data-length="1" data-minute-step="5"
+                                            data-arrow-behavior="picker" type="text">
+                                        <!-- <span class="error" ng-show="(settingForm.$submitted || settingForm.practice_open.$touched) && (settingForm.practice_open.$pristine || settingForm.practice_open.$invalid)">{{'Enter Valid Time'| translate }} </span> -->
+                                    </div>
+                                </div>
+                                <div ng-show="settingValue.is_two_session">
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Lunch At'| translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.lunch_at" name="lunch_at" bs-timepicker data-time-type="time"
+                                                data-default-time="false" data-time-format="HH:mm" data-length="1" data-minute-step="5"
+                                                data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.lunch_at.$touched) && (settingForm.lunch_at.$pristine || settingForm.lunch_at.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="open_lunch">{{open_lunch}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Resume At'| translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.resume_at" name="resume_at" bs-timepicker data-time-type="time"
+                                                data-default-time="false" data-time-format="HH:mm" data-length="1" data-minute-step="5"
+                                                data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.resume_at.$touched) && (settingForm.resume_at.$pristine || settingForm.resume_at.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="lunch_resume">{{lunch_resume}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-4">{{'Practice Close' | translate}}</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" size="8" ng-model="settingValue.practice_close" name="practice_close" bs-timepicker data-time-type="time"
+                                            data-default-time="false" data-time-format="HH:mm" data-length="1" data-minute-step="5"
+                                            data-arrow-behavior="picker" type="text">
+                                        <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.practice_close.$touched) && (settingForm.practice_close.$pristine || settingForm.practice_close.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                        <span class="error" ng-show="resume_close">{{resume_close}}</span>
+                                        <span class="error" ng-show="open_close">{{open_close}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Common Setting Completed Here -->
+
+                    <div ng-show="settingValue.type">
+                        <div class="clearfix">
+                            <div class="col-md-5 date-section">
+                                <div class="form-group col-md-4">
+                                    <label class="checkbox-field">
+                                        <input class="hide" type="checkbox" name="is_sunday_open" ng-checked="settingValue.is_sunday_open === 1" ng-model="settingValue.is_sunday_open"
+                                        />
+                                        <span class="custom-check"></span>
+                                        <span>{{'Sunday' | translate}}</span>
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label class="checkbox-field">
+                                        <input class="hide" type="checkbox" name="sunday_two_session" ng-checked="settingValue.sunday_two_session === 1" ng-model="settingValue.sunday_two_session"
+                                        />
+                                        <span class="custom-check"></span>
+                                        <span>{{'Practice operates in two sessions for' | translate}}{{' Sunday' | translate}}</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div ng-show="settingValue.is_sunday_open" class="col-md-7">
+                                <div class="col-md-12 session-block">
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Practice Open' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.sunday_practice_open" name="sunday_practice_open" bs-timepicker
+                                                data-time-type="time" data-default-time="false" data-time-format="HH:mm" data-length="1"
+                                                data-minute-step="5" data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.sunday_practice_open.$touched) && (settingForm.sunday_practice_open.$pristine || settingForm.sunday_practice_open.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Practice Close' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.sunday_practice_close" name="sunday_practice_close" bs-timepicker
+                                                data-time-type="time" data-default-time="false" data-time-format="HH:mm" data-length="1"
+                                                data-minute-step="5" data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.sunday_practice_close.$touched) && (settingForm.sunday_practice_close.$pristine || settingForm.sunday_practice_close.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="sunday_resume_close">{{sunday_resume_close}}</span>
+                                            <span class="error" ng-show="sunday_open_close">{{sunday_open_close}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div ng-show="settingValue.sunday_two_session" class="col-md-12 session-block">
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Lunch At' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.sunday_lunch_at" name="sunday_lunch_at" bs-timepicker data-time-type="time"
+                                                data-default-time="false" data-time-format="HH:mm" data-length="1" data-minute-step="5"
+                                                data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.sunday_lunch_at.$touched) && (settingForm.sunday_lunch_at.$pristine || settingForm.sunday_lunch_at.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="sunday_open_lunch">{{sunday_open_lunch}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Resume At' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.sunday_resume_at" name="sunday_resume_at" bs-timepicker data-time-type="time"
+                                                data-default-time="false" data-time-format="HH:mm" data-length="1" data-minute-step="5"
+                                                data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.sunday_resume_at.$touched) && (settingForm.sunday_resume_at.$pristine || settingForm.sunday_resume_at.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="sunday_lunch_resume">{{sunday_lunch_resume}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="col-md-5 date-section">
+                                <div class="form-group col-md-4">
+                                    <label class="checkbox-field">
+                                        <input class="hide" type="checkbox" name="is_monday_open" ng-checked="settingValue.is_monday_open === 1" ng-model="settingValue.is_monday_open"
+                                        />
+                                        <span class="custom-check"></span>
+                                        <span>{{'Monday' | translate}}</span>
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label class="checkbox-field">
+                                        <input class="hide" type="checkbox" name="monday_two_session" ng-checked="settingValue.monday_two_session === 1" ng-model="settingValue.monday_two_session"
+                                        />
+                                        <span class="custom-check"></span>
+                                        <span>{{'Practice operates in two sessions for' | translate}} {{'Monday' | translate}}</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div ng-show="settingValue.is_monday_open" class="col-md-7">
+                                <div class="col-md-12 session-block">
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Practice Open' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.monday_practice_open" name="monday_practice_open" bs-timepicker
+                                                data-time-type="time" data-default-time="false" data-time-format="HH:mm" data-length="1"
+                                                data-minute-step="5" data-arrow-behavior="picker" type="text">
+                                            <!-- <span class="error" ng-show="(settingForm.$submitted || settingForm.monday_practice_open.$touched) && (settingForm.monday_practice_open.$pristine || settingForm.monday_practice_open.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Practice Close' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.monday_practice_close" name="monday_practice_close" bs-timepicker
+                                                data-time-type="time" data-default-time="false" data-time-format="HH:mm" data-length="1"
+                                                data-minute-step="5" data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.monday_practice_close.$touched) && (settingForm.monday_practice_close.$pristine || settingForm.monday_practice_close.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="monday_resume_close">{{monday_resume_close}}</span>
+                                            <span class="error" ng-show="monday_open_close">{{monday_open_close}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-show="settingValue.monday_two_session" class="col-md-12 session-block">
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Lunch At' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.monday_lunch_at" name="monday_lunch_at" bs-timepicker data-time-type="time"
+                                                data-default-time="false" data-time-format="HH:mm" data-length="1" data-minute-step="5"
+                                                data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.monday_lunch_at.$touched) && (settingForm.monday_lunch_at.$pristine || settingForm.monday_lunch_at.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="monday_open_lunch">{{monday_open_lunch}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Resume At' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.monday_resume_at" name="monday_resume_at" bs-timepicker data-time-type="time"
+                                                data-default-time="false" data-time-format="HH:mm" data-length="1" data-minute-step="5"
+                                                data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.monday_resume_at.$touched) && (settingForm.monday_resume_at.$pristine || settingForm.monday_resume_at.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="monday_lunch_resume">{{monday_lunch_resume}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="col-md-5 date-section">
+                                <div class="form-group col-md-4">
+                                    <label class="checkbox-field">
+                                        <input class="hide" type="checkbox" name="is_tuesday_open" ng-checked="settingValue.is_tuesday_open === 1" ng-model="settingValue.is_tuesday_open"
+                                        />
+                                        <span class="custom-check"></span>
+                                        <span>{{'Tuesday' | translate}}</span>
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label class="checkbox-field">
+                                        <input class="hide" type="checkbox" name="tuesday_two_session" ng-checked="settingValue.tuesday_two_session === 1" ng-model="settingValue.tuesday_two_session"
+                                        />
+                                        <span class="custom-check"></span>
+                                        <span>{{'Practice operates in two sessions for' | translate}} {{'Tuesday' | translate}}
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div ng-show="settingValue.is_tuesday_open" class="col-md-7">
+                                <div class="col-md-12 session-block">
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Practice Open' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.tuesday_practice_open" name="tuesday_practice_open" bs-timepicker
+                                                data-time-type="time" data-default-time="false" data-time-format="HH:mm" data-length="1"
+                                                data-minute-step="5" data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.tuesday_practice_open.$touched) && (settingForm.tuesday_practice_open.$pristine || settingForm.tuesday_practice_open.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Practice Close' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.tuesday_practice_close" name="practice_close" bs-timepicker data-time-type="time"
+                                                data-default-time="false" data-time-format="HH:mm" data-length="1" data-minute-step="5"
+                                                data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.tuesday_practice_close.$touched) && (settingForm.tuesday_practice_close.$pristine || settingForm.tuesday_practice_close.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="tuesday_resume_close">{{tuesday_resume_close}}</span>
+                                            <span class="error" ng-show="tuesday_open_close">{{tuesday_open_close}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-show="settingValue.tuesday_two_session" class="col-md-12 session-block">
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Lunch At' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.tuesday_lunch_at" name="tuesday_lunch_at" bs-timepicker data-time-type="time"
+                                                data-default-time="false" data-time-format="HH:mm" data-length="1" data-minute-step="5"
+                                                data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.tuesday_lunch_at.$touched) && (settingForm.tuesday_lunch_at.$pristine || settingForm.tuesday_lunch_at.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="tuesday_open_lunch">{{tuesday_open_lunch}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Resume At' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.tuesday_resume_at" name="tuesday_resume_at" bs-timepicker data-time-type="time"
+                                                data-default-time="false" data-time-format="HH:mm" data-length="1" data-minute-step="5"
+                                                data-arrow-behavior="picker" type="text">
+                                            <!-- <span class="error" ng-show="(settingForm.$submitted || settingForm.tuesday_resume_at.$touched) && (settingForm.tuesday_resume_at.$pristine || settingForm.tuesday_resume_at.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="tuesday_lunch_resume">{{tuesday_lunch_resume}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="col-md-5 date-section">
+                                <div class="form-group col-md-4">
+                                    <label class="checkbox-field">
+                                        <input class="hide" type="checkbox" name="is_wednesday_open" ng-checked="settingValue.is_wednesday_open === 1" ng-model="settingValue.is_wednesday_open"
+                                        />
+                                        <span class="custom-check"></span>
+                                        <span>{{'Wednesday' | translate}}</span>
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label class="checkbox-field">
+                                        <input class="hide" type="checkbox" name="wednesday_two_session" ng-checked="settingValue.wednesday_two_session === 1" ng-model="settingValue.wednesday_two_session"
+                                        />
+                                        <span class="custom-check"></span>
+                                        <span>{{'Practice operates in two sessions for' | translate}} {{'Wednesday' | translate}}
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div ng-show="settingValue.is_wednesday_open" class="col-md-7">
+                                <div class="col-md-12 session-block">
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Practice Open' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.wednesday_practice_open" name="wednesday_practice_open" bs-timepicker
+                                                data-time-type="time" data-default-time="false" data-time-format="HH:mm" data-length="1"
+                                                data-minute-step="5" data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.wednesday_practice_open.$touched) && (settingForm.wednesday_practice_open.$pristine || settingForm.wednesday_practice_open.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Practice Close' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.wednesday_practice_close" name="wednesday_practice_close" bs-timepicker
+                                                data-time-type="time" data-default-time="false" data-time-format="HH:mm" data-length="1"
+                                                data-minute-step="5" data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.wednesday_practice_close.$touched) && (settingForm.wednesday_practice_close.$pristine || settingForm.wednesday_practice_close.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="wednesday_resume_close">{{wednesday_resume_close}}</span>
+                                            <span class="error" ng-show="wednesday_open_close">{{wednesday_open_close}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-show="settingValue.wednesday_two_session" class="col-md-12 session-block">
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Lunch At' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.wednesday_lunch_at" name="wednesday_lunch_at" bs-timepicker data-time-type="time"
+                                                data-default-time="false" data-time-format="HH:mm" data-length="1" data-minute-step="5"
+                                                data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.wednesday_lunch_at.$touched) && (settingForm.wednesday_lunch_at.$pristine || settingForm.wednesday_lunch_at.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="wednesday_open_lunch">{{wednesday_open_lunch}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Resume At' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.wednesday_resume_at" name="wednesday_resume_at" bs-timepicker
+                                                data-time-type="time" data-default-time="false" data-time-format="HH:mm" data-length="1"
+                                                data-minute-step="5" data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.wednesday_resume_at.$touched) && (settingForm.wednesday_resume_at.$pristine || settingForm.wednesday_resume_at.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="wednesday_lunch_resume">{{wednesday_lunch_resume}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="col-md-5 date-section">
+                                <div class="form-group col-md-4">
+                                    <label class="checkbox-field">
+                                        <input class="hide" type="checkbox" name="is_thursday_open" ng-checked="settingValue.is_thursday_open === 1" ng-model="settingValue.is_thursday_open"
+                                        />
+                                        <span class="custom-check"></span>
+                                        <span>{{'Thursday' | translate}}</span>
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label class="checkbox-field">
+                                        <input class="hide" type="checkbox" name="thursday_two_session" ng-checked="settingValue.thursday_two_session === 1" ng-model="settingValue.thursday_two_session"
+                                        />
+                                        <span class="custom-check"></span>
+                                        <span>{{'Practice operates in two sessions for' | translate}} {{'Thursday' | translate}}
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div ng-show="settingValue.is_thursday_open" class="col-md-7">
+                                <div class="col-md-12 session-block">
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Practice Open' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.thursday_practice_open" name="thursday_practice_open" bs-timepicker
+                                                data-time-type="time" data-default-time="false" data-time-format="HH:mm" data-length="1"
+                                                data-minute-step="5" data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.thursday_practice_open.$touched) && (settingForm.thursday_practice_open.$pristine || settingForm.thursday_practice_open.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Practice Close' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.thursday_practice_close" name="thursday_practice_close" bs-timepicker
+                                                data-time-type="time" data-default-time="false" data-time-format="HH:mm" data-length="1"
+                                                data-minute-step="5" data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.thursday_practice_close.$touched) && (settingForm.thursday_practice_close.$pristine || settingForm.thursday_practice_close.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="thursday_resume_close">{{thursday_resume_close}}</span>
+                                            <span class="error" ng-show="thursday_open_close">{{thursday_open_close}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div ng-show="settingValue.thursday_two_session" class="col-md-12 session-block">
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Lunch At' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.thursday_lunch_at" name="thursday_lunch_at" bs-timepicker data-time-type="time"
+                                                data-default-time="false" data-time-format="HH:mm" data-length="1" data-minute-step="5"
+                                                data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.thursday_lunch_at.$touched) && (settingForm.thursday_lunch_at.$pristine || settingForm.thursday_lunch_at.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="thursday_open_lunch">{{thursday_open_lunch}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Resume At' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.thursday_resume_at" name="thursday_resume_at" bs-timepicker data-time-type="time"
+                                                data-default-time="false" data-time-format="HH:mm" data-length="1" data-minute-step="5"
+                                                data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.thursday_resume_at.$touched) && (settingForm.thursday_resume_at.$pristine || settingForm.thursday_resume_at.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="thursday_lunch_resume">{{thursday_lunch_resume}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="col-md-5 date-section">
+                                <div class="form-group col-md-4">
+                                    <label class="checkbox-field">
+                                        <input class="hide" type="checkbox" name="is_friday_open" ng-checked="settingValue.is_friday_open === 1" ng-model="settingValue.is_friday_open"
+                                        />
+                                        <span class="custom-check"></span>
+                                        <span>{{'Friday' | translate}}</span>
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label class="checkbox-field">
+                                        <input class="hide" type="checkbox" name="friday_two_session" ng-checked="settingValue.friday_two_session === 1" ng-model="settingValue.friday_two_session"
+                                        />
+                                        <span class="custom-check"></span>
+                                        <span>{{'Practice operates in two sessions for' | translate}} {{'Friday' | translate}}
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div ng-show="settingValue.is_friday_open" class="col-md-7">
+                                <div class="col-md-12 session-block">
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Practice Open' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.friday_practice_open" name="friday_practice_open" bs-timepicker
+                                                data-time-type="time" data-default-time="false" data-time-format="HH:mm" data-length="1"
+                                                data-minute-step="5" data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.friday_practice_open.$touched) && (settingForm.friday_practice_open.$pristine || settingForm.friday_practice_open.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Practice Close' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.friday_practice_close" name="friday_practice_close" bs-timepicker
+                                                data-time-type="time" data-default-time="false" data-time-format="HH:mm" data-length="1"
+                                                data-minute-step="5" data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.friday_practice_close.$touched) && (settingForm.friday_practice_close.$pristine || settingForm.friday_practice_close.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="friday_resume_close">{{friday_resume_close}}</span>
+                                            <span class="error" ng-show="friday_open_close">{{friday_open_close}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-show="settingValue.friday_two_session" class="col-md-12 session-block">
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Lunch At' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.friday_lunch_at" name="friday_lunch_at" bs-timepicker data-time-type="time"
+                                                data-default-time="false" data-time-format="HH:mm" data-length="1" data-minute-step="5"
+                                                data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.friday_lunch_at.$touched) && (settingForm.friday_lunch_at.$pristine || settingForm.friday_lunch_at.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="friday_open_lunch">{{friday_open_lunch}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Resume At' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.friday_resume_at" name="friday_resume_at" bs-timepicker data-time-type="time"
+                                                data-default-time="false" data-time-format="HH:mm" data-length="1" data-minute-step="5"
+                                                data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.friday_resume_at.$touched) && (settingForm.friday_resume_at.$pristine || settingForm.friday_resume_at.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="friday_lunch_resume">{{friday_lunch_resume}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="col-md-5 date-section">
+                                <div class="form-group col-md-4">
+                                    <label class="checkbox-field">
+                                        <input class="hide" type="checkbox" name="is_saturday_open" ng-checked="settingValue.is_saturday_open === 1" ng-model="settingValue.is_saturday_open"
+                                        />
+                                        <span class="custom-check"></span>
+                                        <span>{{'Saturday' | translate}}</span>
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label class="checkbox-field">
+                                        <input class="hide" type="checkbox" name="saturday_two_session" ng-checked="settingValue.saturday_two_session === 1" ng-model="settingValue.saturday_two_session"
+                                        />
+                                        <span class="custom-check"></span>
+                                        <span>{{'Practice operates in two sessions for' | translate}} {{'Saturday' | translate}}
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div ng-show="settingValue.is_saturday_open" class="col-md-7">
+                                <div class="col-md-12 session-block">
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Practice Open' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.saturday_practice_open" name="saturday_practice_open" bs-timepicker
+                                                data-time-type="time" data-default-time="false" data-time-format="HH:mm" data-length="1"
+                                                data-minute-step="5" data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.saturday_practice_open.$touched) && (settingForm.saturday_practice_open.$pristine || settingForm.saturday_practice_open.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Practice Close' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.saturday_practice_close" name="saturday_practice_close" bs-timepicker
+                                                data-time-type="time" data-default-time="false" data-time-format="HH:mm" data-length="1"
+                                                data-minute-step="5" data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.saturday_practice_close.$touched) && (settingForm.saturday_practice_close.$pristine || settingForm.saturday_practice_close.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="saturday_resume_close">{{saturday_resume_close}}</span>
+                                            <span class="error" ng-show="saturday_open_close">{{saturday_open_close}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-show="settingValue.saturday_two_session" class="col-md-12 session-block">
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Lunch At' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.saturday_lunch_at" name="saturday_lunch_at" bs-timepicker data-time-type="time"
+                                                data-default-time="false" data-time-format="HH:mm" data-length="1" data-minute-step="5"
+                                                data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.saturday_lunch_at.$touched) && (settingForm.saturday_lunch_at.$pristine || settingForm.saturday_lunch_at.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="saturday_open_lunch">{{saturday_open_lunch}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4">{{'Resume At' | translate}}</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" size="8" ng-model="settingValue.saturday_resume_at" name="saturday_resume_at" bs-timepicker data-time-type="time"
+                                                data-default-time="false" data-time-format="HH:mm" data-length="1" data-minute-step="5"
+                                                data-arrow-behavior="picker" type="text">
+                                            <!--<span class="error" ng-show="(settingForm.$submitted || settingForm.saturday_resume_at.$touched) && (settingForm.saturday_resume_at.$pristine || settingForm.saturday_resume_at.$invalid)">{{'Enter Valid Time'| translate }} </span>-->
+                                            <span class="error" ng-show="saturday_lunch_resume">{{saturday_lunch_resume}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <label class="checkbox-field">
+                                <input class="hide" type="checkbox" ng-model="settingValue.type" ng-checked="settingValue.type === 1" name="type" />
+                                <span class="custom-check"></span>
+                                <span>{{'Visiting hours are NOT same for all working days in a week' | translate}}</span>
+                            </label>
+                        </div>
+                        <div class="form-group switch-option">
+                            <label>{{'Active' | translate}} / {{'In Active' | translate}}</label>
+                            <div>
+                                <switch id="enabled" name="enabled" ng-model="settingValue.is_active" on="Yes" off="No" class="green"></switch>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 setting-btn">
+                        <button class="btn btn-green btn-animate btn-block show" type="submit" ng-disabled="is_disable">{{'Update'| translate }}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

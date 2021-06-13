@@ -1,0 +1,10 @@
+{
+	"name": "SMS", 
+	"class": "fa fa-2x fa-file-text",
+	"description": "SMS",
+	"dependencies": "Hospital",
+	"module_id": "",
+	"module_hash": "",
+	"display_order": "7",
+	"plugin_name":"Hospital/SMS"
+}

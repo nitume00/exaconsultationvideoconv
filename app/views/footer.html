@@ -1,0 +1,153 @@
+<!--footer section start-->
+<footer id="js-footer-hide-section">
+    <div class="footer">
+        <div class="container">
+            <!-- bottom Banner start-->
+            <div banner position="bottomBanner" ng-class="{'bottomBanner':search_footer}">
+                <!-- bottom Banner end-->
+                <div class="row footer-menu">
+                    <div class="col-md-2 col-sm-3">
+                        <ul class="list-unstyled">
+                            <h5 class=" text-uppercase">{{'Company Info' | translate}}</h5>
+                            <li>
+                                <a href="pages/2/about-us" title="{{'About Us' | translate}}">{{'About Us' | translate}}</a>
+                            </li>
+                            <li>
+                                <a href="pages/12/customer-stories" title="{{'Customer Stories' |translate}}">{{'Customer Stories' |translate}}</a>
+                            </li>
+                            <li>
+                                <a href="pages/7/faq" title="{{'Faq' | translate}}">{{'Faq' | translate}}</a>
+                            </li>
+                            <li>
+                                <a href="pages/4/press" title="{{'Press' | translate}}">{{'Press' | translate}}</a>
+                            </li>
+                            <li>
+                                <a href="pages/13/careers" title="{{'Careers' | translate}}">{{'Careers' | translate}}</a>
+                            </li>
+                            <li>
+                                <a href="pages/8/blog" title="{{'Blog' | translate}}">{{'Blog' | translate}}</a>
+                            </li>
+                            <li>
+                                <a href="pages/6/help" title="{{'Help' | translate}}">{{'Help' | translate}}</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-3 col-sm-4">
+                        <ul class="list-unstyled">
+                            <h5 class="text-uppercase" title="{{'Legal' | translate}}">{{'Legal' | translate}}</h5>
+                            <li>
+                                <a href="pages/10/terms-and-conditions" title="{{'Terms and Conditions' | translate}}">{{'Terms and Conditions' | translate}}</a>
+                            </li>
+                            <li>
+                                <a href="pages/3/privacy-policy" title="{{'Privacy Policy' | translate}}">{{'Privacy Policy' | translate}}</a>
+                            </li>
+                            <li>
+                                <a href="pages/16/service-providing-policy" title="{{'Service Providing Policy' | translate}}">{{'Service Providing Policy' | translate}}</a>
+                            </li>
+                            <li>
+                                <a href="pages/14/refund-policy" title="{{'Refund/Return Policy' | translate}}">{{'Refund/Return Policy' | translate}}</a>
+                            </li>
+                            <li>
+                                <a href="pages/15/cancellation-policy" title="{{'Cancellation Policy' | translate}}">{{'Cancellation Policy' | translate}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <ul class="list-unstyled">
+                            <h5 class="text-uppercase">{{'Browser Specialisations' | translate}}</h5>
+                            <li>
+                                <a href="search?search_field=doctor&city_id={{city_id}}" title="{{'Find a Doctor' | translate}}">{{'Find a Doctor' | translate}}</a>
+                            </li>
+                            <li>
+                                <a href="search?search_field=clinic&city_id={{city_id}}" title="{{'Find a Hospital/Clinic' | translate}}">{{'Find a Hospital/Clinic' | translate}}</a>
+                            </li>
+                            <li>
+                                <a href="search?search_field=doctor&city_id={{city_id}}" title="{{'Find a Specialty' | translate}}">{{'Find a Specialty' | translate}}</a>
+                            </li>
+                            <li>
+                                <a href="search?search_field=doctor&city_id={{city_id}}" title="{{'Online Appoinment' | translate}}">{{'Online Appoinment' | translate}}</a>
+                            </li>
+                            <li>
+                                <a href="search?search_field=doctor&city_id={{city_id}}" title="{{'Corporate Wellness' | translate}}">{{'Corporate Wellness' | translate}}</a>
+                            </li>
+                            <li>
+                                <a href="search?search_field=doctor&city_id={{city_id}}" title="{{'Health Packages' | translate}}">{{'Health Packages' | translate}}</a>
+                            </li>
+                            <li>
+                                <a href="search?search_field=doctor&city_id={{city_id}}" title="{{'Special Hospital/Clinics' | translate}}">{{'Special Hospital/Clinics' | translate}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 col-sm-5">
+                        <ul class="list-inline">
+                            <h5 class="connect text-uppercase">{{'Connect With Us' | translate}}</h5>
+                            <li>
+                                <a href="{{settings.FOLLOW_FACEBOOK_URL}}" target="_blank" ng-if="settings.SITE_FACEBOOK_URL">
+                                    <span class="fa-stack fa-2x">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-facebook fa-stack-1x fa-inverse" title="facebook"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a title="Twitter" ng-if="settings.FOLLOW_TWITTER_URL" href="{{settings.SITE_TWITTER_URL}}" target="_blank">
+                                    <span class="fa-stack fa-2x">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse" title="twitter"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a title="Google+" ng-if="settings.FOLLOW_GOOGLE_PLUS_URL" href="{{settings.SITE_GOOGLEPLUS_URL}}" target="_blank">
+                                    <span class="fa-stack fa-2x">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-google-plus fa-stack-1x fa-inverse" title="google-plus"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a title="LinkedIn" ng-if="settings.FOLLOW_LINKEDIN_URL" href="{{settings.SITE_LINKEDIN_URL}}" target="_blank">
+                                    <span class="fa-stack fa-2x">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse" title="linkedin"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a title="YouTube" ng-if="settings.FOLLOW_YOUTUBE_URL" href="{{settings.SITE_YOUTUBE_URL}}" target="_blank">
+                                    <span class="fa-stack fa-2x">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-youtube fa-stack-1x fa-inverse" title="YouTube"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="row">
+                            <div class="col-md-9 col-sm-10">
+                                <h5 class="text-uppercase">{{'Get The App' | translate}}</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <a href="https://apps.apple.com/us/app/kwikmed/id1478495985?ls=1" target="_blank">
+                                            <img src="/app/images/applestore.png" class="img-responsive" alt="Image" title="{{'Download on the Apple Store' | translate}}">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="https://play.google.com/store/apps/details?id=com.app.quickmed" target="_blank">
+                                            <img src="/app/images/playstore.png" class="img-responsive" alt="Image" title="{{'ANDROID APP ON the Google Play' | translate}}">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <p class="text-center">{{'Copyright'| translate}} <i class="fa fa-copyright" aria-hidden="true"></i> {{settings.SITE_NAME}} . {{cdate | date:'yyyy'}}
+                
+                <a
+                href="/" title="{{$root.settings['settings.SITE_NAME']}}" class="">{{settings.SITE_NAME}}</a>, {{'All rights reserved.'|translate}}</p>
+            </div>
+        </div>
+    </div>
+</footer>

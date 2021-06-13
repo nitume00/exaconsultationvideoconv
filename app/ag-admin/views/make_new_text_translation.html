@@ -1,0 +1,36 @@
+<div class="row">
+	<div id="translate-language">
+		<div class="row">
+			<form class="col-md-12 form-horizontal" name="addTextFrm" ng-submit="addNewText(addTextFrm.$valid)" novalidate>
+				<div class="panel panel-default ">
+					<div class="clearfix panel-heading">
+						<h3>{{'Add New Language Variable'|translate}}</h3>
+					</div>
+					<div class="panel-body">
+						<div class="form-field form-group has-feedback clearfix">
+							<label class="col-sm-3 text-right">{{'Original'|translate}}:</label>
+							<div class="col-sm-4 no-padleft">
+								<textarea type="text" name="originalValue" rows="6" cols="40" col class="form-control" ng-model="original_value" value="original" required></textarea>
+								<span class="error" ng-show="(addTextFrm.$submitted || addTextFrm.originalValue.$touched) && (addTextFrm.originalValue.$pristine || addTextFrm.originalValue.$invalid) && (addTextFrm.originalValue.$error.required)">{{'Required'| translate }}</span>
+							</div>
+						</div>
+						<div class="form-field form-group has-feedback clearfix">
+							<h4>Arabic</h4>
+							<label class="col-sm-3 text-right">{{'Lang Text'|translate}}: </label>
+							<div class="col-sm-4 no-padleft">
+								<textarea type="text" name="arabicValue" rows="6" cols="40" class="form-control" ng-model="arabic_value" value="arabic" required></textarea>
+								<span class="error" ng-show="(addTextFrm.$submitted || addTextFrm.arabicValue.$touched) && (addTextFrm.arabicValue.$pristine || addTextFrm.arabicValue.$invalid) && (addTextFrm.arabicValue.$error.required)">{{'Required'| translate }}</span>
+							</div>
+						</div>
+						<div class="form-field form-group has-feedback clearfix">
+							<div class="col-sm-offset-3 col-sm-2 no-padleft">
+								<button type="submit" class="btn btn-success btn-block">
+									<span class="glyphicon glyphicon-ok"></span> {{'Add'|translate}}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

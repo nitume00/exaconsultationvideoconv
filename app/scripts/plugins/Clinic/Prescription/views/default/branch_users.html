@@ -1,0 +1,54 @@
+<section class="clearfix pad-63 appmt-table">
+	<div class="container">
+        <div class="page-head">    
+            <h1>{{branch.name}}:{{'My Branch Users'|translate}}
+                <span class="pull-right search-table-field">
+                    <a href="branches" class="btn btn-green btn-animate"><i class="fa fa-list fa-fw"></i>{{'My Branches'|translate}}</a>
+                    <a href="users/add/{{branch_id}}" class="btn btn-green btn-animate"><i class="fa fa-plus-circle fa-fw"></i>{{'Add User'|translate}}</a>
+                </span>
+            </h1>
+        </div>
+
+		
+        <div class="table-block">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>{{'Sub Account'|translate}}</th> 
+                            <th>{{'Permission'|translate}}</th>
+                            <th>{{'Action'|translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>                        
+                        <tr ng-repeat="branchUser in users" ng-show="dataLength">
+                            <td>{{branchUser.user.user_profile.first_name |translate}} {{branchUser.user.user_profile.last_name |translate}}</td>
+                            <td>{{branchUser.permissions |translate}}</td>
+                                                   
+                            <td class="action-btn">
+                                <a href="users/edit/{{branchUser.id}}" title="{{'Edit'| translate}}" class="btn green"><i class="fa fa-pencil"></i>{{'Edit' | translate}}</a>
+                                <a ng-click='removeUser(branchUser.id)' title="{{'Remove'| translate}}" class="btn danger"><i class="fa fa-times"></i>{{'Remove' | translate}}</a>
+                            </td>
+                        </tr>
+                        <tr ng-show="!dataLength">
+                            <td colspan="8">
+                                <p class="hor-space text-center text-danger">{{'No Records Found'|translate}}</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="paging clearfix text-center" ng-show="users._metadata.total > 0">
+                <pagination
+                    total-items="users.meta.total"
+                    ng-model="currentPage"
+                    ng-change="paginate()"
+                    max-size="users._metadata.maxSize"
+                    boundary-links="true"
+                    num-pages="users.meta.total"
+                    items-per-page="users.meta.per_page"
+                ></pagination>
+            </div>
+        </div>
+	</div>
+</section>

@@ -1,0 +1,70 @@
+<div class="user-view clearfix pad-63" ng-controller="UserController">
+    <div class="container-fluid">
+        <div class="page-head clearfix">
+            <h1 class="pull-left">{{'Pharmacy Info'| translate}}</h1>
+            <a href="users/edit_profile" title="{{'Edit Profile' | translate}}" class="btn btn-green pull-right">{{'Edit Profile' | translate}}</a>
+            
+            <a ng-click="navigate_dashbooard()" title="{{'Pharmacy Panel' | translate}}" class="btn btn-green pull-right mar-right-5">{{'Pharmacy Panel' | translate}}</a>
+        </div>
+        <div class="row pad-20">
+            <div class="col-md-12">
+                <div class="panel panel-primary post-project">
+                    <div class="user-map-location">
+                        <div class="map-block">
+                            <div map-lazy-load="https://maps.google.com/maps/api/js">
+                                <ng-map zoom="9" center="{{mapCenter}}" class="map-height">
+                                    <marker id='myloc' position="{{pharmacyMapPositions.lat}}, {{pharmacyMapPositions.lon}}" on-click="map.showInfoWindow('user-location')"
+                                        icon="images/hospital-marker.png"></marker>
+                                    <info-window id="user-location" visible-on-marker="myloc">
+                                        <div ng-non-bindable>
+                                            <div id="bodyContent">
+                                                <h4>{{pharmacyMapPositions.name}}</h4>
+                                                <p>{{pharmacyMapPositions.address1}}</p>
+                                            </div>
+                                        </div>
+                                    </info-window>
+                                </ng-map>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row pad-20">
+                            <div class="col-md-4 text-center">
+                                <div class="pull-left">
+                                    <img ng-src="{{profile_image}}" title="{{user.username}}" class="img-responsive img-circle center-block" alt="{{user.username}}" height="150" width="150">
+
+                                    <h3 class="mar-bot-5">
+                                        {{user.user_profile.display_name}} 
+                                    </h3>
+                                    <p>{{user.user_profile.first_name}} {{user.user_profile.last_name}}</p>
+                                    <p class="text-16">  
+                                        {{pharmacyMapPositions.address1}}
+                                    </p>
+                                    <p class="text-16">  
+                                        +{{user.mobile_code}} {{user.mobile}} (Personal)
+                                    </p>
+                                    <p class="text-16">  
+                                            {{user.user_profile.primary_telephone_number}} (Tel. Number) 
+                                    </p>
+                                    <p class="text-16">  
+                                        {{user.user_profile.primary_fax_number}} (Fax Number)
+                                    </p>
+                                    <p class="text-16">  
+                                        <a href="{{user.user_profile.website}}" target="_blank">{{user.user_profile.website}}</a>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
+                                    <div class="field-data" hm-read-more hm-text="{{user.user_profile.about_me}}" hm-limit="1500" hm-more-text="More" hm-less-text="Less"
+                                    hm-dots-class="dots" hm-link-class="links">
+                                    </div>
+                            </div>
+                        </div>        
+                    </div>
+                </div>
+            </div>
+        </div> 
+        
+    </div>
+ </div>

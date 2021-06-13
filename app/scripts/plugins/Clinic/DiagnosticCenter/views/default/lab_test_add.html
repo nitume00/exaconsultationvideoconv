@@ -1,0 +1,73 @@
+<section class="branch-details">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>{{'Add Lab Test'|translate}}</h2>
+          <form class="branch-form" role="form" name="latTestFrm" novalidate>
+              <div class="panel panel-primary post-project">
+                  <div class="panel-heading text-uppercase">{{'Lab Test Info'| translate}}</div>
+                    <div class="panel-body">
+                      <div class="clearfix">
+                           
+                          <div class="form-group">
+                              <label>{{'Lab Tests'|translate}}
+                                <span class="req-color">*</span>
+                              </label>
+                              <div class="frm-select job-cat-select">
+                                <select class="form-control" id="inputCategory" name="lab_test_id" ng-model="data.lab_test_id" class="form-control" required="true">
+                                  <option value="{{labtest.id}}">{{'Please Select'|translate}}</option>
+                                  <option value="{{labtest.id}}" ng-repeat="labtest in labtests">{{labtest.name |translate}}</option>
+                                </select>
+                                <span class="error" ng-show="(latTestFrm.$submitted || latTestFrm.lab_test_id.$touched) && (latTestFrm.lab_test_id.$error.required)">{{'Required'| translate }} </span>
+                              </div>
+                            </div>
+                  
+                            <div class="form-group">
+                              <label>{{'Price'|translate}}</label>
+                              <div class="input-group">
+                                <span class="input-group-addon" ng-if="$root.settings.CURRENCY_SYMBOL !== ''">{{settings.CURRENCY_SYMBOL}}</span>
+                                <span class="input-group-addon" ng-if="$root.settings.CURRENCY_SYMBOL === ''">{{settings.SITE_CURRENCY_CODE}}</span>
+                                <input type="number" ng-model="data.price" name="price" class="form-control" id="price" min="1" number-only required="true"
+                                  autofocus>
+                              </div>
+                              <span class="error" ng-show="(latTestFrm.$submitted || latTestFrm.price.$touched) && (latTestFrm.price.$pristine || latTestFrm.price.$invalid) && (latTestFrm.price.$error.required)">{{'Required'|translate}}</span>
+                              <span class="error" ng-show="latTestFrm.price.$error.min && !latTestFrm.price.$error.required">{{'Enter the valid amount'|translate}}</span>
+                            </div>
+                  
+                            <div class="form-group">
+                              <div class="panel">
+                                <div class="panel-body">
+                                  <div class="row">
+                                    <div class="col-sm-5">
+                                      <label class="fileinput-button btn-block">
+                                        <input type="file" ngf-select ng-model="file" name="file" ng-change="upload(file)" class="underline text-red">
+                                        <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                                        {{'Upload File'|translate}}
+                                      </label>
+                                      <div>
+                                        <span class="grayc help-block">{{'Allowed extensions: jpg,jpeg,gif,png'|translate}}</span>
+                                        <span class="error bot-space" ng-if="error_message && error_message !== ''">
+                                          {{error_message}}</span>
+                                      </div>
+                                      <span class="error" ng-show="(latTestFrm.$submitted || latTestFrm.file.$touched) && (latTestFrm.file.$pristine || latTestFrm.file.$invalid) && (latTestFrm.file.$error.required)">
+                                        {{'Required'| translate }} </span>
+                                      <img ngf-src="file" alt="[Image: Group]" title="Group" class="img-responsive center-block media-object">
+                                      <div ng-bind="file.name" class="navbar-btn"></div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <button title="Submit" type="submit" ng-click="addLabTest(latTestFrm.$valid, data)" class="btn btn-green btn-animate  ng-binding"
+                                ng-show="!save_btn">{{'Submit'|translate}}</button>
+                              <a href="diagnostic/branch/lab_tests/{{branch_id}}" title="Cancel" class="btn btn-danger btn-animate">{{'Cancel'|translate}}</a>
+                            </div>
+                      </div>    
+                    </div>
+                </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>

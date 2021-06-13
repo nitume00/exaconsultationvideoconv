@@ -1,0 +1,62 @@
+<section class="clearfix pad-63 appmt-table appointment-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" role="navigation">
+                <div class="appointment-header clearfix">
+                    <h1 class="pull-left">{{'Questions'|translate}}</h1>
+                    <span class="pull-right search-table-field">
+                            <a href="answers" class="btn btn-green btn-animate">
+                                <i class="fa fa-list fa-fw"></i>{{'Answers'|translate}}</a>
+                            <a href="doctors/answers" class="btn btn-green btn-success">
+                                <i class="fa fa-list fa-fw"></i>{{'Questions'|translate}}</a>
+                        </span>
+                </div>
+            </div>
+
+            <div class="col-md-12 table-block">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>{{'S.No'| translate}}</th>
+                                <th width="450">{{'Questions'| translate}}</th>
+                                <th>{{'Specialty'| translate}}</th>
+                                <th>{{'Action'| translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="questionR in answers">
+                                <td> {{$index+1}} </td>
+                                <td class="ques-field">
+                                    <a href="questions/{{questionR.id}}/{{questionR.slug}}">{{questionR.question}}</a>
+                                    <span class="badge bg-primary">{{questionR.answer_count}}</span>
+                                </td>
+                                <td> {{questionR.specialty.name}} </td>
+                                <td class="action-btn">
+                                    <a href="answers/add/{{questionR.id}}" class="btn green"> <i class="fa fa-plus"></i> {{'Add Answer'| translate}}</a>
+                                    <a href="questions/{{questionR.id}}/{{questionR.question | slugify}}" class="btn blue"> <i class="fa fa-desktop"></i>{{'View Answer'| translate}}</a>
+                                </td>
+                            </tr>
+                            <tr ng-show="!dataLength && !loader">
+                                <td colspan="5">
+                                    <div class="alert alert-danger">
+                                        <h4 class="ng-binding text-center">{{'No Questions Found' |translate}}</h4>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-show="loader">
+                                <td colspan="5">
+                                   <div ng-include="'views/loader.html'"></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="paging clearfix text-center" ng-show="totalRecords > 0">
+                <uib-pagination previous-text="<" next-text=">" total-items="totalRecords" ng-model="currentPage" max-size="maxSize" class="pagination-sm"
+                    boundary-link-numbers="true" rotate="false" items-per-page="Perpage" ng-click="paginate_search('#userTop', currentPage)"></uib-pagination>
+            </div>
+        </div>
+    </div>
+</section>

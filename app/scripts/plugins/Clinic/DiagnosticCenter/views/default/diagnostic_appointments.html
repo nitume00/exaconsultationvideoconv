@@ -1,0 +1,191 @@
+<!-- TABLE -->
+<div class="appointment-block pad-63" ng-controller="DiagnosticAppointmentsController">
+    <div class="container">
+        <div class="dasbboard-list">
+            <div class="col-md-3 col-md-offset-1 for-border">
+                <ul class="list-inline">
+                    <li>
+                        <img src="images/default-user.png" alt="[default-user]">
+                    </li>
+                    <li>
+                        <h4>{{'Total Count' | translate}}</h4>
+                    </li>
+                    <li>
+                        <h3>585</h3>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3 for-border">
+                <ul class="list-inline">
+                    <li>
+                        <img src="images/app-mail.png" alt="[app-mail]">
+                    </li>
+                    <li>
+                        <h4>{{'SMS Sent' | translate}}</h4>
+                    </li>
+                    <li>
+                        <h3>1,283</h3>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <ul class="list-inline">
+                    <li>
+                        <img src="images/app-wallet.png" alt="[app-wallet]">
+                    </li>
+                    <li>
+                        <div class="month-list">
+                            <h4>{{'As on' | translate}}</h4>
+                            <h4> {{'November' | translate}}</h4>
+                        </div>
+                    </li>
+                    <li>
+                        <h3>$150</h3>
+                    </li>
+                    <li>
+                        <span class="label label-success">{{'Pay Now' | translate}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" role="navigation">
+                <div class="appointment-header clearfix">
+                    <h1 class="pull-left">{{'Diagnostic Dashboard'|translate}}</h1>
+                    <div class="pull-right">
+                        <select ng-model="branch_id" ng-click="getAppointmentList(branch_id)" class="form-control" name="doctor">
+                            <option value="all">{{'All Branches'|translate}}</option>
+                            <option ng-repeat="branch in branches" value="{{branch.id}}" ng-selected="branch_id === branch.id"> {{branch.name|translate}}</option>
+                        </select>
+                    </div>
+                    <div class="appointment-list pull-left">
+                        <div class="pull-left all-appointment">
+                            <ul class="list-inline">
+                                <li ng-class="{active: paramsType === 'all'}">
+                                    <a href="appointments/all"> {{'All'| translate}} </a>
+                                </li>
+                                <li ng-class="{active: paramsType === 'today'}">
+                                    <a href="appointments/today"> {{'Today'| translate}} </a>
+                                </li>
+                                <li ng-class="{active: paramsType === 'week'}">
+                                    <a href="appointments/week"> {{'Week'| translate}} </a>
+                                </li>
+                                <li ng-class="{active:paramsType === 'month'}">
+                                    <a href="appointments/month"> {{'Month'| translate}} </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <ul class="nav navbar-nav" ng-if="$root.auth.role_id == model.ConstUserType.User">
+                            <li>
+                                <a href="appointments/pending-approval"> {{'Pending Approval'| translate}} </a>
+                            </li>
+                            <li>
+                                <a href="appointments/approved"> {{'Approved'| translate}} </a>
+                            </li>
+                            <li>
+                                <a href="appointments/closed"> {{'Closed'| translate}} </a>
+                            </li>
+                            <li>
+                                <a href="appointments/cancelled"> {{'Cancelled'| translate}} </a>
+                            </li>
+                            <li>
+                                <a href="appointments/rejected"> {{'Rejected'| translate}} </a>
+                            </li>
+                            <li>
+                                <a href="appointments/expired"> {{'Expired'| translate}} </a>
+                            </li>
+                            <li>
+                                <a href="appointments/present"> {{'Consulting'| translate}} </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 table-block">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="set-size">{{'Appointment.No' | translate}}</div>
+                                </th>
+                                <th>{{'Branch' | translate}}</th>
+                                <th>{{'Doctor Name' | translate}}</th>
+                                <th>{{'Patient Name'| translate}}</th>
+                                <th>
+                                    <span>{{'Appointment' | translate}}</span>
+                                    <span>{{'Date & Time' | translate}}</span>
+                                </th>
+                                <th>{{'Appointment Via'| translate}}</th>
+                                <th ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Common/Payment') > -1">{{'Paid Via Online?' | translate}}</th>
+                                <th>{{'Booked by others' | translate}}</th>
+                                <th>{{'Status' | translate}}</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="appointment in appointments">
+                                <td class="text-capitalize">
+                                    <a href="appointment/{{appointment.id}}/{{appointment.appointment_token}}" class="btn btn-green">{{appointment.appointment_token}}</a>
+                                </td>
+                                <td class="text-capitalize">{{appointment.branch.name}}</td>
+                                <td class="text-capitalize">{{'Dr' | translate}}. {{appointment.provider_user.user_profile.first_name}} {{appointment.provider_user.user_profile.last_name}}
+                                </td>
+                                <td class="text-capitalize">
+                                    {{appointment.user.user_profile.first_name}} {{appointment.user.user_profile.last_name}}
+                                </td>
+                                <td>{{appointment.appointment_date | dateFormat}}
+                                    <span>
+                                        <time>{{appointment.appointment_time}}</time>
+                                    </span>
+                                </td>
+                                <td class="text-capitalize">{{appointment.appointment_type.name}}</td>
+                                <td ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Common/Payment') > -1" class="text-capitalize">
+                                    <span ng-if="appointment.is_paid_via_online == 1">{{'Yes' | translate}}</span>
+                                    <span ng-if="appointment.is_paid_via_online == 0">{{'No' | translate}}</span>
+                                </td>
+                                <td class="text-capitalize">
+                                    <span ng-if="appointment.book_by_user">
+                                        {{appointment.book_by_user.user_profile.first_name}} {{appointment.book_by_user.user_profile.last_name}}
+                                    </span>
+                                    <span ng-if="!appointment.book_by_user">
+                                        --
+                                    </span>
+                                </td>
+                                <td>{{appointment.appointment_status.name | translate}}</td>
+                                <td>
+                                    <a href="#" ng-if="appointment.appointment_status_id == ConstAppointmentStatus.Present" class="btn btn-success">
+                                        {{'Consulting'| translate}}
+                                    </a>
+                                    <a href="#" ng-click="$root.RescheduleNow(appointment.appointment_status_id, appointment.id,appointment.appointment_setting_id)"
+                                        class="btn btn-green btn-danger" ng-if="appointment.appointment_status_id != ConstAppointmentStatus.Cancelled && appointment.appointment_status_id != ConstAppointmentStatus.Present && appointment.appointment_status_id != ConstAppointmentStatus.Closed">{{'Reschedule/Cancel'| translate}}</a>
+                                </td>
+                                <td>
+                                    <a href="#" ng-click="$root.ChangeAppointmentStatus(appointment.id,'present')" class="btn btn-green btn-primary" ng-if="appointment.appointment_status_id != ConstAppointmentStatus.Cancelled && appointment.appointment_status_id != ConstAppointmentStatus.Present && appointment.appointment_status_id != ConstAppointmentStatus.Closed">{{'Mark as Arrived'| translate}}</a>
+
+                                    <a href="#" ng-click="$root.ChangeAppointmentStatus(appointment.id,'close')" class="btn btn-warning" ng-if="appointment.appointment_status_id == ConstAppointmentStatus.Present">{{'Mark as Closed'| translate}}</a>
+                                </td>
+                            </tr>
+                            <tr ng-show="!isShown">
+                                <td colspan="9">
+                                    <div class="alert alert-danger">
+                                        <h4 class="ng-binding text-center">{{'No Records Found' |translate}}</h4>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="paging clearfix text-center" ng-show="_metadata.total > 0">
+                    <uib-pagination previous-text="&#xf104" next-text="&#xf105" total-items="_metadata.total" num-pages="_metadata.total_pages"
+                        ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true" rotate="false"
+                        items-per-page="_metadata.per_page" ng-change="paginate()"></uib-pagination>
+                </div>
+            </div>
+        </div>
+        <!-- END:Table -->
+    </div>
+    <!-- table -->
+</div>

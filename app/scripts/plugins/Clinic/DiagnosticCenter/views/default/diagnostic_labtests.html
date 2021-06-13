@@ -1,0 +1,195 @@
+<!-- TABLE -->
+<div class="appointment-block pad-20" ng-controller="DiagnosticLabTestsController">
+    <div class="container">
+        <div class="dasbboard-list" ng-if="logLength" ng-repeat="bookingLog in bookingLogs">
+            <div class="col-md-3 col-sm-6 col-md-offset-1 for-border">
+                <ul class="list-inline">
+                    <li>
+                        <img src="images/default-user.png" alt="[default-user]">
+                    </li>
+                    <li>
+                        <h4>{{'Total Count' | translate}}</h4>
+                    </li>
+                    <li>
+                        <h3>{{bookingLog.total_booking_count}}</h3>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3 col-sm-6 for-border">
+                <ul class="list-inline">
+                    <li>
+                        <img src="images/app-mail.png" alt="[app-mail]">
+                    </li>
+                    <li>
+                        <h4>{{'SMS Sent' | translate}}</h4>
+                    </li>
+                    <li>
+                        <h3>{{bookingLog.sms_count}}</h3>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <ul class="list-inline">
+                    <li>
+                        <img src="images/app-wallet.png" alt="[app-wallet]">
+                    </li>
+                    <li>
+                        <div class="month-list">
+                            <h4>{{'As on' | translate}}</h4>
+                            <h4> {{ bookingLog.start_date | date : 'MMMM'}}</h4>
+                        </div>
+                    </li>
+                    <li>
+                        <h3>
+                            <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">{{$root.settings.CURRENCY_SYMBOL}}{{bookingLog.amount}}</span>
+                            <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">{{$root.settings.SITE_CURRENCY_CODE}}{{bookingLog.amount}}</span>
+                        </h3>
+                    </li>
+                    <li>
+                        <span class="label label-success">{{'Pay Now' | translate}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 for-pad">
+                <h1 class="pad-dash">{{'Diagnostic Dashboard'|translate}}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="appointment-header clearfix">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="appointment-list for-margin">
+                            <div class="pull-left all-appointment">
+                                <ul class="list-inline">
+                                    <li ng-class="{active: paramsType === 'all'}">
+                                        <a ng-click="appoinment_type('all')"> {{'All'| translate}} </a>
+                                    </li>
+                                    <li ng-class="{active: paramsType === 'today'}">
+                                        <a ng-click="appoinment_type('today')"> {{'Today'| translate}} </a>
+                                    </li>
+                                    <li ng-class="{active: paramsType === 'week'}">
+                                        <a ng-click="appoinment_type('week')"> {{'Week'| translate}} </a>
+                                    </li>
+                                    <li ng-class="{active:paramsType === 'month'}">
+                                        <a ng-click="appoinment_type('month')"> {{'Month'| translate}} </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-md-4">
+                        <div class="mr-top">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" name="last_date" uib-datepicker-popup="{{format}}" ng-model="appointment_date" is-open="popup1.opened"
+                                        datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats"
+                                        ng-focus="open1()" ng-change="BookingDate(appointment_date)" class="form-control appoinment"
+                                        placeholder="{{'Appoiment Date' | translate}}" />
+                                    <span class="input-group-addon" id="basic-addon2" ng-click="popup1.opened = !popup1.opened">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1 col-md-2">
+                        <div class="mr-top">
+                            <button type="button" ng-click="reset_date_filter()" class="btn btn-primary btn-green">{{'Reset'| translate}}</button>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-4 pull-right">
+                        <div class="mr-top">
+                            <div ng-if="dataLength">
+                                <select ng-model="branch_id" ng-click="getLabTestList(branch_id)" class="form-control" name="doctor">
+                                    <option value="all">{{'All Branches'|translate}}</option>
+                                    <option ng-repeat="branch in branches" value="{{branch.id}}" ng-selected="branch_id === branch.id"> {{branch.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 table-block for-pad">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>{{'Patient Name' | translate}}</th>
+                                <th>{{'Branches' | translate}}</th>
+                                <th>
+                                    <span>{{'Appointment' | translate}}</span>
+                                    <span>{{'Date & Time' | translate}}</span>
+                                </th>
+                                <th>{{'Appointment Via'| translate}}</th>
+                                <th ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Common/Payment') > -1">{{'Paid Via Online?' | translate}}</th>
+                                <th>{{'Booked by others' | translate}}</th>
+                                <th>{{'Status' | translate}}</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="loader">
+                                <td colspan="9">
+                                    <div ng-include="'views/loader.html'"></div>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="labtest in labtests | filter: { appointment_date: appointment_date_search }" ng-if="!loader">
+                                <td class="text-capitalize">{{labtest.patient.user_profile.first_name}} {{labtest.patient.user_profile.last_name}} </td>
+                                <td class="text-capitalize">{{labtest.branch.name}}, {{labtest.branch.city.name}}</td>
+                                <td>{{labtest.appointment_date | dateFormat}}
+                                    <span>
+                                        <time>{{labtest.appointment_time}}</time>
+                                    </span>
+                                </td>
+                                <td class="text-capitalize">{{labtest.appointment_type.name}}</td>
+                                <td ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Common/Payment') > -1" class="text-capitalize">
+                                    <span ng-if="labtest.is_paid_via_online == 1">{{'Yes' | translate}}</span>
+                                    <span ng-if="labtest.is_paid_via_online == 0">{{'No' | translate}}</span>
+                                </td>
+                                <td class="text-capitalize">
+                                    <span ng-if="appointment.book_by_user">
+                                        {{labtest.book_by_user.user_profile.first_name}} {{labtest.book_by_user.user_profile.last_name}}
+                                    </span>
+                                    <span ng-if="!mylabtest.book_by_user">
+                                        --
+                                    </span>
+                                </td>
+                                <td>{{labtest.appointment_status.name | translate}}</td>
+                                <td>
+                                    <a href="labtest/report/{{labtest.id}}" class="btn btn-green btn-primary">{{'Upload Report'| translate}}</a>
+                                </td>
+                            </tr>
+                            <tr ng-show="!isShown && !loader && (labtests | filter: { appointment_date: appointment_date_search }).length != 0">
+                                <td colspan="9">
+                                    <div class="alert alert-danger">
+                                        <h4 class="ng-binding text-center">{{'No Records Found' |translate}}</h4>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-show="(labtests | filter: { appointment_date: appointment_date_search }).length == 0">
+                                <td colspan="9">
+                                    <div class="alert alert-danger">
+                                        <h4 class="ng-binding text-center">{{'No Records Found' |translate}}</h4>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="paging clearfix text-center" ng-show="totalRecords > 0">
+                    <uib-pagination previous-text="<" next-text=">" total-items="totalRecords" ng-model="currentPage" max-size="maxSize" class="pagination-sm"
+                        boundary-link-numbers="true" rotate="false" items-per-page="Perpage" ng-click="paginate_search('#userTop', currentPage)"></uib-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END:Table -->
+</div>
+<!-- table -->
+</div>

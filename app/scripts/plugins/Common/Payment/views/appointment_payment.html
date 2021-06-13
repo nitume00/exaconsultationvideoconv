@@ -1,0 +1,35 @@
+<div class="appoiment-details">
+    <div class="container">
+        <div class="row">
+            <h3>{{'Pay Appointment Fee' | translate}}</h3>
+        </div> 
+        <div class="table-block">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>{{'Appointment Requested On' | translate}}</th>
+                            <th>{{appointment.appointment_date | dateFormat}} {{appointment.appointment_time}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{'Doctor Name' | translate}}</td>
+                            <td>{{appointment.provider_user.user_profile.first_name}} {{appointment.provider_user.user_profile.last_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Where' | translate}}</td>
+                            <td ng-if="appointment.provider_user.is_individual == 0">{{appointment.clinic_user.user_profile.display_name}}, {{appointment.branch.name}}, {{appointment.branch.city.name}}</td>
+                            <td ng-if="appointment.provider_user.is_individual == 1">{{appointment.provider_user.user_profile.address}}, {{appointment.provider_user.user_profile.city.name}}, {{appointment.provider_user.user_profile.state.name}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Consultation Fee' | translate}}</td>
+                            <td>{{$root.settings.CURRENCY_SYMBOL}}{{appointment.consultation_fee}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div ng-include="'views/gateway.html'" class="col-xs-12"></div>
+    </div>
+</div>

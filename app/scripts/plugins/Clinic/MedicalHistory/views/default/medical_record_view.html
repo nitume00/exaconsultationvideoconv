@@ -1,0 +1,157 @@
+<section class="clearfix pad-63 appmt-table">
+    <div class="container-fluid">
+        <div class="page-head clearfix">
+            <h1 class="pull-left">{{medical_history.user.user_profile.display_name}} - {{'Medical Record'| translate}}</h1>
+            <a href="appointments/approved" class="btn btn-red pull-right">{{'Back'| translate}}</a>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="panel panel-primary post-project">
+                    <div class="panel-heading text-uppercase">{{'Medical Data'| translate}}</div>
+                    <div class="panel-body">
+                     <!-- START:TABLE-BLOCK -->
+                        <div class="table-block">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>{{'The record is created at' | translate}}</th>
+                                            <th>{{medical_history.created_at | dateFormat}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{'Specialty' | translate}}</td>
+                                            <td><span class="label label-success">{{medical_history.specialty.name}}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{'Treatment Year' | translate}}</td>
+                                            <td>{{medical_history.years}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <div ng-if="form_submissions.length > 0">
+                                                    <table class="table table-bordered">
+                                                        <tr>
+                                                            <th colspan="2">{{'Patient Speciality Details' | translate }}</th>
+                                                        </tr>
+                                                        <tr ng-repeat="form_submission in form_submissions">
+                                                            <td>{{form_submission.form_field.name}}</td>
+                                                            <td>
+                                                                <span ng-if="data.response != 'fileupload'">{{form_submission.response}}</span>
+                                                                <a class="clsRemoveTextCap" ng-if="form_submission.response == 'fileupload'" href="{{form_submission.attachments.thumb[0].url}}" download>{{form_submission.attachments.thumb[0].url}}</a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr> 
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                     <!-- START:TABLE-BLOCK -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-primary post-project">
+                    <div class="panel-heading text-uppercase">{{'Details'| translate}}</div>
+                    <div class="panel-body">
+                        <p class="doc-desc" hm-read-more hm-text="{{medical_history.description | removeHTMLTags}}" hm-limit="250" hm-more-text="read more" hm-less-text="read less" hm-dots-class="dots" hm-link-class="links"></p>
+                    </div>
+                </div>
+                <div class="panel panel-primary post-project">
+                    <div class="panel-heading text-uppercase">{{'Report'| translate}}</div>
+                    <div class="panel-body">
+                        <ul class="list-inline" ng-repeat="medicalReport in medical_history.attachment">
+                            <li class="">
+                                <file-download attachment="{{medicalReport}}" downloadlable="<i class='fa fa-download fa-2x'> </i>"></file-download>
+                            </li>
+                        </ul>
+                        <span ng-if="medical_history.attachment.length == 0" class="text-center text-danger">{{'No medical report added'| translate}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>    
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary post-project">
+                    <div class="panel-heading text-uppercase">{{'Appointment Details'| translate}}</div>
+                    <div class="panel-body">
+                    <!-- START:TABLE-BLOCK -->
+                    <div class="table-block">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>{{'The appointment is scheduled at' | translate}}</th>
+                                        <th>{{appointment.appointment_date | dateFormat}} {{appointment.appointment_time}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{'Appointment Token' | translate}}</td>
+                                        <td><span class="label label-success">{{appointment.appointment_token}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{'Where' | translate}}</td>
+                                        <td>{{appointment.clinic_user.user_profile.display_name}}, {{appointment.branch.name}}, {{appointment.branch.city.name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{'Doctor Name' | translate}}</td>
+                                        <td>{{appointment.provider_user.user_profile.first_name}} {{appointment.provider_user.user_profile.last_name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{'Room Number' | translate}}</td>
+                                        <td>
+                                            <span ng-if="appointment.provider_user.branches_doctor[0].doctor_room !== null"> {{appointment.provider_user.branches_doctor[0].doctor_room}}</span>
+                                            <span ng-if="appointment.provider_user.branches_doctor[0].doctor_room == null"> --</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{'Patient Name' | translate}}</td>
+                                        <td>{{appointment.user.user_profile.first_name}} {{appointment.user.user_profile.last_name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{'Email' | translate}}</td>
+                                        <td>{{appointment.user.email}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{'Phone' | translate}}</td>
+                                        <td>{{appointment.user.mobile_code}}{{appointment.user.mobile}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{'Gender' | translate}}</td>
+                                        <td><span ng-if="appointment.user.user_profile.gender_id == 1">{{'Male' | translate }}</span>
+                                            <span ng-if="appointment.user.user_profile.gender_id == 2">{{'Female' | translate }}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{'Patient Status' | translate}}</td>
+                                        <td>
+                                            <span ng-if="appointment.is_seen_before == 1"> {{'Already Seen' | translate}}</span>
+                                            <span ng-if="appointment.is_seen_before == 0"> {{'New Patient' | translate}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{'Reason for visit' | translate}}</td>
+                                        <td>{{appointment.provider_user.primary_speciality.name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{'Appointment Status' | translate}}</td>
+                                        <td>
+                                            <span class="label label-warning">{{appointment.appointment_status.name | translate}}</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- START:TABLE-BLOCK -->
+                    </div>
+                </div>
+            </div>
+        </div>   
+    </div>
+</section>

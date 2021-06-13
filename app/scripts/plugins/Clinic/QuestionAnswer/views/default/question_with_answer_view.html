@@ -1,0 +1,67 @@
+<section class="clearfix pad-63 question-answer">
+  <div class="container">
+    <div class="page-head clearfix">
+      <h1 class="pull-left">{{'Question with Answers' | translate }} </h1>
+      <span ng-if="$root.auth.role_id == ConstUserType.User" class="pull-right">
+        <a href="questions" class="btn btn-red">
+          <i class="fa fa-chevron-left"></i> {{'Back' | translate }}</a>
+      </span>
+      <span ng-if="$root.auth.role_id == ConstUserType.Doctor" class="pull-right">
+        <a href="doctors/answers" class="btn btn-red">
+          <i class="fa fa-chevron-left"></i> {{'Back' | translate }}</a>
+      </span>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h4 class="site-head">Q.{{answers[0].question.question}}</h4>
+        <div class="clinic-listing">
+        <!--START:ANSWERS-BLOCK-->
+        <div class="row">
+          <div class="col-md-1 col-sm-2 no-padright">
+            <h2 class="answer">{{'A.'}}</h2>
+          </div>
+          <div class="col-md-11 col-sm-10 no-padleft">
+            <div class="appointment-block">
+              <div class="panel panel-default" ng-repeat="docAnswer in answers">
+                <div class="panel-body">
+                  <div class="row diagonistic-center">
+                    <div class="col-md-12">
+                      <div class="media">
+                        <div class="media-left">
+                          <a href="doctors/{{docAnswer.user.id}}/{{docAnswer.user.username | slugify}}" class="img-resposnive media-object">
+                            <img ng-src="{{docAnswer.user.user_image}}" alt="{{docAnswer.user.username}}" />
+                          </a>
+                          <h4 title="{{docAnswer.user.user_profile.first_name}} {{docAnswer.user.user_profile.last_name}}">
+                            <a href="doctors/{{docAnswer.user.id}}/{{docAnswer.user.user_profile.display_name | slugify}}">{{docAnswer.user.user_profile.first_name}} {{docAnswer.user.user_profile.last_name}}</a>
+                          </h4>
+                          <div class="star-rating">
+                            <input-stars max="5" allow-half icon-base="fa fa-fw" icon-empty="fa-star-o" icon-half="fa-star-half-o" icon-full="fa-star"
+                              icon-hover-full="fa-star" ng-model="docAnswer.user.average_rating_as_service_provider" readonly="true"
+                              class="list-inline"></input-stars>
+                          </div>
+                        </div>
+                        <div class="media-body">
+                          <div class="language">
+                            <p class="doc-desc" hm-read-more hm-text="{{docAnswer.answer}}" hm-limit="250" hm-more-text="read more" hm-less-text="read less"
+                              hm-dots-class="dots" hm-link-class="links">
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div ng-if="!dataLength" class="no-record-field">
+                <div class="alert alert-danger">
+                  <h4 class="ng-binding text-center">{{'No Answers Found' |translate}}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--END:ANSWERS-BLOCK-->
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,62 @@
+<div class="container">
+	<div class="well-lg"></div>
+	<div class="btn-success">
+		<div class="panel-heading">
+			<strong>{{'Confirm Your Subscription Payment'|translate}}</strong>
+		</div>
+	</div>
+	<div class="clearfix well-lg">
+		<div class="loading_container text-center" ng-show="model.loading === true">
+			<div class="well-lg"></div>
+			<i class="fa fa-pulse fa-3x  text-success fa-spinner"></i>
+			<div class="well-lg"></div>
+		</div>
+		<div ng-include src="'get_gateways.html'" ng-show="model.loading === false"></div>
+	</div>
+</div>
+<script type="text/ng-template" id="get_gateways.html">
+  <!-- Admin Gateways index index start -->
+	<div class="clearfix">
+		<form role="form" class="form-horizontal clearfix navbar-btn" name="subscribePlan" >	
+			<div class="form-group">
+				<div class="col-xs-12">
+				<div class="btn subscribe-btn-plan" ng-repeat="subscribeplan in model.subscribeplan" ng-class="{ 'btn-success' : model.subscriptions.id === subscribeplan.id  }" popover-placement="bottom" popover-html="{{subscribeplan.description|removeHTMLTags}}"  >
+					<div class="radio" ng-click="model.subscriptions.id = subscribeplan.id;model.getSubscribePlan()" >
+						<label for="{{subscribeplan.name}}" class="control-label" ng-class="{ 'text-muted' : model.subscriptions.id !== subscribeplan.id  }">
+						<input type="radio"  value="{{subscribeplan.id}}" id="subscriptions_{{subscribeplan.id}}" name="subscriptions_Level" ng-model="model.subscriptions.id"><span></span></label>
+					
+					</div>
+					{{subscribeplan.name}} - <amount-display amount='{{subscribeplan.price}}' fraction='0' is-course-price='no'> / {{subscribeplan.interval_unit}}
+				</div>
+				<div class="clearfix"></div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+		<div class="subscription-panel"> 
+				<div class="text-primary"><h3><strong>{{'Name'| translate}}: {{model.subscriptions.name}}</strong></h3>
+					<p class="text-left" ng-bind-html='model.subscriptions.description'></p>
+		<form method="post" id="payment-form" class="stripe-form">
+		<div class="well-sm">
+		<div class="form-row">
+			<label for="card-element">
+				<h4>Credit or Debit Card</h4>	
+			</label>
+			<div id="card-element">
+				<!-- A Stripe Element will be inserted here. -->
+			</div>
+			<!-- Used to display form errors. -->
+			<div id="card-errors" class="error" role="alert"></div>
+			</div>
+
+			<button class="btn btn-primary"  ng-disabled="paynow_is_disabled" >Pay<span ng-show="paynow_is_disabled">
+					<i class="fa fa-spinner fa-pulse fa-lg"></i>
+				</span></button>
+		</div>
+
+		</form>
+		</div>
+
+  <!-- Admin Gateways_index index end -->
+</script>

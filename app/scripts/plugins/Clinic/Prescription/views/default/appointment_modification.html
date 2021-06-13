@@ -1,0 +1,80 @@
+<section class="clearfix pad-63 appmt-table">
+    <div class="container">
+        <div class="page-head">
+            <h1>{{'Unavailable Days'| translate}}
+                <span class="pull-right search-table-field">
+                    <a href="branch/doctor/{{branch_id}}/{{user_id}}/{{apt_set_id}}/appoinmentmodification/add" class="btn btn-green btn-animate"><i class="fa fa-plus-circle fa-fw"></i>{{'Add'|translate}}</a>
+                </span>            
+            </h1>
+        </div>
+
+        <div class="table-block">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th width="200">{{'Date'| translate}}</th>
+                            <th width="200">{{'Type'| translate}}</th>
+                            <th width="500">{{'Slot'| translate}}</th>
+                            <th width="150">{{'Status'| translate}}</th>
+                            <th width="220">{{'Action'| translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+						 <tr ng-repeat="modifyValue in appoinmentModification">
+                            <td>{{modifyValue.appoint_date | dateFormat}}</td>
+                            <td>
+                                <span ng-show="modifyValue.type == 1">
+                                    {{'Day Off'| translate}}
+                                </span>
+                                <span ng-show="modifyValue.type == 0">
+                                    {{'Schedule Change'| translate}}
+                                </span>
+                            </td>
+
+                            <td>
+                                <span ng-show="modifyValue.practice_open == ''">
+                                    --
+                                </span>
+                                <span ng-show="modifyValue.practice_open != ''">
+                                    <ul ng-bind-html="modifyValue.practice_open | splitedShow" class="time-slots list-unstyled">
+                                    </ul>
+                                </span>
+                            </td>
+                            <td>
+                                <div class="switch-option" ng-if="modifyValue.is_active == '1'">
+                                    <switch id="enabled" name="enabled" ng-model="modifyValue.is_active" disabled="true" on="Yes" off="No" class="green"></switch>
+                                </div>
+                                <div class="switch-option" ng-if="modifyValue.is_active != '1'">
+                                    <switch id="enabled" name="enabled" disabled="true" ng-model="modifyValue.is_active" on="Yes" off="No" class="green"></switch>
+                                </div>
+                            </td>
+
+                            <td class="action-btn">                               
+								<a href="branch/doctor/{{modifyValue.id}}/{{branch_id}}/{{user_id}}/{{apt_set_id}}/appoinmentmodification/update" title="{{'Edit'| translate}}" class="btn green"><i class="fa fa-pencil"></i>{{'Edit' | translate}}</a>
+                                <a ng-click='deleteWorkPlace(modifyValue.id)' title="{{'Delete' | translate}}" class="btn red"><i class="fa fa-trash"></i>{{'Delete' | translate}}</a>
+                            </td>
+                        </tr>
+                        <tr ng-show="!dataLength">
+                            <td colspan="5">
+                                <p class="hor-space text-center text-danger">{{'No Records Found' |translate}}</p>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="paging clearfix text-center" ng-show="worklocation._metadata.total_records > 0">
+                <pagination
+                    total-items="worklocation.meta.pagination.total"
+                    ng-model="currentPage"
+                    ng-change="paginate()"
+                    max-size="worklocation._metadata.maxSize"
+                    boundary-links="true"
+                    num-pages="worklocation.meta.pagination.total_pages"
+                    items-per-page="worklocation.meta.pagination.per_page"
+                ></pagination>
+            </div>
+        </div>
+    </div>
+</section>

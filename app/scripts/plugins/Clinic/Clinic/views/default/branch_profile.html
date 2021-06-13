@@ -1,0 +1,132 @@
+<div class="clinic-view clearfix" ng-controller="BranchViewController">
+    <!--START:USER-PROFILE-->
+    <div class="user-profile">
+        <div class="container">
+            <div class="col-md-6 media-size">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="javascript:void(0)" title="{{branch.name}}" class="thumbnail">
+                            <img ng-src="{{branchImages[0].img}}" title="{{branch.name}}" class="" alt="{{branch.name}}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h1 class="media-heading">{{branch.name}}</h1>
+                        <p>{{branch.address}}</p>
+                        <p>{{'Phone'| translate }} : {{branch.phone_number}} </p>
+                        <p>
+                            <a class="btn btn-green btn-animate" href="javascript:void(0)" ng-if="branchImages.length > 0" ng-click="allPhotos()"> {{'See Branch Images' | translate}}</a>
+                            <div ng-if="showPhoto">
+                                <ng-gallery images="branchImages"></ng-gallery>
+                            </div>
+                        </p>
+                        <p ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('UserFavorites') > -1 && $root.auth.role_id == ConstUserType.User && $root.isAuth">
+                            <user-favorite favorite="isFavorite" provideruser="branch.id" clinicuser="branch.clinic_user_id" favoritetype='branchFav'></user-favorite>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 line-wht">
+                <p id="diag-review">{{branch.description}}</p>
+            </div>
+        </div>
+    </div>
+    <!--END:USER-PROFILE-->
+
+    <!--START:MAP-->
+    <div class="user-map-location">
+        <div map-lazy-load="https://maps.google.com/maps/api/js">
+            <ng-map default-style="true" center="[{{branch.latitude}}, {{branch.longitude}}]" zoom="12">
+                <marker id="myloc" position="{{branch.latitude}}, {{branch.longitude}}" on-click="map.showInfoWindow('user-location')" icon="images/hospital-marker.png">
+                </marker>
+                <info-window id="user-location" visible-on-marker="myloc">
+                    <div ng-non-bindable>
+                        <div id="bodyContent">
+                            <h4> {{branch.name}} </h4>
+                            <p>{{branch.address}}</p>
+                        </div>
+                    </div>
+                </info-window>
+            </ng-map>
+        </div>
+    </div>
+    <!--END:MAP-->
+
+    <!-- START:SPECIALIST DOCTORS-->
+    <div class="container appmt-details">
+        <div class="col-md-8 pull-right">
+            <h2>{{'Specialist Doctors'| translate}} </h2>
+            <!--START:PANEL-->
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div ng-if="branch.branch_doctor.length > 0">
+                        <!--  -->
+                        <div ng-include="'views/loader.html'"></div>
+                        <!--  -->
+                        <!--START:MEDIA SPECIALIST DOCTORS-->
+                        <div class="row">
+                            <div class="item">
+                                <div class="col-md-4" ng-repeat="doctor in branch.branch_doctor track by $index" ng-if="!loader">
+                                    <div class="media">
+                                        <a class="pull-left" href="doctors/{{doctor.user.id}}/{{doctor.user.user_profile.display_name | slugify}}">
+                                            <img class="media-object img-circle" ng-src="{{doctor.user.user_image}}" title="{{'Dr'}}.{{doctor.user.user_profile.first_name}} {{doctor.user.user_profile.last_name}}"
+                                                alt="{{'Dr' | translate}}.{{doctor.user.user_profile.first_name}} {{doctor.user.user_profile.last_name}}">
+                                        </a>
+                                        <div class="media-body">
+                                            <h4 class="media-heading">
+                                                <a class="pull-left" href="doctors/{{doctor.user.id}}/{{doctor.user.user_profile.display_name | slugify}}">
+                                                    {{'Dr' | translate}}.{{doctor.user.user_profile.first_name}} {{doctor.user.user_profile.last_name}}
+                                                </a>
+                                            </h4>
+                                            <p>{{doctor.user.primary_speciality.name}}</p>
+                                            <ul class="docotr-rating list-inline star-rating" ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Clinic/Review') > - 1">
+                                                <input-stars max="5" allow-half icon-base="fa fa-fw" icon-empty="fa-star-o" icon-half="fa-star-half-o" icon-full="fa-star checked" icon-hover-full="fa-star" ng-model="doctor.user.average_rating_as_service_provider" readonly="true"></input-stars>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--END:MEDIA SPECIALIST DOCTORS-->
+                    <div ng-show="!isShown">
+                        <div class="hor-space alert alert-danger">{{'No Doctors Available'|translate}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+        <div class="qualify-exp">
+            <div class="form-group clearfix specialty">
+                <label>{{'Specialties'| translate}}</label>
+                <ul class="list-unstyled field-data">
+                    <li class="sg-para3 sg-navy" ng-repeat="branchSpecialty in branch.branches_specialty track by $index">
+                        <span> {{branchSpecialty.specialty.name}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="form-group clearfix specialty">
+                <label>{{'Insurances'| translate}}</label>
+                <ul class="list-unstyled field-data">
+                    <li class="sg-para3 sg-navy" ng-repeat="branchInsurance in branch.branches_insurance track by $index">
+                        <span> {{branchInsurance.insurance.name}} </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+        <!--END:PANEL-->
+    </div>
+
+    <!--START:SPECIALTIES/INSURANCES-->
+    
+    <!--END:SPECIALTIES/INSURANCES-->
+    <div class="col-md-12 patient-reviews">
+        <div class="" id="VerifiedPatientReviews">
+            <div class="clearfix"></div>
+            <review-show showreview="branch"> </review-show>
+        </div>
+    </div>
+</div>
+<!-- END:SPECIALIST DOCTORS-->
+</div>

@@ -1,0 +1,357 @@
+<div class="clinic-view clearfix diagonistic-center">
+    <!-- START:BRANCH DETAILS -->
+    <div class="user-profile">
+        <div class="container">
+            <div class="col-md-6 media-size">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="users/edit_profile" title="{{user.username}}" class="thumbnail">
+                            <img ng-src="{{branchImages[0].img}}" title="{{branch.name}}" class="" alt="{{branch.name}}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h1 class="media-heading">{{branch.name}}</h1>
+                        <p>{{branch.address}}</p>
+                        <p>{{'Phone'| translate }} : +971{{branch.phone_number}}</p>
+                        <p></p>
+                        <p>
+                            <a class="btn btn-green btn-animate" href="javascript:void(0)" ng-click="allPhotos()"> {{'See Branch Images' | translate}}</a>
+                            <div ng-if="showPhoto">
+                                <ng-gallery images="branchImages"></ng-gallery>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 line-wht">
+                <p id="diag-review">{{branch.description}}</p>
+            </div>
+        </div>
+    </div>
+    <!--END:BRANCH DETAILS-->
+
+    <div class="container diagonistic-details">
+        <h2 class="main-heading">{{diagonostic.user.user_profile.display_name}}</h2>
+        <!--START:FORM-->
+        <form class="form-horizontal adminpg-form" role="form" name="labTestFrm" novalidate>
+            <div class="row">
+                <div class="col-md-8 no-pad">
+                    <div class="for-space">
+                        <!--START:DEFAULT LAB TEST DETAILS TABLE-->
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Labtest</th>
+                                        <th></th>
+                                        <th class="text-right">Price </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-left">
+                                            <img ng-src="{{addedTests[0].lab_image}}" title="{{addedTests[0].lab_test_name}}" class="img-responsive" alt="{{addedTests[0].lab_test_name}}">
+                                        </td>
+                                        <td>{{addedTests[0].lab_test_name}}</td>
+                                        <td class="price">
+                                            <p>
+                                                <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">{{$root.settings.CURRENCY_SYMBOL}}{{addedTests[0].price}}</span>
+                                                <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">{{$root.settings.SITE_CURRENCY_CODE}}{{addedTests[0].price}}</span>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--END:DEFAULT LAB TEST DETAILS TABLE-->
+
+                        <!--START:MODAL-->
+                        <div class="clinic-test" ng-if="ConstUserType.User == $root.user.role_id">
+                            <div class="row select-others">
+                                <div class="col-md-12">
+                                    <div class="form-group text-center">
+                                        <div class="radio-group text-center">
+                                            <input type="radio" id="option-one" name="selector" checked="checked" ng-model="booking_type" value="me" ng-click="radioSelected('me')"
+                                                class="ng-untouched ng-valid ng-not-empty ng-dirty ng-valid-parse" style="">
+                                            <label for="option-one" title="Me" class="ng-binding">{{'Me' | translate}}</label>
+                                            <input type="radio" id="option-two" name="selector" checked="" ng-model="booking_type" value="some_one_else" ng-click="radioSelected('some_one_else')"
+                                                class="ng-untouched ng-valid ng-not-empty ng-dirty" style="">
+                                            <label for="option-two" title="Someone else" class="ng-binding">{{'Someone else' | translate}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-if="booking_type=='me'">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{{'Patient Name' | translate }}</td>
+                                                        <td>{{patient.user_profile.first_name}} {{patient.user_profile.last_name}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{'Email'| translate}}</td>
+                                                        <td class="clsRemoveTextCap">{{patient.email}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{'Phone'| translate}}</td>
+                                                        <td>{{patient.mobile_code}}{{patient.mobile}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{'Branch' | translate }}</td>
+                                                        <td>
+                                                            {{branch.name}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{'Diagonistic Center' | translate }}</td>
+                                                        <td>
+                                                            {{diagonostic.user.user_profile.display_name}}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-if="booking_type=='some_one_else'">
+                                        <div class="patient-detail">
+                                            <div>
+                                                <label>Patient Name</label>
+                                                <input type="text" name="PatientName" class="form-control" ng-model="guest_name" placeholder="{{'Patient Name'| translate}}"
+                                                    ng-change="guestName(guest_name)" required>
+                                                <span class="error" ng-show="guest_name_required && labTestFrm.PatientName.$error.required">{{'Required'| translate}} </span>
+                                            </div>
+                                         <!--   <div class="for-alert" ng-if="!familyLength">
+                                                <div class="alert alert-info">{{'Please add the family or friends in your appointment booking list' | translate}}
+                                                    <span>
+                                                        <a href="familyfriends" class="btn"> {{'Family or Friends' | translate}} </a>
+                                                    </span>
+                                                </div>
+                                            </div>-->
+                                        <!--    <select ng-model="family_friend_id" class="form-control" name="family_friend_id" convert-to-number ng-if="familyLength" ng-change="changeFamilyList(family_friend_id)">
+                                                <option value="">{{'Select Family or Friends'| translate}}</option>
+                                                <option ng-repeat="family_friend in family_friends" value="{{family_friend.id}}">{{family_friend.relationship}}</option>
+                                            </select>-->
+                                         <!--   <span class="error" ng-show="(labTestFrm.$submitted || labTestFrm.family_friend_id.$touched) && (labTestFrm.family_friend_id.$error.required)">{{'Required'| translate }} </span>-->
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-if="checkFamily">
+                                        <!--START: LAB TEST LISTS DETAILS-->
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{{'Branch' | translate }}</td>
+                                                        <td>
+                                                            {{branch.name}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{'Diagonistic Center' | translate }}</td>
+                                                        <td>
+                                                            {{diagonostic.user.user_profile.display_name}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{'Name' | translate }}</td>
+                                                        <td>{{familydata.name}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{'Relationship' | translate }}</td>
+                                                        <td>{{familydata.relationship}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{'Email'| translate}}</td>
+                                                        <td class="clsRemoveTextCap">{{familydata.email}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{'Phone'| translate}}</td>
+                                                        <td>{{patient.mobile_code}}{{patient.mobile}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!--END:LAB TEST LISTS DETAILS-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--END:MODAL-->
+                        <div ng-if="ConstUserType.Diagnostic == $root.user.role_id" class="patient-add">
+                            <h4>{{'Add Patient Details'|translate}}</h4>
+                            <div class="add-patient">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>{{'First Name' | translate}}</label>
+                                            <input type="text" class="form-control f-name" placeholder="{{'First Name' | translate}}" name="first_name" ng-model="data.first_name"
+                                                ng-required="true" ng-minlength="3" ng-pattern="/^[a-z A-Z]*$/" ng-change="UserDetails(data)">
+                                            <span class="error" ng-show="(labTestFrm.$submitted || labTestFrm.first_name.$touched) && (labTestFrm.first_name.$pristine || labTestFrm.first_name.$invalid) && (labTestFrm.first_name.$error.required)">{{'Please enter your last name'| translate }} </span>
+                                            <span class="error" ng-show="(labTestFrm.$submitted || labTestFrm.first_name.$touched) && (labTestFrm.first_name.$pristine || labTestFrm.first_name.$invalid) && (labTestFrm.first_name.$error.minlength)">{{ 'Minimum length is 3' | translate }}</span>
+                                            <span class="error" ng-show="(labTestFrm.$submitted || labTestFrm.first_name.$touched) && (labTestFrm.first_name.$pristine || labTestFrm.first_name.$invalid) && (labTestFrm.first_name.$error.pattern)">{{ 'Enter Valid name without number' | translate }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>{{'Last Name' | translate}}</label>
+                                            <input type="text" class="form-control l-name" placeholder="{{'Last Name' | translate}}" name="last_name" ng-model="data.last_name"
+                                                ng-required="true" ng-minlength="3" ng-pattern="/^[a-z A-Z]*$/" ng-change="UserDetails(data)">
+                                            <span class="error" ng-show="(labTestFrm.$submitted || labTestFrm.last_name.$touched) && (labTestFrm.last_name.$pristine || labTestFrm.last_name.$invalid) && (labTestFrm.last_name.$error.required)">{{'Please enter your last name'| translate }} </span>
+                                            <span class="error" ng-show="(labTestFrm.$submitted || labTestFrm.last_name.$touched) && (labTestFrm.last_name.$pristine || labTestFrm.last_name.$invalid) && (labTestFrm.last_name.$error.minlength)">{{ 'Minimum length is 3' | translate }}</span>
+                                            <span class="error" ng-show="(labTestFrm.$submitted || labTestFrm.last_name.$touched) && (labTestFrm.last_name.$pristine || labTestFrm.last_name.$invalid) && (labTestFrm.last_name.$error.pattern)">{{ 'Enter Valid name without number' | translate }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>{{'E-mail' | translate}}</label>
+                                    <input type="email" class="form-control" placeholder="{{'Email' | translate}}" name="Email" ng-change="UserDetails(data)"
+                                        ng-model="data.email" required ng-pattern="/^([_a-z0-9._%+-]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5}))|(\d+$)$/">
+                                    <span class="error" ng-show="(labTestFrm.$submitted || labTestFrm.Email.$touched) && (labTestFrm.Email.$pristine || labTestFrm.Email.$invalid) && (labTestFrm.Email.$error.required)">{{'Please enter your mail id'| translate }}</span>
+                                    <span class="error" ng-show="(labTestFrm.$submitted || labTestFrm.Email.$touched) && (labTestFrm.Email.$pristine || labTestFrm.Email.$invalid) && (labTestFrm.Email.$error.email)">{{'Enter valid email'| translate }}</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>{{'Mobile' | translate}}</label>
+                                    <input type="number" class="form-control" placeholder="{{'Mobile' | translate}}" name="phone" ng-model="data.phone" ng-required="true"
+                                        ng-change="UserDetails(data)">
+                                    <span class="error" ng-show="(labTestFrm.$submitted || labTestFrm.phone.$touched) && (labTestFrm.phone.$pristine || labTestFrm.phone.$invalid) && (labTestFrm.phone.$error.required)">{{'Enter Mobile Number'| translate }} </span>
+                                    <span class="error" ng-show="(labTestFrm.$submitted || labTestFrm.phone.$touched) && (labTestFrm.phone.$pristine || labTestFrm.phone.$invalid) && (labTestFrm.phone.$error.maxlength)">{{ 'Maximum length is 12' | translate }}</span>
+                                    <span class="error" ng-show="(labTestFrm.$submitted || labTestFrm.phone.$touched) && (labTestFrm.phone.$pristine || labTestFrm.phone.$invalid) && (labTestFrm.phone.$error.minlength)">{{ 'Minimum length is 8' | translate }}</span>
+                                    <span class="error" ng-show="(labTestFrm.$submitted || labTestFrm.phone.$touched) && (labTestFrm.phone.$pristine || labTestFrm.phone.$invalid) && (labTestFrm.phone.$error.pattern)">{{'Enter Valid Mobile Number Without Character'| translate }} </span>
+                                    <span class="error">{{mobileErr}} </span>
+                                </div>
+                                <div class="form-group">
+                                    <label>{{'Appointment type' | translate}}</label>
+                                    <select class="form-control" ng-model="data.appointment_type_id" name="appointment_type_id" id="appointment_type_id" ng-selected="appointmentType.id == data.appointment_type_id"
+                                        ng-options="appointmentType.id as appointmentType.name | translate for appointmentType in appointmentTypes"
+                                        ng-change="UserDetails(data)"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <!--START:LAB TEST_TABLE-->
+                        <table class="table table-hover">
+                            <div class="table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>{{'Other Lab Tests' | translate}}</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th class="text-right">{{'Price' | translate}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="labtest in labtests" id="chkLabtest_{{$index+1}}">
+                                        <td class="reduce-length">
+                                            <div class="checkbox">
+                                                <label for="chkLabtest_{{$index+1}}">
+                                                    <input id="chkLabtest_{{$index+1}}" type="checkbox" value="" ng-model="labtestmark[labtest.lab_test.id]" ng-click="addLabTestToCart($event, labtest.id, labtest.lab_test.id, labtest.lab_test.name, labtest.price)">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td class="text-left">
+                                            <img ng-src="{{labtest.lab_image}}" title="{{labtest.lab_test.name}}" class="img-responsive" alt="{{labtest.lab_test.name}}">
+                                        </td>
+                                        <td>
+                                            <p>{{labtest.lab_test.name}}</p>
+                                            <p>{{labtest.lab_test.description}}</p>
+                                        </td>
+                                        <td class="price">
+                                            <p>
+                                                <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">{{$root.settings.CURRENCY_SYMBOL}}{{labtest.price}}</span>
+                                                <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">{{$root.settings.SITE_CURRENCY_CODE}}{{labtest.price}}</span>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </div>
+                        </table>
+                        <!-- END:LAB TEST_TABLE -->
+                    </div>
+                </div>
+                <!--  -->
+
+                <div class="col-md-4">
+                    <!--START:PANEL-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <img src="images/diag-4.png" class="img-responsive" alt="[lab-text]">
+                        </div>
+                        <div class="panel-body">
+                            <h3 class="panel-title text-center"> {{diagonostic.user.user_profile.display_name}}</h3>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5>{{'Overall Tests' | translate}}</h5>
+                                </div>
+                            </div>
+                            <div class="test-details">
+                                <div class="row" id="labtest_row_{{$index}}" ng-repeat="(key, value) in addedTests">
+                                    <div class="col-md-8">
+                                        <h4>{{value.data.lab_test_name}}</h4>
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        <h4 ng-if="$root.settings.CURRENCY_SYMBOL !== ''">{{$root.settings.CURRENCY_SYMBOL}}{{value.data.price}}
+                                            <a ng-click="removeAddedTest($event, key, value.data.price)" class="cursor-pointer" ng-if="!$first">
+                                                <i class="fa fa-window-close fa-fw text-danger"></i>
+                                            </a>
+                                        </h4>
+                                        <h4 ng-if="$root.settings.CURRENCY_SYMBOL === ''">{{$root.settings.SITE_CURRENCY_CODE}}{{value.data.price}}
+                                            <a ng-click="removeAddedTest($event, key, value.data.price)" class="cursor-pointer" ng-if="!$first">
+                                                <i class="fa fa-window-close fa-fw text-danger"></i>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row total">
+                                <div class="col-md-6">
+                                    <h4>{{'Total' | translate}}</h4>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <h4>
+                                        <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">{{$root.settings.CURRENCY_SYMBOL}}{{totalcost}}</span>
+                                        <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">{{$root.settings.SITE_CURRENCY_CODE}}{{totalcost}}</span>
+                                    </h4>
+                                </div>
+                            </div>
+                            <!--START:BOOK NOW-->
+                            <div class="book-now" ng-if="$root.user.role_id == ConstUserType.User || $root.user.role_id == ConstUserType.Diagnostic">
+                                <h3 class="text-center">{{'Book Now' | translate}}</h3>
+                                <div class="form-group">
+                                    <div ng-class="{ 'has-error' : ((labTestFrm.$submitted || labTestFrm.appointment_time.$touched) && (labTestFrm.appointment_time.$pristine || labTestFrm.appointment_time.$invalid))}">
+                                        <label for="time"></label>
+                                        <select class="form-control" id="appointment_time" name="appointment_time" ng-model="appointment_time" class="form-control"
+                                            ng-required="true">
+                                            <option value="">{{'Time'|translate}}</option>
+                                            <option value="{{time_slot}}" ng-repeat="time_slot in branch.slot | orderBy:'time_slot'">{{time_slot}}</option>
+                                        </select>
+                                        <span class="error" ng-show="(labTestFrm.$submitted || labTestFrm.appointment_time.$touched) && (labTestFrm.appointment_time.$error.required)">{{'Required'| translate }} </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div>
+                                        <div class="input-group">
+                                            <input class="form-control" ng-model="appointment_date" data-date-format="yyyy-MM-dd" data-min-date="{{dateBlockeBefore}}"
+                                                data-autoclose="1" name="appointment_date" bs-datepicker type="text" ng-required="true"
+                                                placeholder="Date" ng-model="appointment_date">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar fa-fw"></i>
+                                            </span>
+                                        </div>
+                                        <span class="error" ng-show="(labTestFrm.$submitted || labTestFrm.appointment_date.$touched) && (labTestFrm.appointment_date.$error.required)">{{'Required'| translate }} </span>
+                                    </div>
+                                </div>
+                                <div class="diagonistic-button text-center">
+                                    <button ng-click="BookNow(labTestFrm.$valid,labTestFrm, 'book-now')" type="submit" class="btn btn-primary btn-green">{{'Pay later' | translate}}</button>
+                                    <button ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Common/Payment') > -1" ng-click="BookNow(labTestFrm.$valid,labTestFrm, 'pay-now')" type="submit" class="btn btn-primary btn-green">{{'Confirm & Pay now' | translate}}</button>
+                                </div>
+                            </div>
+                            <div class="book-now" ng-if="$root.user.role_id == ConstUserType.Doctor || $root.user.role_id == ConstUserType.Clinic">
+                                <h4 class="error">{{'You are unable to make an appointment with another patients'| translate}}.</h4>
+                            </div>
+                            <!--END:BOOK NOW-->
+                        </div>
+                    </div>
+                    <!--END:PANEL-->
+                </div>
+            </div>
+        </form>
+        <!--END:FORM  -->
+    </div>
+</div>

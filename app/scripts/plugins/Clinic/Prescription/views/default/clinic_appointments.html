@@ -1,0 +1,173 @@
+<!-- TABLE -->
+<div class="appointment-block pad-40" ng-controller="ClinicAppointmentsController">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-7 col-sm-7">
+                <h1 class="pat-dash">{{'Clinic Appointments'|translate}}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-7 col-sm-7" role="navigation">
+                <div class="appointment-header clearfix">
+                    <div class="doctor-appointment-list">
+                        <div class="all-appointment">
+                            <ul class="list-inline">
+                                <li ng-class="{active:paramsType === 'approved'}">
+                                    <a ng-click="appoinment_type('approved')"> {{'Approved'| translate}} </a>
+                                </li>
+                                <li ng-class="{active:paramsType === 'present'}">
+                                    <a ng-click="appoinment_type('present')"> {{'Consulting'| translate}} </a>
+                                </li>
+                                <li ng-class="{active:paramsType === 'closed'}">
+                                    <a ng-click="appoinment_type('closed')"> {{'Closed'| translate}} </a>
+                                </li>
+                                <li ng-class="{active:paramsType === 'cancelled'}">
+                                    <a ng-click="appoinment_type('cancelled')"> {{'Cancelled'| translate}} </a>
+                                </li>
+                                <li ng-class="{active: paramsType === 'today'}">
+                                    <a ng-click="appoinment_type('today')"> {{'Today'| translate}} </a>
+                                </li>
+                                <li ng-class="{active: paramsType === 'week'}">
+                                    <a ng-click="appoinment_type('week')"> {{'Week'| translate}} </a>
+                                </li>
+                                <li ng-class="{active:paramsType === 'month'}">
+                                    <a ng-click="appoinment_type('month')"> {{'Month'| translate}} </a>
+                                </li>
+                                <li ng-class="{active: paramsType === 'all'}">
+                                    <a ng-click="appoinment_type('all')"> {{'All'| translate}} </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="mr-top">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" name="last_date" uib-datepicker-popup="{{format}}" ng-model="appointment_date" is-open="popup1.opened"
+                                datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-focus="open1()"
+                                ng-change="BookingDate(appointment_date)" class="form-control appoinment" placeholder="{{'Appoiment Date' | translate}}"
+                            />
+                            <span class="input-group-addon" id="basic-addon2" ng-click="popup1.opened = !popup1.opened">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="mr-top">
+                    <button type="button" ng-click="reset_date_filter()" class="btn btn-primary btn-green">{{'Reset'| translate}}</button>
+                </div>
+            </div>
+            <div class="col-md-2" ng-if="dataLength">
+
+                <div class="mr-top">
+                    <div class="input-group">
+                        <select ng-model="branch_id" ng-click="getAppointmentList(paramsType,branch_id)" class="form-control" name="doctor">
+                            <option value="all">{{'All Branches'|translate}}</option>
+                            <option ng-repeat="branch in branches" value="{{branch.id}}" ng-selected="branch_id === branch.id"> {{branch.name|translate}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!--  -->
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="col-md-12 table-block">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="set-size">{{'Appointment.No' | translate}}</div>
+                            </th>
+                            <th>{{'Branch' | translate}}</th>
+                            <th>{{'Doctor Name' | translate}}</th>
+                            <th>{{'Patient Name'| translate}}</th>
+                            <th>
+                                <span>{{'Appointment' | translate}}</span>
+                                <span>{{'Date & Time' | translate}}</span>
+                            </th>
+                            <th>{{'Appointment Via'| translate}}</th>
+                            <th>{{'Booked by others' | translate}}</th>
+                            <th>{{'Status' | translate}}</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="loader">
+                            <td class="text-center" colspan="9">
+                                <div ng-include="'views/loader.html'"></div>
+                            </td>
+                        </tr>
+                        <tr ng-repeat="appointment in appointments | filter: { appointment_date: appointment_date_search }" ng-if="!loader">
+                            <td class="text-capitalize">
+                                <a href="appointment/{{appointment.id}}/{{appointment.appointment_token}}" class="btn btn-green">{{appointment.appointment_token}}</a>
+                            </td>
+                            <td class="text-capitalize">{{appointment.branch.name}}</td>
+                            <td class="text-capitalize">{{'Dr' | translate}}. {{appointment.provider_user.user_profile.first_name}} {{appointment.provider_user.user_profile.last_name}}
+                            </td>
+                            <td class="text-capitalize">
+                                {{appointment.user.user_profile.first_name}} {{appointment.user.user_profile.last_name}}
+                            </td>
+                            <td>{{appointment.appointment_date | dateFormat}}
+                                <span>
+                                    <time>{{appointment.appointment_time}}</time>
+                                </span>
+                            </td>
+                            <td class="text-capitalize">{{appointment.appointment_type.name}} </td>
+                            <td class="text-capitalize">
+                                <span ng-if="appointment.book_by_user">
+                                    {{appointment.book_by_user.user_profile.first_name}} {{appointment.book_by_user.user_profile.last_name}}
+                                </span>
+                                <span ng-if="!appointment.book_by_user">
+                                    --
+                                </span>
+                            </td>
+                            <td>
+                                <span class="label label-{{ConstStatusColor[appointment.appointment_status_id]}}">{{appointment.appointment_status.name | translate}}</span>
+                            </td>
+                            <td>
+                                <a href="#" ng-if="appointment.appointment_status_id == ConstAppointmentStatus.Present" class="btn btn-success">
+                                    {{'Consulting'| translate}}
+                                </a>
+                                <a href="#" ng-click="$root.RescheduleNow(appointment.appointment_status_id, appointment.id,appointment.appointment_setting_id)"
+                                    class="btn btn-green btn-danger" ng-if="appointment.appointment_status_id != ConstAppointmentStatus.Cancelled && appointment.appointment_status_id != ConstAppointmentStatus.Present && appointment.appointment_status_id != ConstAppointmentStatus.Closed">{{'Reschedule/Cancel'| translate}}</a>
+                            </td>
+                            <td>
+                                <a href="#" ng-click="$root.ChangeAppointmentStatus(appointment.id,'present')" class="btn btn-green btn-primary" ng-if="appointment.appointment_status_id != ConstAppointmentStatus.Cancelled && appointment.appointment_status_id != ConstAppointmentStatus.Present && appointment.appointment_status_id != ConstAppointmentStatus.Closed">{{'Mark as Arrived'| translate}}</a>
+
+                                <a href="#" ng-click="$root.ChangeAppointmentStatus(appointment.id,'close')" class="btn btn-warning" ng-if="appointment.appointment_status_id == ConstAppointmentStatus.Present">{{'Mark as Closed'| translate}}</a>
+                            </td>
+                        </tr>
+                        <tr ng-show="(appointments | filter: { appointment_date: appointment_date_search }).length == 0">
+                            <td colspan="9">
+                                <div class="text-center text-danger">
+                                    <h4 class="ng-binding text-center">{{'No Records Found' |translate}}</h4>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-show="!isShown && !loader && (appointments | filter: { appointment_date: appointment_date_search }).length != 0">
+                            <td colspan="9">
+                                <div class="text-center text-danger">
+                                    <h4 class="ng-binding text-center">{{'No Records Found' |translate}}</h4>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="paging clearfix text-center" ng-show="_metadata.total > 0">
+                <uib-pagination previous-text="<" next-text=">" total-items="_metadata.total" num-pages="_metadata.total_pages" ng-model="currentPage"
+                    max-size="maxSize" class="pagination-sm" boundary-link-numbers="true" rotate="false" items-per-page="_metadata.per_page"
+                    ng-click="paginate_search('#userTop', currentPage)"></uib-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END:Table -->
+<!-- table -->

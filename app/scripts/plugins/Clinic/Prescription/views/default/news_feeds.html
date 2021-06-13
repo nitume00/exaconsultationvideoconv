@@ -1,0 +1,76 @@
+<section class="branch-details" ng-controller="NewsFeedsController">
+    <div class="container news-feeds">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-9">
+                        <h2>{{'News Feeds'|translate}}</h2>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="appointment-list text-right">
+                            <a href="news_feeds/add" class="btn btn-primary btn-green">{{'Add News Feeds' | translate}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content appointment-block">
+                    <div class="tab-pane fade in active">
+                        <div ng-include="'views/loader.html'"></div>
+                        <div class="panel panel-default" ng-repeat="newsfeed in newsfeeds" ng-if="!loader">
+                            <div class="panel-body">
+                                <div class="row space">
+                                    <div class="col-md-10 col-sm-6 col-xs-12">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <h4 class="media-heading"> {{newsfeed.title}} </h4>
+                                                <div class="language">
+                                                    <p class="doc-desc" hm-read-more hm-text="{{newsfeed.content | removeHTMLTags}}" hm-limit="100" hm-more-text="read more"
+                                                        hm-less-text="read less" hm-dots-class="dots" hm-link-class="links">
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-6 col-xs-12">
+                                        <div class="rem-book">
+                                            <a href="news_feeds/{{newsfeed.id}}/{{newsfeed.title | slugify}}" title="{{'View'| translate}}" class="btn text-primary">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>{{'View' | translate}}</a>
+                                            <a href="news_feeds/edit/{{newsfeed.id}}" title="{{'Edit'| translate}}" class="btn text-primary">
+                                                <i class="fa fa-pencil"></i>{{'Edit' | translate}}</a>
+                                            <a href="" ng-click="remove_newsfeeds(newsfeed.id)" class="btn text-danger" title="{{'Remove' | translate}}">
+                                                <i class="fa fa-window-close-o" aria-hidden="true"></i>{{'Remove' | translate}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row space text-center" ng-show="!dataLength && !loader">
+                        <div class="col-md-12">
+                            <div class="text-center text-danger">
+                                <h4 class="ng-binding text-center">{{'No News Feeds Found' |translate}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="post-project">
+                    <div class="bg-primary">
+                        <h4 class="text-center no-mar">{{"News Feeds"|translate}}</h4>
+                    </div>
+                    <ul class="list-unstyled clearfix">
+                        <li>
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                            <span class="menu-content"> {{'Hospital/Clinic News Feeds'|translate}}. </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="paging clearfix text-center" ng-show="totalRecords > 0">
+            <uib-pagination previous-text="<" next-text=">" total-items="totalRecords" ng-model="currentPage" max-size="maxSize"
+                class="pagination-sm" boundary-link-numbers="true" rotate="false" items-per-page="Perpage" ng-click="paginate_search('#userTop', currentPage)"></uib-pagination>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,145 @@
+<!--START:MODAL-->
+<div class="clearfix">
+    <div class="modal-content clinic-modal">
+        <div class="modal-header">
+            <button type="button" class="close pull-right line-height-28" data-dismiss="modal" ng-click="closemodel()">&times;</button>
+            <h4 class="no-mar top-mar-5">{{'Who is the appointment for?' | translate}}</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <!-- START:COLM-6 -->
+                <div class="col-md-6">
+                    <!--START:PATIENT FIND FORM-->
+                    <form class="form-horizontal adminpg-form" role="form" name="findPatientFrm" novalidate>
+                        <div class="row">
+                            <label>{{'Find patients by Mobile number'|translate}}</label>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <input type="text" ng-model="data.phone" class="form-control" id="phone" placeholder="{{'Mobile Number' | translate}}" name="phone"
+                                        ng-minlength="8" ng-maxlength="12" ng-pattern="/^[0-9]*$/" required="true" autofocus>
+                                    <span class="error" ng-show="(findPatientFrm.$submitted || findPatientFrm.phone.$touched) && (findPatientFrm.phone.$pristine || findPatientFrm.phone.$invalid) && (findPatientFrm.phone.$error.required)">{{'Required'| translate }} </span>
+                                    <span class="error" ng-show="(findPatientFrm.$submitted || findPatientFrm.phone.$touched) && (findPatientFrm.phone.$pristine || findPatientFrm.phone.$invalid) && (findPatientFrm.phone.$error.maxlength)">{{ 'Maximum length is 12' | translate }}</span>
+                                    <span class="error" ng-show="(findPatientFrm.$submitted || findPatientFrm.phone.$touched) && (findPatientFrm.phone.$pristine || findPatientFrm.phone.$invalid) && (findPatientFrm.phone.$error.minlength)">{{ 'Minimum length is 8' | translate }}</span>
+                                    <span class="error" ng-show="(findPatientFrm.$submitted || findPatientFrm.phone.$touched) && (findPatientFrm.phone.$pristine || findPatientFrm.phone.$invalid) && (findPatientFrm.phone.$error.pattern)">{{'Enter Valid Phone Number Without Character'| translate }} </span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <button title="Find" type="submit" ng-click="searchPatient(data.phone)" class="btn btn-info btn-green" ng-show="!save_btn">{{'Find'|translate}}</button>
+                            </div>
+                            <div class="appointment-block" ng-if="already_added">
+                                <div class="alert alert-warning alert-dismissable">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close"></a>
+                                    <span class="help-block search-table-field">{{'The mobile number is already registered with some other users. Please try with other
+                                        number.'| translate}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!--START:PATIENT FIND FORM-->
+
+                    <!-- START:CREATE-PATIENT -->
+                    <div class="createdoctor" ng-if="addPatients">
+                        <div class="alert alert-info search-table-field">
+                            {{'The mobile number is not used by users. Please add new patient with following fields.'| translate}}
+                        </div>
+                        <!--START:PATIENT DETAILS FORM-->
+                        <form class="form-horizontal adminpg-form" role="form" name="Frmbooknow" ng-submit="AptBookNow(data)" novalidate>
+                            <div class="row">
+                                <h4 class="add-patient">{{'Add Patient Details'|translate}}</h4>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{'First Name' | translate}}</label>
+                                        <input type="text" class="form-control f-name" placeholder="{{'First Name' | translate}}" name="first_name" ng-model="data.first_name"
+                                            ng-required="true" ng-minlength="3" ng-pattern="/^[a-z A-Z]*$/">
+                                        <span class="error" ng-show="(Frmbooknow.$submitted || Frmbooknow.first_name.$touched) && (Frmbooknow.first_name.$pristine || Frmbooknow.first_name.$invalid) && (Frmbooknow.first_name.$error.required)">{{'Please enter your first name'| translate }} </span>
+                                        <span class="error" ng-show="(Frmbooknow.$submitted || Frmbooknow.first_name.$touched) && (Frmbooknow.first_name.$pristine || Frmbooknow.first_name.$invalid) && (Frmbooknow.first_name.$error.minlength)">{{ 'Minimum length is 3' | translate }}</span>
+                                        <span class="error" ng-show="(Frmbooknow.$submitted || Frmbooknow.first_name.$touched) && (Frmbooknow.first_name.$pristine || Frmbooknow.first_name.$invalid) && (Frmbooknow.first_name.$error.pattern)">{{ 'Enter Valid name without number' | translate }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{'Last Name' | translate}}</label>
+                                        <input type="text" class="form-control l-name" placeholder="{{'Last Name' | translate}}" name="last_name" ng-model="data.last_name"
+                                            ng-required="true" ng-minlength="3" ng-pattern="/^[a-z A-Z]*$/">
+                                        <span class="error" ng-show="(Frmbooknow.$submitted || Frmbooknow.last_name.$touched) && (Frmbooknow.last_name.$pristine || Frmbooknow.last_name.$invalid) && (Frmbooknow.last_name.$error.required)">{{'Please enter your last name'| translate }} </span>
+                                        <span class="error" ng-show="(Frmbooknow.$submitted || Frmbooknow.last_name.$touched) && (Frmbooknow.last_name.$pristine || Frmbooknow.last_name.$invalid) && (Frmbooknow.last_name.$error.minlength)">{{ 'Minimum length is 3' | translate }}</span>
+                                        <span class="error" ng-show="(Frmbooknow.$submitted || Frmbooknow.last_name.$touched) && (Frmbooknow.last_name.$pristine || Frmbooknow.last_name.$invalid) && (Frmbooknow.last_name.$error.pattern)">{{ 'Enter Valid name without number' | translate }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>{{'E-mail' | translate}}</label>
+                                <input type="text" class="form-control" placeholder="{{'Email' | translate}}" name="email" ng-model="data.email" ng-required="true">
+                                <span class="error" ng-show="(Frmbooknow.$submitted || Frmbooknow.email.$touched) && (Frmbooknow.email.$pristine || Frmbooknow.email.$invalid) && (Frmbooknow.email.$error.required)">{{'Please enter your mail id'| translate }}</span>
+                                <span class="error" ng-show="(Frmbooknow.$submitted || Frmbooknow.email.$touched) && (Frmbooknow.email.$pristine || Frmbooknow.email.$invalid) && (Frmbooknow.email.$error.email)">{{'Enter valid email'| translate }}</span>
+                            </div>
+                            <div class="form-group">
+                                <label>{{'Mobile' | translate}}</label>
+                                <input type="text" class="form-control" placeholder="{{'Mobile' | translate}}" name="email" ng-model="data.phone" ng-required="true">
+                                <span class="error" ng-show="(Frmbooknow.$submitted || Frmbooknow.phone.$touched) && (Frmbooknow.phone.$pristine || Frmbooknow.phone.$invalid) && (Frmbooknow.phone.$error.required)">{{'Enter Mobile Number'| translate }} </span>
+                                <span class="error" ng-show="(Frmbooknow.$submitted || Frmbooknow.phone.$touched) && (Frmbooknow.phone.$pristine || Frmbooknow.phone.$invalid) && (Frmbooknow.phone.$error.maxlength)">{{ 'Maximum length is 12' | translate }}</span>
+                                <span class="error" ng-show="(Frmbooknow.$submitted || Frmbooknow.phone.$touched) && (Frmbooknow.phone.$pristine || Frmbooknow.phone.$invalid) && (Frmbooknow.phone.$error.minlength)">{{ 'Minimum length is 8' | translate }}</span>
+                                <span class="error" ng-show="(Frmbooknow.$submitted || Frmbooknow.phone.$touched) && (Frmbooknow.phone.$pristine || Frmbooknow.phone.$invalid) && (Frmbooknow.phone.$error.pattern)">{{'Enter Valid Mobile Number Without Character'| translate }} </span>
+                                <span class="error">{{mobileErr}} </span>
+                            </div>
+                            <div class="form-group">
+                                <label>{{'Appointment type' | translate}}</label>
+                                <select ng-model="data.appointment_type_id" class="form-control" name="appointment_type_id" convert-to-number>
+                                    <option ng-repeat="appointmentType in appointmentTypes" value="{{appointmentType.id}}" ng-selected="appointmentType.id == 1">{{appointmentType.name|translate}}</option>
+                                </select>
+                            </div>
+                            <!--START:SUBMIT BUTTON-->
+                            <div class="final-button text-center">
+                                <button type="submit" class="btn btn-primary btn-green">{{'Submit'|translate}}</button>
+                                <button type="button" class="btn btn-danger btn-green" data-dismiss="modal" ng-click="closemodel()">{{'Cancel' | translate}}</button>
+                            </div>
+                            <!--END:SUBMIT BUTTON-->
+                        </form>
+                        <!--END:PATIENT DETAILS FORM-->
+                    </div>
+                    <!-- END:CREATE-PATIENT -->
+                </div>
+                <!--END:COLM-6-->
+
+                <!--START:COLM-6-->
+                <div class="col-md-6">
+                    <!--START:DOCTOR PANEL-->
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <img ng-src="{{doctor.user.user_image}}" class="img-resposnive" align="middle" alt="{{'Dr' | translate}}.{{doctor.user.user_profile.first_name}} {{doctor.user.user_profile.last_name}}">
+
+                                    <div class="doc-name">
+                                        <h4>{{'Dr' | translate}}.{{doctor.user.user_profile.first_name}} {{doctor.user.user_profile.last_name}}</h4>
+                                        <span>{{doctor.user.primary_speciality.name}}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <h5>{{doctor.branch.name}}</h5>
+                                    <h5>{{doctor.branch.address}}</h5>
+                                    <h5>{{doctor.branch.city.name}}, {{doctor.branch.country.name}}, {{doctor.branch.postal_code}}</h5>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <h4>{{'Appointment Date' | translate}} :
+                                    <span>{{apt_date}}</span>
+                                </h4>
+                                <h4>{{'Appointment Time' | translate}} :
+                                    <span>{{apt_time}}</span>
+                                </h4>
+                                <h4>{{'Doctor Room' | translate}} :
+                                    <span>{{doctor.doctor_room}}</span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END:DOCTOR PANEL -->
+                </div>
+                <!--END:COLM-6-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--END:MODAL-->

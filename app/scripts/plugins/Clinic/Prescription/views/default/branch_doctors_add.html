@@ -1,0 +1,176 @@
+<section class="branch-details">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="findByDoctors">
+          <h2>{{'Add Doctor'|translate}}</h2>
+          <form class="branch-form" role="form" name="findDoctorFrm" novalidate>
+            <div class="form-group">
+              <label>{{"Add Doctor's Mobile Phone Number"|translate}}</label>
+              <!--  -->
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="text" ng-model="findData.mobile_number" class="form-control" id="mobile_number" placeholder="{{'Mobile Number' | translate}}" name="mobile_number" ng-minlength="8" ng-maxlength="12" ng-pattern="/^[0-9]*$/" required="true" autofocus>
+                    <span class="error" ng-show="(findDoctorFrm.$submitted || findDoctorFrm.mobile_number.$touched) && (findDoctorFrm.mobile_number.$pristine || findDoctorFrm.mobile_number.$invalid) && (findDoctorFrm.mobile_number.$error.required)">
+                    {{'Required'| translate }} </span>
+                    <span class="error" ng-show="(findDoctorFrm.$submitted || findDoctorFrm.mobile_number.$touched) && (findDoctorFrm.mobile_number.$pristine || findDoctorFrm.mobile_number.$invalid) && (findDoctorFrm.mobile_number.$error.maxlength)">{{ 'Maximum length is 12' | translate }}</span>
+                    <span class="error" ng-show="(findDoctorFrm.$submitted || findDoctorFrm.mobile_number.$touched) && (findDoctorFrm.mobile_number.$pristine || findDoctorFrm.mobile_number.$invalid) && (findDoctorFrm.mobile_number.$error.minlength)">{{ 'Minimum length is 8' | translate }}</span>
+                    <span class="error" ng-show="(findDoctorFrm.$submitted || findDoctorFrm.mobile_number.$touched) && (findDoctorFrm.mobile_number.$pristine || findDoctorFrm.mobile_number.$invalid) && (findDoctorFrm.mobile_number.$error.pattern)">{{'Enter Valid Phone Number Without Character'| translate }} </span>
+                </div>
+                <div class="col-md-6 buton-dwn">
+                  <div class="form-group">
+                    <button title="Find" type="submit" ng-click="searchDoctor(findDoctorFrm.$valid, findData)" class="btn btn-green btn-animate  ng-binding" ng-show="!save_btn">{{'Add'|translate}}</button>
+                    <a href="branch/doctors/{{branch_id}}" title="Cancel" type="submit" class="btn btn-danger btn-animate">{{'Cancel'|translate}}</a>
+                  </div>
+                </div>
+              </div>
+              <!--  -->
+            </div>
+          </form>
+          <div class="appointment-block" ng-if="showDoctors" ng-repeat="doctor in doctors">
+            <!--  -->
+            <div class="alert alert-info alert-dismissable" ng-show="doctor.role_id !== ConstUserType.Doctor">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close"></a>
+              <span class="help-block search-table-field">{{'The mobile number is already registered with some other users. Please try with other number.'| translate}}</span>
+            </div>
+            <div class="alert alert-info" ng-show="doctor.role_id === ConstUserType.Doctor">
+              <div class="row space">
+                <div class="col-md-8">
+                  <div class="media">
+                    <div class="media-left">
+                        <img src="{{doctor.image}}" alt="[Image: {{doctor.first_name}}]" class="media-object">
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading"> Dr.{{doctor.user_profile.first_name}} {{doctor.user_profile.last_name}}
+                        <sub>(Denist,General Sugergy)</sub>
+                      </h4>
+                      <div class="doc-profile">
+                        <span>
+                          <i class="fa fa-map-marker" aria-hidden="true"></i> {{doctor.user_profile.address}}</span>
+                      </div>
+                      <div class="language">
+                        <span>
+                          <i class="fa fa-language" aria-hidden="true"></i> English, Tamil</span>
+                        <p class="doc-desc"> {{doctor.user_profile.about_me}} </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 added-btn">
+                <ul class="docotr-rating list-inline star-rating" ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Clinic/Review') > - 1">
+                  <input-stars max="5" allow-half icon-base="fa fa-fw" icon-empty="fa-star-o" icon-half="fa-star-half-o" icon-full="fa-star" icon-hover-full="fa-star" ng-model="doctor.user.average_rating_as_service_provider" readonly="true"></input-stars>
+                </ul>  
+                  <button ng-if="show_add" type="submit" ng-click="addBranchDoctor(doctor.id, branch_id)" class="btn btn-primary">{{'Add'| translate}}</button>
+                  <button ng-if="!show_add" class="btn btn-primary">{{'Already Added'| translate}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="createdoctor" ng-if="addDoctors">
+            <div class="alert alert-info">
+              <span class="help-block search-table-field">{{'The mobile number is not used by users. Please add new doctor with following fields.'| translate}}</span>
+            </div>
+            <h2>{{'Add Doctor'|translate}}</h2>
+            <form class="branch-form" role="form" name="doctorFrm" novalidate>
+              <div class="form-group">
+                <label>{{'Name'|translate}}
+                  <span class="req-color">*</span>
+                </label>
+                <input type="text" ng-model="data.name" class="form-control" id="doctorname" name="doctorname" required="true" autofocus>
+                <span class="error" ng-show="(doctorFrm.$submitted || doctorFrm.doctorname.$touched) && (doctorFrm.doctorname.$pristine || doctorFrm.doctorname.$invalid) && (doctorFrm.doctorname.$error.required)">
+                  {{'Required'| translate }} </span>
+              </div>
+
+              <div class="form-group">
+                <label>{{'Email'|translate}}
+                  <span class="req-color">*</span>
+                </label>
+                <input type="email" ng-model="data.email" class="form-control" id="doctoremail" name="doctoremail" required="true" autofocus>
+                <span class="error" ng-show="(doctorFrm.$submitted || doctorFrm.doctoremail.$touched) && (doctorFrm.doctoremail.$pristine || doctorFrm.doctoremail.$invalid) && (doctorFrm.doctoremail.$error.required)">
+                  {{'Required'| translate }} </span>
+                <span class="error" ng-show="(doctorFrm.$submitted || doctorFrm.doctoremail.$touched) && (doctorFrm.doctoremail.$pristine || doctorFrm.doctoremail.$invalid) && (doctorFrm.doctoremail.$error.required)">{{'Please enter your email'| translate }}</span>
+                <span class="error" ng-show="(doctorFrm.$submitted || doctorFrm.doctoremail.$touched) && (doctorFrm.doctoremail.$pristine || doctorFrm.doctoremail.$invalid) && (doctorFrm.doctoremail.$error.email)">{{'Enter valid email'| translate }}</span>
+              </div>
+
+              <div class="form-group">
+                <label>{{'Mobile Number'|translate}}</label>
+                <input type="text" ng-model="data.mobile" class="form-control" id="mobile" placeholder="{{'Mobile Number' | translate}}"
+                  name="mobile" ng-minlength="8" ng-maxlength="12" ng-pattern="/^[0-9]*$/" autofocus>
+                <span class="error" ng-show="(doctorFrm.$submitted || doctorFrm.mobile.$touched) && (doctorFrm.mobile.$pristine || doctorFrm.mobile.$invalid) && (doctorFrm.mobile.$error.maxlength)">{{ 'Maximum length is 12' | translate }}</span>
+                <span class="error" ng-show="(doctorFrm.$submitted || doctorFrm.mobile.$touched) && (doctorFrm.mobile.$pristine || doctorFrm.mobile.$invalid) && (doctorFrm.mobile.$error.minlength)">{{ 'Minimum length is 8' | translate }}</span>
+                <span class="error" ng-show="(doctorFrm.$submitted || doctorFrm.mobile.$touched) && (doctorFrm.mobile.$pristine || doctorFrm.mobile.$invalid) && (doctorFrm.mobile.$error.pattern)">{{'Enter Valid Phone Number Without Character'| translate }} </span>
+              </div>
+
+              <div class="form-group">
+                <label>{{'Country'|translate}}
+                  <span class="req-color">*</span>
+                </label>
+                <div class="frm-select job-cat-select">
+                  <select class="form-control" id="country_id" name="country_id" ng-model="data.country_id" class="form-control" ng-required="true"
+                    autofocus>
+                    <option value="{{country.id}}">{{'Please Select'|translate}}</option>
+                    <option value="{{country.id}}" ng-repeat="country in countries">{{country.name|translate}}</option>
+                    <span class="error" ng-show="(doctorFrm.$submitted || doctorFrm.country_id.$touched) && (doctorFrm.country_id.$error.required)">{{'Required'| translate }} </span>
+                  </select>
+                  <span class="error" ng-show="(doctorFrm.$submitted || doctorFrm.country_id.$touched) && (doctorFrm.country_id.$error.required)">{{'Required'| translate }} </span>
+                </div>
+              </div>
+          <div class="form-group">
+            <label>{{'Doctor Room Number'|translate}}
+            </label>
+            <input type="text" ng-model="data.doctor_room" class="form-control" id="doctorroom" name="doctorroom" ng-pattern="/^[0-9]*$/"
+              ng-minlength="1" ng-maxlength="5" autofocus>
+            <span class="error" ng-show="(doctorFrm.$submitted || doctorFrm.doctorroom.$touched) && (doctorFrm.doctorroom.$pristine || doctorFrm.doctorroom.$invalid) && (doctorFrm.doctorroom.$error.maxlength)">{{ 'Maximum length is 5' | translate }}</span>
+            <span class="error" ng-show="(doctorFrm.$submitted || doctorFrm.doctorroom.$touched) && (doctorFrm.doctorroom.$pristine || doctorFrm.doctorroom.$invalid) && (doctorFrm.doctorroom.$error.minlength)">{{ 'Minimum length is 1' | translate }}</span>
+            <span class="error" ng-show="(doctorFrm.$submitted || doctorFrm.doctorroom.$touched) && (doctorFrm.doctorroom.$pristine || doctorFrm.doctorroom.$invalid) && (doctorFrm.doctorroom.$error.pattern)">{{'Enter Valid Room Number Without Character'| translate }} </span>
+          </div>
+
+          <div class="form-group">
+            <label>{{'Specialties'|translate}}
+            </label>
+            <tags-input name="specialty_select" ng-model="data.specialty_select" placeholder="Choose Your Specialties" add-from-autocomplete-only="true"
+              on-tag-added="tagAdded($tag)" on-tag-removed="tagRemoved($tag)" replace-spaces-with-dashes="false"
+              add-on-enter="true">
+              <auto-complete min-length="1" debounce-delay="0" source="loadSpecialties($query)"></auto-complete>
+            </tags-input>
+           <!--  <span class="error" ng-show="(doctorFrm.$submitted || doctorFrm.specialty_select.$touched) && (doctorFrm.specialty_select.$pristine || doctorFrm.specialty_select.$invalid) && (doctorFrm.specialty_select.$error.required)">
+              {{'Required'| translate }} </span> -->
+          </div>
+
+          <div class="form-group">
+            <label>{{'Languages'|translate}}
+              <span class="req-color">*</span>
+            </label>
+            <tags-input name="language_select" ng-model="data.language_select" placeholder="Choose Your Languages" on-tag-added="tagAdded($tag)"
+              on-tag-removed="tagRemoved($tag)" replace-spaces-with-dashes="false" ng-required="true" add-on-enter="true">
+              <auto-complete min-length="1" debounce-delay="0" source="loadLanguages($query)"></auto-complete>
+            </tags-input>
+            <span class="error" ng-show="(userFrm.$submitted || userFrm.language_select.$touched) && (userFrm.language_select.$pristine || userFrm.language_select.$invalid) && (userFrm.language_select.$error.required)">
+              {{'Required'| translate }} </span>
+          </div>
+          <user-educations></user-educations>
+          <div class="form-group">
+            <button title="Submit" type="submit" ng-click="addDoctor(doctorFrm.$valid, data)" class="btn btn-green btn-animate  ng-binding"
+              ng-show="!save_btn">{{'Submit'|translate}}</button>
+            <a href="branch/doctors/{{branch_id}}" title="Cancel" type="submit" class="btn btn-danger btn-animate">{{'Cancel'|translate}}</a>
+          </div>
+          </form>
+       </div>   
+    </div>
+      </div>
+      <div class="col-md-4">
+        <div class="post-project">
+          <div class="bg-primary">
+            <h4 class="text-center no-mar">{{"Add your doctor"|translate}}</h4>
+          </div>
+          <ul class="list-unstyled clearfix">
+            <li>
+              <i class="fa fa-check" aria-hidden="true"></i>
+              <span class="menu-content"> {{'Branch Doctor'|translate}}. </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

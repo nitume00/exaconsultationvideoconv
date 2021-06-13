@@ -1,0 +1,199 @@
+<!--START:APPOIMENT-DETAILS-->
+<div class="appoiment-details" ng-controller="DiagnosticLabTestsController">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>{{'Lab Test Detail' | translate}}</h3>
+            </div>
+            <div class="col-md-6">
+                <!-- <div class="app-buttons">
+                    <a href="#" ng-if="appointment.appointment_status_id == ConstAppointmentStatus.Cancelled" class="btn btn-green btn-info">{{'Cancelled'| translate}}</a>
+                    <a href="#" ng-click="$root.RescheduleNow(appointment.appointment_status_id, appointment.id,appointment.appointment_setting_id)" class="btn btn-green btn-danger" ng-if="appointment.appointment_status_id != ConstAppointmentStatus.Present && (branchinfo.branch_permission.indexOf('AppointmentEdit') !== -1)">{{'Reschedule/Cancel'| translate}}</a>
+                    
+                     <a href="#" ng-click="$root.ChangeAppointmentStatus(appointment.id,'present')" class="btn btn-info btn-green" ng-if="appointment.appointment_status_id != ConstAppointmentStatus.Cancelled && appointment.appointment_status_id != ConstAppointmentStatus.Present && appointment.appointment_status_id != ConstAppointmentStatus.Closed">{{'Mark as Arrived'| translate}}</a>
+                    
+                     <a href="#" ng-click="$root.ChangeAppointmentStatus(appointment.id,'close')" class="btn btn-warning" ng-if="appointment.appointment_status_id == ConstAppointmentStatus.Present">{{'Mark as Closed'| translate}}</a>
+                </div> -->
+            </div>
+        </div>
+        <!-- START:TABLE-BLOCK -->
+        <div class="table-block">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>{{'The appointment is scheduled at' | translate}}</th>
+                            <th>{{appointment.appointment_date | dateFormat}} {{appointment.appointment_time}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{'Appointment Type' | translate}}</td>
+                            <td>
+                                <span class="label label-success">{{appointment.appointment_type.name | translate}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Where' | translate}}</td>
+                            <td>{{appointment.diagnostic_center_user.user_profile.display_name}}, {{appointment.branch.name}},
+                                {{appointment.branch.city.name}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Patient Name' | translate}}</td>
+                            <td ng-if="appointment.guest_name !=null">{{appointment.guest_name}}</td>
+                            <td ng-if="appointment.guest_name ==null">{{appointment.patient.user_profile.first_name}} {{appointment.patient.user_profile.last_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Email' | translate}}</td>
+                            <td>{{appointment.patient.email}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Phone' | translate}}</td>
+                            <td>{{appointment.patient.mobile_code}}{{appointment.patient.mobile}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Gender' | translate}}</td>
+                            <td> <span ng-if="appointment.patient.user_profile.gender_id == 1">{{'Male' | translate }}</span>
+                                <span ng-if="appointment.patient.user_profile.gender_id == 2">{{'Female' | translate }}</span> </td>
+                        </tr>
+                       <!--  <tr>
+                            <td>{{'Reason for visit' | translate}}</td>
+                            <td>
+                                <span ng-repeat="labtest in appointment.diagnostic_center_tests_patient_diagnostic_test">{{labtest.diagnostic_center_test.lab_test.name}} - {{labtest.diagnostic_center_test.lab_test.description}}</span>
+                            </td>
+                        </tr> -->
+                        <tr>
+                            <td>{{'Appointment Status' | translate}}</td>
+                            <td>
+                                <span class="label label-success">{{appointment.appointment_status.name | translate}}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="panel panel-primary post-project">
+                    <div class="panel-heading text-uppercase">{{'Lab Tests'| translate}}</div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>{{'Name' | translate}}</th>
+                                        <th>{{'Price' | translate}}</th>
+                                        <th>{{'Reason for visit' | translate}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="mylabtest in appointment.diagnostic_center_tests_patient_diagnostic_test">
+                                        <td class="text-capitalize">
+                                            {{mylabtest.diagnostic_center_test.lab_test.name}}
+                                        </td>
+                                        <td class="text-capitalize">
+                                            <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">{{$root.settings.CURRENCY_SYMBOL}}{{mylabtest.diagnostic_center_test.price}}</span>
+                                            <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">{{$root.settings.SITE_CURRENCY_CODE}}{{mylabtest.diagnostic_center_test.price}}</span>
+                                         </td>
+                                        <td class="text-capitalize">{{mylabtest.diagnostic_center_test.lab_test.description}}</td>
+                                    </tr>
+                                     
+                                </tbody>
+                            </table>
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="panel panel-primary post-project" ng-if="$root.auth.role_id == $root.ConstUserType.Diagnostic">
+                    <div class="panel-heading text-uppercase">{{'Update Payment Status'| translate}}</div>
+                    <div class="panel-body">
+                        {{'Payment Status(Is Paid?)' | translate}}
+                        <div class="text-center">
+                            <div class="switch-option">
+                                <switch id="is_paid" name="is_paid" ng-model="labtest.is_paid" on="Yes" off="No" class="green" ng-change="updatePayment(labtest.is_paid)"></switch>
+                            </div>
+                        </div>
+                    </div>
+                </div>                      
+
+                <div ng-if="$root.auth.role_id == ConstUserType.Diagnostic">
+                    <form class="branch-form" role="form" name="testReportFrm" novalidate>
+                        <div class="form-group">
+                            <div class="panel panel-primary post-project">
+                                <div class="panel-heading text-uppercase">{{'Reports'| translate}}</div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="download">
+                                                <label class="fileinput-button btn-block">
+                                                    <multi-image-upload form-name='branch-form' type='Upload' max-size="5" ng-required="true" object-name="attachment" class="underline text-red"
+                                                        class-name="LabtestReport"> </multi-image-upload>
+                                                    <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                                                    {{'Upload Report'|translate}}
+                                                </label>
+                                                <img ngf-src="file" alt="[Image: Group]" title="Group" class="img-responsive center-block media-object upload-image">
+                                                <div ng-bind="file.name" class="text-center file-name"></div>
+                                                <!-- <div>
+                                                    <span class="grayc help-block">{{'Allowed extensions: jpg,jpeg,gif,png,pdf'|translate}}</span>
+                                                    <span class="error bot-space" ng-if="error_message && error_message !== ''">
+                                                        {{error_message}}</span>
+                                                </div> -->
+                                            </div>
+                                            <div>
+                                                <span class="error bot-space" ng-if="error">{{'Required'| translate }}</span>
+                                            </div>
+                                            
+                                            <!--UPLOAD REPORT-->
+                                            <div class="form-group text-center">
+                                                <button title="Submit" type="submit" ng-click="uploadReport(testReportFrm.$valid,appointment.diagnostic_center_tests_patient_diagnostic_test[0].id)" class="btn btn-green btn-animate ng-binding"
+                                                    ng-show="!save_btn">{{'Submit'|translate}}</button>
+                                            </div>
+                                            <!--UPLOAD REPORT-->
+                                        </div>
+                                        <!--  -->
+                                        <div class="col-md-8">
+                                            <div class="view-reports">
+                                                <h4>{{'View Reports' | translate}}</h4>
+                                                <div class="download-report">
+                                                    <div ng-repeat="patient_diagnostic_test in appointment.diagnostic_center_tests_patient_diagnostic_test">
+                                                        <div ng-repeat="reports in patient_diagnostic_test.attachment">
+                                                            <file-download attachment="{{reports}}" downloadlable="<i class='fa fa-download fa-2x'> </i>"></file-download>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--  -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- -->
+                        </div>
+
+                    </form>
+                </div>
+                <!--  -->
+                <div ng-if="$root.auth.role_id == ConstUserType.User">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="view-reports">
+                                        <h4>{{'View Reports' | translate}}</h4>
+                                        <div class="download-report">
+                                            <div ng-repeat="patient_diagnostic_test in appointment.diagnostic_center_tests_patient_diagnostic_test">
+                                                <div ng-repeat="reports in patient_diagnostic_test.attachment">
+                                                    <file-download attachment="{{reports}}" downloadlable="<i class='fa fa-download fa-2x'> </i>"></file-download>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  -->
+            </div>
+        </div>
+        <!-- START:TABLE-BLOCK -->
+    </div>
+    <!--START:APPOIMENT-DETAILS-->

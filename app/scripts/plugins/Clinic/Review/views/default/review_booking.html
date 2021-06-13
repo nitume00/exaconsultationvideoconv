@@ -1,0 +1,150 @@
+<section class="clearfix branch-details setting-page" id="friendtop">
+    <div class="container">
+        <h2>{{"Rating & Reviews" | translate }}</h2>
+        <div class="row">
+            <div class="col-md-6" ng-if="!isAlreadyReviewed">
+                <h3>{{"For Doctors" | translate }}</h2>
+                    <form role="form" class="form-horizontal clearfix form-addon" name="reviewFrm" ng-submit="postDoctorReviewRating(reviewFrm.$valid,reviewFrm);" novalidate>    
+                        <div class="form-group">
+                            <label for="review" class="col-sm-3 col-md-4">{{'Bedside Manner' | translate}}:</label>
+                            <div class="col-md-8 col-sm-7" ng-class="{ 'has-error' : ((reviewFrm.$submitted || reviewFrm.bedside_rate.$touched) && (reviewFrm.bedside_rate.$pristine || reviewFrm.bedside_rate.$invalid))}">
+                                <input-stars ng-model="bedside_rate" max="5" name="bedside_rate" class="list-inline cursor" required></input-stars>
+                                <span class="error" ng-show="(reviewFrm.$submitted || reviewFrm.bedside_rate.$touched) && (reviewFrm.bedside_rate.$pristine || reviewFrm.bedside_rate.$invalid) && (reviewFrm.bedside_rate.$error.required)"> {{'Required' | translate }}
+                                </span> 
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="review" class="col-sm-3 col-md-4">{{'Wait Time Manner' | translate}}:</label>
+                            <div class="col-md-8 col-sm-7" ng-class="{ 'has-error' : ((reviewFrm.$submitted || reviewFrm.waittime_rate.$touched) && (reviewFrm.waittime_rate.$pristine || reviewFrm.waittime_rate.$invalid))}">
+                                <input-stars ng-model="waittime_rate" max="5" name="waittime_rate" class="list-inline cursor" required></input-stars>
+                                <span class="error" ng-show="(reviewFrm.$submitted || reviewFrm.waittime_rate.$touched) && (reviewFrm.waittime_rate.$pristine || reviewFrm.waittime_rate.$invalid) && (reviewFrm.waittime_rate.$error.required)">
+                                    {{'Required' | translate }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-7 col-md-10 control-label" ng-class="{ 'has-error' : ((reviewFrm.$submitted || reviewFrm.message.$touched) && (reviewFrm.message.$pristine || reviewFrm.message.$invalid))}">
+                                <textarea name="message" ng-model="message" class="form-control" rows="6" placeholder="{{'Review'|translate}}"></textarea>
+                                <span class="error" ng-show="(reviewFrm.$submitted || reviewFrm.message.$touched) && (reviewFrm.message.$pristine || reviewFrm.message.$invalid) && (reviewFrm.message.$error.required)">
+                                    {{'Required'| translate }} </span>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <button type="submit" class="text-uppercase btn btn-green btn-animate">{{'Rate & Review'|translate}}<span ng-show="disableButton"><i class="fa fa-spinner fa-pulse fa-lg"></i></span></button>
+                        </div>
+                    </form>
+            </div>
+            <div class="col-md-6" ng-if="isAlreadyReviewed">
+                <h3>{{"Doctor" | translate }}</h2>
+                    <div class="well">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <!-- START:ALREADY REVIEWED -->
+                                <div class="user-rating">
+                                    <div class="rating-block">
+                                        <h1>{{review.rating}}</h1>
+                                        <!--  -->
+                                        <input-stars max="5" allow-half icon-base="fa fa-fw" icon-empty="fa-star-o" icon-half="fa-star-half-o" icon-full="fa-star checked" icon-hover-full="fa-star" ng-model="review.rating" class="list-inline" readonly="true"></input-stars>
+                                        <!--  -->
+                                    </div>
+                                </div>
+                                <!-- END:ALREADY REVIEWED -->
+                            </div>
+                            <div class="col-md-7">
+                                <div class="other-ratings">
+                                    <!--start:other ratings-->
+                                    <label for="review" class="col-md-6">{{'Bedside Manner' | translate}}:</label>
+                                    <input-stars max="5" icon-base="fa fa-fw" icon-empty="fa-star-o" icon-hover="hover" icon-half="fa-star-half-o" icon-full="fa-star checked" readonly="true" ng-model="review.bedside_rate" class="list-inline cursor col-md-6" allow-half></input-stars>
+
+                                    <label for="review" class="col-md-6">{{'Wait Time Manner' | translate}}:</label>
+                                    <input-stars max="5" icon-base="fa fa-fw" icon-empty="fa-star-o" icon-hover="hover" icon-half="fa-star-half-o" icon-full="fa-star checked" readonly="true" ng-model="review.waittime_rate" class="list-inline cursor col-md-6" allow-half></input-stars>
+                                    <!--end:other ratings-->
+                                </div>
+                            </div>
+                        </div>
+                        <!--START:VIEW REVIEW-->
+                        <div class="reviews-doctor">
+                            <div class="alert alert-info">
+                                <p>{{review.message}}</p>
+                            </div>
+                        </div>
+                        <!--END:VIEW REVIEW-->
+                    </div>
+            </div>
+            <div class="col-md-6" ng-if="isBranchReviewed && review_type == 'branch'">
+                <h3>{{"Branch" | translate }}</h2>
+                    <div class="well">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <!-- START:ALREADY REVIEWED -->
+                                <div class="user-rating">
+                                    <div class="rating-block">
+                                        <h1>{{branch_review.rating}}</h1>
+                                        <input-stars max="5" allow-half icon-base="fa fa-fw" icon-empty="fa-star-o" icon-half="fa-star-half-o" icon-full="fa-star checked" icon-hover-full="fa-star" ng-model="branch_review.rating" class="list-inline" readonly="true"></input-stars>
+                                    </div>
+                                </div>
+                                <!-- END:ALREADY REVIEWED -->
+                            </div>
+                            <div class="col-md-7">
+                                <div class="other-ratings">
+                                    <!--start:other ratings-->
+                                    <label for="review" class="col-md-6">{{'Bedside Manner' | translate}}:</label>
+                                    <input-stars max="5" icon-base="fa fa-fw" icon-empty="fa-star-o" icon-hover="hover" icon-half="fa-star-half-o" icon-full="fa-star checked" readonly="true" ng-model="branch_review.bedside_rate" class="list-inline cursor col-md-6" allow-half></input-stars>
+
+                                    <label for="review" class="col-md-6">{{'Wait Time Manner' | translate}}:</label>
+                                    <input-stars max="5" icon-base="fa fa-fw" icon-empty="fa-star-o" icon-hover="hover" icon-half="fa-star-half-o" icon-full="fa-star checked" readonly="true" ng-model="branch_review.waittime_rate" class="list-inline cursor col-md-6" allow-half></input-stars>
+                                    <!--end:other ratings-->
+                                </div>
+                            </div>
+                        </div>
+                        <!--START:VIEW REVIEW-->
+                        <div class="reviews-doctor">
+                            <div class="alert alert-info">
+                                <p>{{branch_review.message}}</p>
+                            </div>
+                        </div>
+                        <!--END:VIEW REVIEW-->
+                    </div>
+            </div>
+            <div class="col-md-6" ng-if="!isBranchReviewed && review_type== 'branch'">
+                <h3>{{"For Branch" | translate }}</h3>
+                    <form role="form" class="form-horizontal clearfix form-addon" name="branchreviewFrm" ng-submit="postBranchReviewRating(branchreviewFrm.$valid,branchreviewFrm);"
+                        novalidate>
+                        <div class="form-group">
+                            <label for="review" class="col-sm-3 col-md-4">{{'Bedside Manner' | translate}}:</label>
+                            <div class="col-md-8 col-sm-7" ng-class="{ 'has-error' : ((branchreviewFrm.$submitted || branchreviewFrm.branch_bedside_rate.$touched) && (branchreviewFrm.branch_bedside_rate.$pristine || branchreviewFrm.branch_bedside_rate.$invalid))}">
+                                <input-stars ng-model="branch_bedside_rate" max="5" name="branch_bedside_rate" class="list-inline cursor" required></input-stars>
+                                <span class="error" ng-show="(branchreviewFrm.$submitted || branchreviewFrm.branch_bedside_rate.$touched) && (branchreviewFrm.branch_bedside_rate.$pristine || branchreviewFrm.branch_bedside_rate.$invalid) && (branchreviewFrm.branch_bedside_rate.$error.required)">
+                                    {{'Required' | translate }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="review" class="col-sm-3 col-md-4">{{'Wait Time Manner' | translate}}:</label>
+                            <div class="col-md-8 col-sm-7" ng-class="{ 'has-error' : ((branchreviewFrm.$submitted || branchreviewFrm.branch_waittime_rate.$touched) && (branchreviewFrm.branch_waittime_rate.$pristine || branchreviewFrm.branch_waittime_rate.$invalid))}">
+                                <input-stars ng-model="branch_waittime_rate" max="5" name="branch_waittime_rate" class="list-inline cursor" required></input-stars>
+                                <span class="error" ng-show="(branchreviewFrm.$submitted || branchreviewFrm.branch_waittime_rate.$touched) && (branchreviewFrm.branch_waittime_rate.$pristine || branchreviewFrm.branch_waittime_rate.$invalid) && (branchreviewFrm.waittime_rate.$error.required)">
+                                    {{'Required' | translate }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-7 col-md-10 control-label" ng-class="{ 'has-error' : ((branchreviewFrm.$submitted || branchreviewFrm.message.$touched) && (branchreviewFrm.branch_message.$pristine || branchreviewFrm.branch_message.$invalid))}">
+                                <textarea name="branch_message" ng-model="branch_message" class="form-control" rows="6" placeholder="{{'Review'|translate}}"></textarea>
+                                <span class="error" ng-show="(branchreviewFrm.$submitted || branchreviewFrm.branch_message.$touched) && (branchreviewFrm.branch_message.$pristine || branchreviewFrm.branch_message.$invalid) && (branchreviewFrm.branch_message.$error.required)">
+                                    {{'Required'| translate }} </span>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <button type="submit" class="text-uppercase btn btn-green btn-animate">{{'Rate & Review'|translate}}
+                                <span ng-show="disableButton">
+                                    <i class="fa fa-spinner fa-pulse fa-lg"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+</section>

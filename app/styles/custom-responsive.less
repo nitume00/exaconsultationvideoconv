@@ -1,0 +1,1528 @@
+/**
+*    CSS for @Bookmydoc
+*
+* @author		ganesh_119at09 (Sridharan Team)
+* @copyright 	Copyright (c) 2012 {@link http://www.agriya.com Agriya Infoway}
+* @license 		http://www.agriya.com Agriya Infoway Licence
+* @version 		SVN: $Id: custom-responsive.less ganesh_119at09 $
+* @since 		2013-10-09
+*/
+
+/*@media(min-width:1601px) {
+    .banner {
+        background:url('@{images}banner-big.jpg') no-repeat center top;
+        background-size: cover;
+    }
+}*/
+
+@media screen and (min-width:992px) and (max-width:1199px) {
+    .banner .home-search .form-group,
+    .doctor-search .search-block .form-search .form-group {
+        width: auto;
+        margin: (@margin - 15px) (@margin - 10px) (@margin);
+    }
+    .star-doctor {
+        padding-bottom: @padding + 98px;
+        .container {
+            img {
+                top: -34px;
+                right: 0;
+            }
+        }
+    }
+    .how-it-works {
+        ul {
+            &:before {
+                width: 628px;
+                left: 142px;
+            }
+            li {
+                &:before {
+                    left: 142px;
+                }
+            }
+        }
+    }
+    .footer {
+        .get-app li,
+        .social-link li {
+            margin-bottom: @margin;
+        }
+    }
+    .login-page {
+        .choose-register {
+            .patient-block {
+                top: -235px;
+                right: 32px;
+            }
+            .doctor-block {
+                bottom: -320px;
+                right: 210px;
+            }
+        }
+    }
+    .register {
+        form {
+            .form-footer {
+                .btn {
+                    min-width: 185px;
+                }
+            }
+        }
+    }
+    .doctor-search .search-result .search-result-header .search-week-ul>li {
+        min-width: 80px;
+        &.search-right-arrow {
+            right: -60px;
+        }
+        &.search-left-arrow {
+            left: -25px;
+        }
+        ul {
+            font-size: @font-size - 2px;
+        }
+    }
+    .doctor-search .search-result .doctor-booking-details ul {
+        min-width: 77px;
+        ul li {
+            width: 80px;
+            min-width: auto;
+            a {
+                min-width: 77px;
+            }
+        }
+    }
+    .user-view {
+        .search-result .week-hender ul.search-week-ul>li {
+            min-width: 70px;
+        }
+    }
+    .subscription_block .subscription_plans {
+        .subscription_head span {
+            &:before,
+            &:after {
+                width: 55px;
+            }
+            &:before {
+                left: -65px;
+            }
+            &:after {
+                right: -65px;
+            }
+        }
+        .subs-content p {
+            min-height: 330px;
+        }
+    }
+    .uil-ring-css {
+        margin-left: @margin - 15px;
+    }
+    .user-view .search-result .doctor-list .search-week-ul {
+        width: 590px;
+    }
+    .user-view .search-result .week-hender ul.search-week-ul>li {
+        min-width: 83px;
+    }
+    .user-view .search-result .doctor-list .search-week-ul ul li a {
+        min-width: 77px;
+    }
+}
+
+@media(min-width:992px) and (max-width: 1199px) {
+    .making-day-worker .carousel {
+        .left {
+            left: -15%;
+        }
+        .right {
+            right: -15%;
+        }
+    }
+}
+
+@media screen and (max-width:991px) {
+    .take-our-word .left-side {
+        padding: @padding + 15px;
+    }
+    .banner .home-search .form-group.form-btn {
+        .bor-rad(5px);
+    }
+    .making-day-worker .carousel {
+        .left {
+            left: 0;
+        }
+        .right {
+            right: 0;
+        }
+    }
+    .take-our-word {
+        .left-side {
+            margin-bottom: @margin + 5px;
+        }
+    }
+    .paging-head {
+        h2 {
+            font-size: @font-size + 16px;
+        }
+    }
+    .video-block {
+        padding-bottom: 20px;
+    }
+    .related-practice,
+    .how-it-works,
+    .find-doctor,
+    .contact-block {
+        padding: (@padding + 25px) (@padding - 15px);
+    }
+    .how-it-works .carousel-indicators {
+        bottom: -30px;
+    }
+    .banner {
+        h1 {
+            font-size: @font-size + 26px;
+        }
+    }
+    .home-search .form-group,
+    .doctor-search .search-block .form-search .form-group {
+        width: 100% !important;
+    }
+    .doctor-search .search-block .map-block form .form-group {
+        margin-right: @margin - 15px;
+        display: block;
+        margin-bottom: @margin;
+        .form-control {
+            width: 100%;
+        }
+    }
+    .star-doctor {
+        .star-doc-left {
+            padding-top: @padding - 15px;
+            h2 {
+                font-size: @font-size + 14px;
+            }
+            h3 {
+                font-size: @font-size + 8px;
+            }
+            .btn {
+                margin-bottom: 30px;
+            }
+        }
+        .container {
+            img {
+                position: static;
+                max-width: 100%;
+            }
+        }
+    }
+    .how-it-works {
+        ul {
+            &:before {
+                width: 480px;
+                left: 110px;
+            }
+            li {
+                margin-bottom: @margin + 10px;
+                &:before {
+                    left: 110px;
+                }
+            }
+        }
+    }
+    .login-page {
+        padding-bottom: @padding + 5px;
+        .login-page-height {
+            padding: (@padding + 75px) (@padding);
+            &.login-user {
+                padding: (@padding + 75px) (@padding - 15px);
+            }
+        }
+        form {
+            margin-top: @margin + 25px;
+        }
+        .choose-register {
+            .patient-block {
+                .joinnow-block;
+            }
+            .doctor-block {
+                .joinnow-block;
+            }
+        }
+    }
+    .register {
+        .form-login-heading {
+            text-align: center;
+            .btn {
+                float: none !important;
+                margin-top: @margin - 5px;
+                display: block;
+            }
+        }
+    }
+    .appointment-block {
+        .appointment-header {
+            .appointment-list {
+                ul {
+                    margin: (@margin - 15px) (@margin - 15px) (@margin + 10px);
+                }
+                .all-appointment a:active {
+                    background-color: #b41aea;
+                    color: #fff;
+                }
+            }
+        }
+        .appmt-view {
+            padding: (@padding) (@padding - 15px) (@padding + 10px);
+        }
+    }
+    .doctor-search .search-result {
+        .search-result-header .search-week-ul>li {
+            min-width: 90px;
+            &.search-left-arrow {
+                left: -10px;
+            }
+            &.search-right-arrow {
+                right: 0;
+            }
+        }
+        .doctor-booking-details ul ul li {
+            min-width: auto;
+            width: 85px;
+        }
+    }
+    .clinic-view {
+        .appmt-details {
+            >div {
+                float: none !important;
+                &+div {
+                    float: left;
+                }
+            }
+        }
+        .qualify-exp {
+            margin-top: @margin + 30px;
+        }
+    }
+    .user-view {
+        .appmt-details {
+            >div {
+                float: none !important;
+                &+div {
+                    float: left;
+                }
+            }
+        }
+        .user-profile {
+            .media {
+                text-align: center;
+                .media-left {
+                    padding-right: @padding - 15px;
+                }
+                .media-left,
+                .media-body {
+                    display: block;
+                    width: 100%;
+                }
+            }
+            ul.bottom-list li a {
+                margin-bottom: @margin;
+            }
+        }
+        .qualify-exp {
+            margin-top: @margin + 30px;
+        }
+        .patient-reviews .profile-review .profile-review-author {
+            margin-bottom: @margin + 5px;
+        }
+        .patient-reviews .separate-reviews>div .angular-input-stars {
+            left: 0 !important;
+        }
+        .user-profile ul.bottom-list li {
+            float: none;
+            display: block;
+        }
+    }
+    .book-appmt-block {
+        .book-doctor-details {
+            text-align: center;
+            .media {
+                .media-left,
+                .media-body {
+                    display: block;
+                    padding: @padding - 15px;
+                    width: auto;
+                }
+            }
+            address {
+                display: inline-block;
+                margin-top: @margin + 5px;
+                margin-bottom: @margin + 5px;
+            }
+        }
+        .doctor-visit {
+            margin-top: (@margin + 10px);
+            margin-bottom: (@margin + 10px);
+        }
+        .doctor-visit {
+            .form-group {
+                margin-right: @margin - 15px;
+            }
+            .book-free {
+                padding: (@padding - 15px) (@padding);
+            }
+            .radio {
+                margin: (@margin - 5px) (@margin - 15px);
+            }
+            &.patient-info {
+                .form-group {
+                    margin-right: @margin - 30px;
+                }
+            }
+        }
+        .appmt-finish {
+            padding: @padding - 15px;
+            .table-responsive {
+                margin: (@margin + 15px) (@margin - 15px);
+            }
+        }
+    }
+    .calendar-settings {
+        .date-section {
+            .form-group {
+                select {
+                    max-width: none;
+                }
+            }
+            &+div {
+                .form-group {
+                    padding: @padding - 15px;
+                }
+            }
+        }
+        .session-block {
+            padding: @padding - 15px;
+            label+div {
+                padding: @padding - 15px;
+            }
+        }
+    }
+    .calendar-block .calendar-body .cal-cell1 {
+        min-height: 60px;
+        .cal-month-day {
+            height: 60px;
+        }
+    }
+    .ng-gallery {
+        margin-bottom: @margin + 5px;
+        &>div {
+            display: inline-block;
+        }
+    }
+    .ng-gallery-content {
+        &>.ng-thumbnails-wrapper {
+            bottom: 30px;
+        }
+        &>a.nav-left {
+            left: 0 !important;
+        }
+        &>a.nav-right {
+            right: 0 !important;
+        }
+        &>span.info-text {
+            bottom: 130px !important;
+        }
+    }
+    .uil-ring-css {
+        margin-left: @margin - 15px;
+    }
+}
+
+@media(min-width:992px) {
+   /*  .take-our-word .left-side:after {
+        content: '';
+        display: inline-block;
+        border: 10px solid #f2f5f8;
+        border-width: 20px 0 20px 20px;
+        border-color: transparent transparent transparent #f2f5f8;
+        position: absolute;
+        right: -20px;
+        top: auto;
+        bottom: 90px;
+    } */
+    .header {
+        .navbar-brand {
+            margin-right: 50px;
+        }
+    }
+    .take-our-word {
+        .row {
+            >div {
+                padding: 0;
+            }
+        }
+    }
+}
+
+
+/* START:NEW CSS */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .appoiment-details {
+        padding: 15px;
+    }
+    .navbar-right {
+        float: right;
+        margin-right: -15px;
+    }
+    .banner {
+        background: url(../images/banner.png) no-repeat bottom;
+        width: 100%;
+        min-height: 640px;
+        height: 610px;
+        color: #fff;
+        color: #ffde0d;
+        position: relative;
+        text-align: center;
+    }
+    .banner .home-search .popular-search ul>li {
+        font: 15px 'Open Sans', sans-serif;
+        padding-top: 10px;
+    }
+    .banner .home-search {
+        color: #fff;
+        padding: 140px 0 0 0;
+    }
+    .banner h4 {
+        font-size: 37px;
+        color: #fff;
+        font-weight: 600;
+        text-shadow: 0 6px #585959;
+    }
+    .header .navbar-brand>img {
+        height: 45px;
+        margin-left: 0px;
+    }
+    .header .navbar-left {
+        margin-top: 3px;
+        padding-left: 0px;
+    }
+    .header .navbar-collapse .navbar-right .dropdowns .fa {
+        padding: 0 0 0 5px;
+    }
+    .header .navbar-collapse li a {
+        font: 12px 'Open Sans', sans-serif;
+        font-weight: 600;
+        color: #585959;
+        padding: 5px 0;
+    }
+    .header .navbar-collapse .navbar-right .bars {
+        font: 12px 'Open Sans', sans-serif;
+        width: 140px;
+        color: #fff;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 3px;
+        line-height: 13px;
+    }
+    .header .navbar-collapse .navbar-right #country-select .dropbtn {
+        background-color: transparent;
+        color: #51677d;
+        padding: 5px;
+        font-size: 13px;
+        border: none;
+        font-weight: 500;
+    }
+    .header .navbar-collapse .download {
+        padding: 0 5px 0 0;
+    }
+    .nav>li>a {
+        padding: 5px;
+    }
+    .header .navbar-collapse .navbar-right #arrow-right:before {
+        right: 300px;
+    }
+    .navbar>.container-fluid .navbar-brand {
+        margin-left: -15px;
+        margin-right: 0;
+    }
+    .navbar-right {
+        float: right;
+        margin-right: auto;
+    }
+    .header .navbar-collapse .navbar-right .dropdowns .dropdown-toggle {
+        padding: 10px 10px 10px 10px;
+    }
+    .header .navbar-collapse .navbar-right #final-tog {
+        width: auto;
+    }
+    .doctor-search .search-block .form-search .form-group {
+        width: auto;
+    }
+    .banner .home-search .popular-search {
+        padding: 40px 0 40px 0;
+    }
+    .banner .home-search .form-group .form-control {
+        margin-left: 0px;
+        border-right: none;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    .book-appmt .nav-tabs>li {
+        padding: 15px;
+        float: none;
+        display: block;
+        zoom: 1;
+    }
+    .doctor-search .chosen-container {
+        min-width: 100%;
+    }
+    .doctor-search .search-block .gender-list {
+        padding: 0px;
+    }
+}
+
+
+/*END:NEW CSS*/
+
+@media(min-width: 768px) {
+    .navbar-right {
+        float: right;
+        margin-right: 5px;
+    }
+    .header .navbar-collapse .navbar-right .language-select {
+        min-height: 35px;
+        min-width: 20px;
+    }
+    .header .navbar-collapse .navbar-right #country-select .flag-icon {
+        font-size: 22px;
+        vertical-align: middle;
+        span {
+            font-size: 14px;
+        }
+    }
+    .clinic-view .qualify-exp .form-group {
+        position: relative;
+        margin: 0 0 0px 60px;
+    }
+    .clinic-view .qualify-exp:before {
+        content: "";
+        width: 1px;
+        height: 80%;
+        background-color: #ccc;
+        position: absolute;
+        top: 0;
+        left: 23px;
+        border: 1px solid #ccc;
+    }
+   
+}
+
+@media screen and (max-width:580px) {
+    .header .navbar-collapse .navbar-right #final-tog {
+        width: auto;
+        float: right;
+    }
+    .header .navbar-collapse .navbar-right #country-select .dropbtn {
+        float: left;
+    }
+    .appoiment-details {
+        padding: 15px;
+    }
+    .header .navbar-brand>img {
+        height: 50px;
+        margin-left: 0px;
+    }
+    .appoinment-report .view-button .btn-primary {
+        min-width: 250px;
+        margin-top: 15px;
+    }
+    .banner .home-search .select-specality .radio-group {
+        display: inline-grid;
+    }
+    .banner .home-search .select-specality label {
+        padding: 10px 50px 10px 50px;
+    }
+    .banner .home-search .form-group .form-control {
+        border-right: none;
+        margin-left: 0px;
+    }
+    .appoinment-report {
+        padding: 20px;
+    }
+    .clinic-view .appmt-details .panel-default .alert {
+        min-width: auto;
+    }
+    .header .navbar-collapse .navbar-right .user-bar {
+        display: block;
+    }
+    .header .navbar-collapse .download {
+        float: left;
+    }
+    .doctor-search .search-block .select-specality .radio-group {
+        display: inline-grid;
+        border-radius: 6px;
+    }
+    .doctor-search .search-block .select-specality label {
+        font-weight: 700;
+        padding: 10px 60px 10px 60px;
+        font-size: 16px;
+    }
+    .doctor-search .filter{
+        position: relative;
+        top: 20px;
+    }
+    .doctor-search .search-block .form-search .form-group .form-control {
+        font: 14px 'Open Sans', sans-serif;
+        padding: 8px 10px 10px 10px;
+        text-align: center;
+        font-weight: 600;
+    }
+    .doctor-search .map-here .panel-default {
+        display: none;
+    }
+    .appointment-block h3 {
+        font: 17px 'Open Sans', sans-serif;
+        padding-bottom: 10px;
+        text-align: center;
+    }
+    .footer .footer-menu .fa-stack {
+        width: 42px;
+        height: 30px;
+        .fa-stack-2x {
+            font-size: 38px;
+        }
+    }
+    .appointment-block {
+        .nav-tabs>li {
+            float: none;
+            display: inline-block;
+            zoom: 1;
+        }
+        .nav-tabs {
+            padding-bottom: 10px;
+            padding-top: 10px;
+            text-align: center;
+            li>a {
+                font: 11px 'Open Sans', sans-serif;
+                padding: 13px 20px 13px 20px;
+                min-width: 170px;
+                font-weight: 600;
+            }
+        }
+    }
+    .appoiment-details .panel .view-reports {
+        overflow: hidden;
+        padding: 0;
+        border-radius: 5px;
+        border: 1px solid #b41aea;
+        height: 350px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow-y: scroll;
+    }
+    .your-next-booking .panel-default {
+        width: auto;
+    }
+    .doctor-search .search-block .gender-list {
+        padding: 25px 15px;
+    }
+    .loader {
+        bottom: 0;
+    }
+}
+
+@media screen and (min-width:768px) and (max-width:991px) {
+    /*sample */
+    .making-day-worker {
+        .carousel-caption {
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        .carousel-indicators {
+            bottom: -60px;
+            text-align: right;
+            right: 0;
+            left: auto;
+        }
+    }
+    .header .navbar-brand>img {
+        height: 40px;
+        margin-left: 1px;
+    }
+    .banner .home-search .overall-form {
+        padding: 0
+    }
+    .header .navbar-collapse li.dropdown a {
+        font: 12px 'Open Sans', sans-serif;
+        font-weight: 600;
+        color: #585959;
+    }
+    .header .navbar-collapse .download .help-block {
+        display: block;
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: 10px;
+    }
+    .header .navbar-collapse .navbar-right .user-bar img {
+        padding: 0 10px 0 0;
+        display: none;
+    }
+    .header .navbar-collapse li .form-control {
+        font: 11px Raleway, sans-serif;
+        font-weight: 300;
+        min-height: 30px;
+        width: 55px;
+        background-color: #ecf1f5;
+        border: 1px solid #cedcea;
+        border-radius: 3px;
+        font-weight: 500;
+        margin: 0;
+        padding: 5px;
+    }
+    .header .navbar-collapse .navbar-right .dropdowns .dropdown-toggle {
+        padding: 10px 5px 10px 5px;
+        .fa {
+            padding: 0 0 0 0px;
+        }
+    }
+   
+    .header .navbar-left {
+        margin-top: 0px;
+        padding-left: 10px;
+    }
+    /* END:sample */
+    .navbar-right {
+        float: right;
+    }
+    .appoinment-report .view-button .btn-primary {
+        color: #fff;
+        background-color: #b41aea;
+        padding: 5px 25px 5px 25px;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+    .doctor-search .search-result {
+        .search-result-header {
+            &>div {
+                float: none !important;
+            }
+            .search-week-ul>li {
+                min-width: 83px;
+                &.search-left-arrow {
+                    left: 0;
+                }
+                ul {
+                    font-size: @font-size - 2px;
+                }
+            }
+        }
+        .doctor-booking-details ul {
+            min-width: auto;
+        }
+    }
+    .header .navbar-collapse {
+        li {
+            margin: 0px 4px;
+        }
+        a {
+            font: 12px 'Open Sans', sans-serif;
+            font-weight: 600;
+            color: #b41aea;
+        }
+        .download {
+            padding: 0 0px 0 0;
+            span {
+                font-size: 10px;
+            }
+        }
+    }
+    .book-appmt {
+        p {
+            min-height: 20px;
+            padding: 0px 0 0 0px;
+            font: 16px 'Open Sans', sans-serif;
+            color: #555d5c;
+            line-height: 10px;
+            text-align: left;
+            font-weight: 600;
+            text-align: center;
+        }
+        .panel-default {
+            h3 {
+                text-align: center;
+            }
+        }
+        .panel-default .nav-tabs>li {
+            padding-top: 15px;
+            padding-left: 60px;
+            padding-right: 60px;
+            float: none;
+            zoom: 1;
+        }
+        .book-head {
+            font-size: 20px;
+            font-weight: 500;
+            color: #000;
+            padding: 10px 0 0 0;
+        }
+        ul .doctor-list span img {
+            height: 100px;
+        }
+        ul {
+            text-align: center;
+            line-height: 30px;
+            font-size: 17px;
+        }
+    }
+    .how-it-work h3 {
+        font-size: 22px;
+    }
+    .how-it-work h4 {
+        min-height: 0px;
+        color: #555c5b;
+        font-size: 15px;
+        line-height: 20px;
+        padding: 0;
+    }
+    .how-it-work ul .doctor-list {
+        min-height: 150px;
+    }
+    .register-app h4 {
+        text-align: center;
+    }
+    .footer {
+        height: auto;
+    }
+    .header {
+        padding: 7px 0 7px 0;
+        background-color: white;
+    }
+    .appoinment-report {
+        p {
+            color: #5d6f82;
+            font: 13px 'Open Sans', sans-serif;
+            font-weight: 600;
+        }
+        .btn-primary {
+            font-size: 15px;
+            font-weight: 600;
+        }
+    }
+    .register-user .reg-heading {
+        font-size: 17px;
+    }
+    .register-user .panel-default .panel-body {
+        padding: 0;
+    }
+    .your-next-booking {
+        padding-top: 50px;
+        .panel-default {
+            width: 200px;
+            h5 {
+                font-size: 17px;
+                margin-top: 0;
+                margin-bottom: 0;
+                font-weight: 400;
+            }
+            p {
+                font-size: 15px;
+                margin-top: 0;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+        }
+    }
+    .header .navbar-collapse .navbar-right .bars {
+        min-height: 36px;
+        min-width: 100px;
+        span {
+            font-size: 11px;
+        }
+    }
+    .banner {
+        background-size: cover;
+        display: block;
+        height: 100%;
+        >div {
+            display: block;
+        }
+        .home-search .form-group.insurance {
+            min-width: 290px;
+        }
+        .banner-scroll {
+            right: 40px;
+            top: 40%;
+        }
+        .form-btn {
+            padding: 0 0 25px 0;
+        }
+        p {
+            color: #ffff;
+            font-weight: 100;
+            font: 16px 'Open Sans', sans-serif;
+        }
+        h4 {
+            font-size: 23px;
+        }
+        .home-search {
+            color: #fff;
+            padding: 100px 0 0 0;
+        }
+    }
+    .appoinment-report {
+        padding: 40px 10px 40px 10px;
+    }
+    .book-appmt .panel-default .nav-tabs>li {
+        padding: 15px;
+        display: block;
+    }
+    .book-appmt .panel-default .nav-tabs>li.active {
+        border: 4px solid #b41aea;
+        background-color: transparent;
+        color: #333;
+    }
+    .book-appmt .panel-default .nav-tabs>li>a {
+        font-size: 18px;
+    }
+    .appointment-block {
+        .nav-tabs {
+            padding-bottom: 10px;
+            padding-top: 10px;
+            li>a {
+                font: 11px 'Open Sans', sans-serif;
+                padding: 13px 20px 13px 20px;
+                min-width: 170px;
+                font-weight: 600;
+            }
+        }
+    }
+    .clinic-view .appmt-details .panel-default {
+        height: auto;
+    }
+    .chosen-container-single .chosen-single {
+        border-right: none;
+    }
+    .doctor-search .map-here {
+        padding: 0 15px;
+    }
+    .register-app .dec-find {
+        display: block;
+    }
+}
+
+@media screen and (max-width:767px) {
+    .appoiment-details {
+        padding: 15px;
+    }
+    .navbar-brand>img {
+        height: 50px;
+        margin-left: 0px;
+    }
+    .navbar .navbar-collapse .navbar-right>li:last-child {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .navbar .nav-collapse {
+        margin: 7.5px auto;
+        padding: 0;
+    }
+    .navbar .nav-collapse .navbar-form {
+        margin: 0;
+    }
+    .nav-collapse>li {
+        float: none;
+    }
+    .navbar.navbar-default .nav-collapse,
+    .navbar.navbar-inverse .nav-collapse {
+        transform: translate(-100%, 0px);
+    }
+    .navbar.navbar-default .nav-collapse.in,
+    .navbar.navbar-inverse .nav-collapse.in {
+        transform: translate(0px, 0px);
+    }
+    .navbar.navbar-default .nav-collapse.slide-down,
+    .navbar.navbar-inverse .nav-collapse.slide-down {
+        transform: translate(0px, -100%);
+    }
+    .navbar.navbar-default .nav-collapse.in.slide-down,
+    .navbar.navbar-inverse .nav-collapse.in.slide-down {
+        transform: translate(0px, 0px);
+    }
+    .banner .home-search .overall-form {
+        padding: 0
+    }
+    header .navbar-collapse .download {
+        width: 150px;
+    }
+    .banner-logo {
+        padding: @padding + 55px 0;
+    }
+    .name-field {
+        div {
+            margin: @margin - 5px 0;
+        }
+    }
+    .banner {
+        background-size: cover;
+        display: block;
+        height: 100%;
+        >div {
+            display: block;
+        }
+        .home-search .form-group.insurance {
+            min-width: 290px;
+        }
+        .banner-scroll {
+            right: 40px;
+            top: 40%;
+        }
+        .form-btn {
+            padding: 0 0 25px 0;
+        }
+        p {
+            color: #ffff;
+            font-weight: 100;
+            font: 16px 'Open Sans', sans-serif;
+        }
+        h4 {
+            font-size: 23px;
+        }
+        .home-search {
+            color: #fff;
+            padding: 70px 0 0 0;
+        }
+    }
+    .book-appmt ul .doctor-list {
+        margin-bottom: @margin + 5px;
+    }
+    .making-day-worker {
+        .carousel-caption {
+            position: static;
+        }
+        .carousel-indicators {
+            bottom: 0;
+        }
+    }
+    .header {
+        background-color: #fff;
+        .navbar-header {
+            .navbar-brand {
+                left: 50px;
+                img {
+                    max-width: 60px;
+                }
+            }
+        }
+        .navbar-collapse {
+            li {
+                margin: (@margin - 5px)(@margin - 15px);
+                border-right: 0;
+                a {
+                    padding: (@padding - 8px) (@padding);
+                    &:hover {
+                        background-color: @gray;
+                    }
+                }
+            }
+            .nav {
+                margin: 0;
+            }
+            li.dropdown {
+                margin: @margin - 15px;
+                .dropdown-menu {
+                    width: 100%;
+                    height: 200px;
+                    overflow: auto;
+                    padding: 10px;
+                    top: 210px;
+                    border-bottom: @border;
+                }
+                &.open.arrow-icon:after {
+                    border: none;
+                }
+            }
+        }
+        .navbar-header .navbar-toggle {
+            margin-top: 8px;
+        }
+    }
+    .thumb-block {
+        li {
+            display: block;
+        }
+    }
+    .related-practice {
+        .carousel-control {
+            position: static;
+        }
+    }
+    .how-it-works {
+        ul:before,
+        li:before {
+            display: none;
+        }
+    }
+    .register {
+        form {
+            .form-group {
+                label.form-name+div {
+                    margin-bottom: @margin + 13px;
+                }
+            }
+        }
+    }
+    .appointment-block {
+        .appointment-header {
+            .pull-left {
+                float: none !important;
+            }
+            .appointment-list {
+                margin-left: @margin - 15px;
+            }
+        }
+        .appmt-view-btn {
+            text-align: center;
+            p {
+                display: inline-block;
+                margin-right: @margin - 15px;
+                margin-bottom: @margin;
+            }
+        }
+    }
+    .contact-block .footer-logo p {
+        margin-left: @margin - 15px;
+    }
+    .doctor-search {
+        .search-result {
+            .search-result-header {
+                .search-week-ul {
+                    .search-left-arrow,
+                    .search-right-arrow {
+                        border-bottom: 0;
+                        top: 50%;
+                        left: 0 !important;
+                    }
+                    .search-right-arrow {
+                        left: auto !important;
+                        right: 0 !important;
+                    }
+                    &>li {
+                        min-width: 100%;
+                        border-bottom: @border;
+                        margin-bottom: @margin - 5px;
+                        padding-bottom: @padding - 5px;
+                    }
+                }
+            }
+            .doctor-booking-details {
+                padding-bottom: @padding;
+                overflow-x: auto;
+                overflow-y: hidden;
+                .search-week-ul {
+                    width: 720px;
+                }
+            }
+        }
+    }
+    .doctor-search .filter{
+        position: relative;
+        top: 20px;
+    }
+    .user-view {
+        .add-review {
+            .btn {
+                margin-bottom: @margin;
+            }
+        }
+        .search-responsive {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            border: @border;
+            .search-result {
+                width: 630px;
+                margin: auto;
+                .week-hender {
+                    border-left: 0;
+                    border-right: 0;
+                    & ul.search-week-ul>li {
+                        padding-bottom: @padding - 5px;
+                    }
+                }
+                .doctor-list {
+                    border: 0;
+                    .doctor-booking-details {
+                        width: 635px;
+                        margin: auto;
+                    }
+                }
+            }
+        }
+    }
+    .appmt-table {
+        h1 {
+            .search-table-field {
+                float: none !important;
+                .input-group {
+                    margin: (@margin) (@margin - 15px) (@margin) (@margin - 15px);
+                }
+                .btn {
+                    width: 100%;
+                }
+                .pull-left {
+                    float: none !important;
+                }
+            }
+        }
+    }
+    .search-responsive {
+        .pagination {
+            display: inline-block;
+            padding: 0px;
+        }
+        .paging li a {
+            padding: 5px 9px 5px 8px;
+            font: 13px Raleway, sans-serif;
+            line-height: 25px;
+            color: #000000;
+        }
+    }
+    .register-user .reg-heading {
+        padding: 15px;
+        font-size: 17px;
+        font-weight: 600;
+    }
+    .register-user .panel-default .panel-body {
+        text-align: center;
+    }
+    .book-appmt-block {
+        .appmt-steps {
+            li {
+                margin-bottom: @margin;
+            }
+        }
+        .appmt-finish {
+            .appmt-btn {
+                .btn {
+                    min-width: 100%;
+                    margin-bottom: @margin;
+                }
+            }
+        }
+    }
+    .book-apmt {
+        .panel-default .panel-body {
+            padding: 0;
+        }
+        .panel-default>.nav-tabs {
+            text-align: center;
+            text-transform: uppercase;
+            border-bottom: 2px solid#e5ebf1;
+            padding: 0;
+        }
+        .panel-default .nav-tabs>li>a {
+            font-size: 14px;
+            border-radius: 0;
+            border: none;
+            color: #404040;
+        }
+        .book-head {
+            font-size: 16px;
+            font-weight: 500;
+            color: #000;
+            padding: 10px 0 0 0;
+        }
+        .book-appmt ul {
+            color: #3f4544;
+            text-align: left;
+            line-height: 30px;
+            list-style: none;
+            padding: 0 0 0 0px;
+        }
+    }
+    .take-our-word .right-side .panel-default {
+        height: 100px;
+        width: 250px;
+        border-radius: 0;
+        background-color: #fff;
+        border: none;
+        overflow: hidden;
+    }
+    .book-appmt .panel-default .nav-tabs>li.active {
+        background-color: transparent;
+        color: #333;
+        border: 2px solid #b41aea;
+    }
+    .how-it-work h4 {
+        min-height: 66px;
+        color: #555c5b;
+        font-size: 17px;
+        line-height: 28px;
+        text-align: center;
+        padding:10px 0;
+    }
+    .book-appmt .panel-default .nav-tabs>li {
+        padding-top: 0px;
+        padding-left: 60px;
+        padding-right: 60px;
+        float: none;
+        display: inherit;
+        zoom: 1;
+    }
+    .diagnostic-view .media-size {
+        width: 100%;
+    }
+    .footer {
+        height: auto;
+    }
+    .doctor-search .search-block h4 {
+        font-size: 17px;
+        font-weight: 600;
+    }
+    .doctor-search .search-block .select-specality .radio-group {
+        font: 10px 'Open Sans', sans-serif;
+        border-radius: 6px;
+    }
+    .doctor-search .search-block .form-search .form-group .form-control {
+        font: 14px 'Open Sans', sans-serif;
+        padding: 8px 10px 10px 10px;
+    }
+    .doctor-search .search-block .help-text {
+        margin: 10px 0;
+        font-size: 14px;
+    }
+    .doctor-search .search-block .form-search .form-group:after {
+        top: 0;
+        line-height: 55px;
+    }
+    .list-form:after {
+        font-size: 20px;
+    }
+    .searchpg-left {
+        display: none;
+    }
+    .searchpg-left .map-block .map-height {
+        top: 0;
+        width: 0;
+        left: 0;
+        bottom: 0;
+    }
+    .find-doctor h2 {
+        font: 25px Raleway, sans-serif;
+        font-weight: 700;
+        color: #b41aea;
+    }
+    .find-doctor .change-location h4 {
+        font: 25px Raleway, sans-serif;
+        font-weight: 500;
+        border-bottom: 2px solid #d9d9d9;
+    }
+    .clinic-view .user-profile .media-left {
+        padding: 0;
+    }
+    .clinic-view .user-profile .media-body {
+        padding: 0 0 0 20px;
+    }
+    .clinic-view .qualify-exp:before {
+        height: 100%;
+    }
+    .doctor-search .search-block .form-search #city {
+        min-width: 250px;
+    }
+    .doctor-search .search-block .form-search #area {
+        min-width: 250px;
+    }
+    .doctor-search .search-block {
+        padding: 10px 10px;
+    }
+    .footer .bottomBanner {
+        float: none;
+        width: 100%;
+        margin: 0;
+    }
+    .doctor-search .search-result .search-result-header>div {
+        float: none!important;
+    }
+    .how-it-work .clini-appoinment {
+        text-align: center;
+    }
+    .register-app h4 {
+        text-align: center;
+    }
+    .doctor-search .search-block h3 {
+        color: #75F700;
+        font-size: 21px;
+        font-weight: 600;
+        text-shadow: 3px 3px #ddd;
+        margin: 0;
+    }
+    .appoiment-details .panel .view-reports {
+        overflow: hidden;
+        padding: 0;
+        border-radius: 5px;
+        border: 1px solid #b41aea;
+        height: 350px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow-y: scroll;
+    }
+    .clinic-view .appmt-details .panel-default {
+        height: auto;
+    }
+    .chosen-container-single .chosen-single {
+        border-right: none;
+        width: 100%;
+    }
+    /*  .doctor-search .week-hender .panel-default {
+        width: 350px;
+        margin: 0 auto;
+    } */
+}
+
+@media screen and (max-width:639px) {
+    .calendar-block {
+        .calendar-header {
+            &>div {
+                float: none !important;
+                margin-top: @margin + 5px;
+            }
+        }
+    }
+    .user-view {
+        .user-profile {
+            ul.bottom-list {
+                margin-left: @margin - 15px;
+                li {
+                    margin: @margin - 15px;
+                    display: block;
+                }
+                p {
+                    margin-left: @margin - 15px;
+                }
+            }
+        }
+    }
+    .contact-block .btn {
+        font-size: @font-size + 1px;
+    }
+}
+
+@media screen and (max-width:430px) {
+    .growl-container.growl-fixed.top-center {
+        margin-left: @margin - 160px !important;
+    }
+    .user-view .appmt-details h2 {
+        font-size: @font-size + 7px;
+    }
+}
+
+@media screen and (max-width:375px) {
+    .user-view .search-result .week-hender .search-left-arrow,
+    .user-view .search-result .week-hender .search-right-arrow {
+        top: 36px;
+    }
+    .get-app li a {
+        display: block;
+        margin-bottom: @margin;
+    }
+}

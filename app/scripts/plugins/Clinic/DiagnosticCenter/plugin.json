@@ -1,0 +1,10 @@
+{
+	"name": "DiagnosticCenter", 
+	"class": "fa fa-2x fa-file-text",
+	"description": "DiagnosticCenter",
+	"dependencies": "Hospital",
+	"module_id": "",
+	"module_hash": "",
+	"display_order": "2",
+	"plugin_name":"Hospital/DiagnosticCenter"
+}

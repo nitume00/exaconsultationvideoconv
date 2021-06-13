@@ -1,0 +1,87 @@
+<div class="clinic-view clearfix">
+    <div class="user-profile">
+        <div class="container">
+            <div class="col-md-6 media-size">
+                <!--START:MEDIA-->
+                <div class="media">
+                    <div class="media-left">
+                        <a href="users/edit_profile" title="{{user.username}}" class="thumbnail">
+                            <img ng-src="{{branchImages[0].img}}" title="{{branch.name}}" class="" alt="{{branch.name}}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <div class="media-heading">
+                            <h4>{{branch.name}}</h4>
+                        </div>
+                        <p>{{branch.address}}</p>
+                        <p>{{'Phone'| translate }} : {{branch.phone_number}} </p>
+                        <p>
+                            <a class="btn btn-green btn-animate" href="javascript:void(0)" ng-click="allPhotos()"> {{'See Branch Images' | translate}}</a>
+                            <div ng-if="showPhoto">
+                                <ng-gallery images="branchImages"></ng-gallery>
+                            </div>
+                        </p>
+                        <p ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('UserFavorites') > -1 && $root.auth.role_id == ConstUserType.User && $root.isAuth">
+                            <user-favorite favorite="isFavorite" provideruser="branch.id" clinicuser="branch.clinic_user_id" favoritetype='branchFav'></user-favorite>
+                        </p>
+                    </div>
+                </div>
+                <!--END:MEDIA-->
+            </div>
+            <div class="col-md-5 line-wht">
+                <p id="diag-review">{{branch.description}}</p>
+            </div>
+        </div>
+    </div>
+
+    <!--START:MAP-->
+    <div class="user-map-location">
+        <div map-lazy-load="https://maps.google.com/maps/api/js">
+            <ng-map default-style="true" center="[{{branch.latitude}}, {{branch.longitude}}]" zoom="12" class="map-height">
+                <marker id="myloc" position="{{branch.latitude}}, {{branch.longitude}}" on-click="map.showInfoWindow('user-location')" icon="images/hospital-marker.png">
+                </marker>
+                <info-window id="user-location" visible-on-marker="myloc">
+                    <div ng-non-bindable>
+                        <div id="bodyContent">
+                            <h4> {{branch.name}} </h4>
+                            <p>{{branch.address}},</p>
+                            <p>{{branch.postal_code}} {{branch.city.name}}, {{branch.country.name}}</p>
+                        </div>
+                    </div>
+                </info-window>
+            </ng-map>
+        </div>
+    </div>
+    <!--END:MAP-->
+
+    <!--START:LABTEST-LIST-->
+    <div class="container appmt-details book-instruction">
+        <div class="row space-top">
+            <div class="col-md-12 here">
+                <h3>{{'Lab Tests' | translate}}</h3>
+                <ul class="list-inline">
+                    <li ng-repeat="labtest in labtests track by $index">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <img ng-src="{{labtest.lab_image}}" title="{{labtest.lab_test.name}}" alt="{{labtest.lab_test.name}}">
+                            </div>
+                            <div class="panel-body">
+                                <h4>{{labtest.lab_test.name}}</h4>
+                                <p>{{labtest.lab_test.description}}</p>
+                                <div class="fr-spc">
+                                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">{{$root.settings.CURRENCY_SYMBOL}}{{labtest.price}}</span>
+                                    <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">{{$root.settings.SITE_CURRENCY_CODE}}{{labtest.price}}</span>
+                                    <a href="labtests/{{labtest.diagnostic_center_user_id}}/{{labtest.branch_id}}/choose-tests/{{labtest.lab_test.id}}" class="btn btn-green btn-animate pull-right">{{'Book Now'|translate}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li ng-show="!testLength">
+                        <p class="hor-space alert alert-danger">{{'No Record Found'|translate}}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--END:LABTEST-LIST-->
+</div>

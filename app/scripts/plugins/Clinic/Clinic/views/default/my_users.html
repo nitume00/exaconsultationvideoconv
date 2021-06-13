@@ -1,0 +1,50 @@
+<section class="clearfix pad-63 appmt-table">
+	<div class="container-fluid">
+        <div class="page-head">    
+            <h1>{{'My Users'|translate}}</h1>
+        </div>
+        <div class="table-block">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>{{'Branch'|translate}}</th> 
+                            <th>{{'Sub Account'|translate}}</th> 
+                            <th>{{'Permission'|translate}}</th>
+                            <th>{{'Action'|translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>                        
+                        <tr ng-repeat="branchUser in users" ng-show="dataLength">
+                            <td>{{branchUser.branch.name |translate}}</td>
+                            <td>{{branchUser.user.user_profile.first_name |translate}} {{branchUser.user.user_profile.last_name |translate}}</td>
+                            <td>{{branchUser.permissions |translate}}</td>
+                                                   
+                            <td class="action-btn">
+                                <a href="users/edit/{{branchUser.id}}" title="{{'Edit'| translate}}" class="btn green"><i class="fa fa-pencil"></i>{{'Edit' | translate}}</a>
+                                <a ng-click='removeUser(branchUser.id)' title="{{'Remove'| translate}}" class="btn danger"><i class="fa fa-times"></i>{{'Remove' | translate}}</a>
+                            </td>
+                        </tr>
+                        <tr ng-show="!dataLength && !loader">
+                            <td colspan="8">
+                                <p class="hor-space alert alert-danger">{{'No Record Found'|translate}}</p>
+                            </td>
+                        </tr>
+                        <tr ng-show="loader">
+                            <td colspan="8">
+                               <div ng-include="'views/loader.html'"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="paging clearfix text-center" ng-show="totalRecords > 0">
+                    <div class="paging clearfix text-center">
+                     <uib-pagination previous-text="<" next-text=">" total-items="totalRecords"
+                        ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true" rotate="false"
+                        items-per-page="Perpage" ng-click="paginate_search('#userTop', currentPage)"></uib-pagination>
+                </div>
+            </div>
+        </div>
+	</div>
+</section>

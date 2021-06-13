@@ -1,0 +1,202 @@
+<header ng-class="{'afer-login': model.isAuthenticated()}">
+    <!-- Navigation -->
+    <nav class="navbar header navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <a class="navbar-brand" href="/app">
+                <img src="/app/images/logo.png" title="{{settings.SITE_NAME}}" alt="{{settings.SITE_NAME}}">
+            </a>
+            <div class="navbar-header page-scroll header-logo">
+                <button type="button" class="navbar-toggle x collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                    id="js-header-hide-section-btn">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <!--START:NAVBAR-LEFT--> <!--ng-if="isAuth && $root.auth.role_id == $root.ConstUserType.User"-->
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            {{'Our Services'| translate }}
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="search?search_field=doctor" title="  {{' Book a Doctor / Hospital/Clinic' | translate}}">
+                                    {{'Book an Appointment' | translate}}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="search?search_field=diagnostic">
+                                    {{'Book a Test' | translate}}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="pages/17/read-articles" title="{{'READ ARTICLES' | translate}}" class="text-uppercase read-article">{{'Read Articles' | translate}}</a>
+                    </li>
+                    <li ng-if="isAuth && ($root.auth.role_id == $root.ConstUserType.Clinic || $root.auth.role_id == $root.ConstUserType.Hospital || $root.auth.role_id == $root.ConstUserType.Diagnostic)">
+                        <a href="subscribe/plans" title="{{'Subscription Plans' | translate}}" class="text-uppercase read-article">{{'Subscription Plans' | translate}}</a>
+                    </li>
+                    <li ng-if="isAuth && $root.auth.role_id == $root.ConstUserType.Doctor">
+                        <a href="verify/proof" title="{{'Get Verified' | translate}}" class="text-uppercase read-article">{{'Get Verified' | translate}}</a>
+                    </li>
+                </ul>
+                <!--END:NAVBAR-LEFT-->
+
+                <!--START:NAVBA-RIGHT-->
+                <ul class="nav navbar-nav navbar-right" id="js-header-hide-section">
+                    <li>
+                        <a class="btn  btn-default download text-uppercase" title="{{'DOWNLOAD MOBILE APP' | translate}}">
+                            <img src="/app/images/phone.png" alt="[phone]" class="pull-left">
+                            <span>{{'Download' | translate}}</span>
+                            <span class="mob help-block">{{'Mobile App' | translate}}</span>
+                        </a>
+                    </li>
+                    <!-- <li ng-if="!isAuth">
+                        <a href="users/register/pharmacy" class="btn btn-outline-success bars text-center text-uppercase" type="button">
+                            <span class="block">{{'Become a' | translate}}</span>
+                            <span class="block">{{'Pharmacy!' | translate}}</span>
+                        </a>
+                    </li> -->
+                    <li class="nav-item dropdown" ng-if="!isAuth">
+                        <a class="btn btn-outline-success dropdown-toggle bar" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <img src="/app/images/user-add.png" alt="[user-log]"> {{'Sign In / Sign Up' | translate}}
+                        </a>
+                        <div class="dropdown-menu " aria-labelledby="navbarDropdown">
+                            <div class="dropdown-item">
+                                <form class="user-login-form" role="form" name="userLogin" ng-submit="login(userLogin.$valid)" novalidate>
+                                    <div class="form-group email row" ng-class="{ 'has-error' : (userLogin.$submitted || userLogin.email.$touched) && (userLogin.email.$pristine)}">
+                                        <div class="col-sm-12">
+                                            <input type="text" class="form-control" placeholder="Email" name="email" ng-model="email"
+                                                ng-required="true" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/">
+                                            <span class="error" ng-show="userLogin.email.$error.pattern">
+                                                {{'Enter correct email' | translate}} </span>
+                                            <span class="error" ng-show="(userLogin.$submitted || userLogin.email.$touched) && (userLogin.email.$pristine || userLogin.email.$invalid) && (userLogin.email.$error.required)">
+                                                {{'Required' | translate}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" ng-model="password" class="form-control" id="inputPassword3" placeholder="{{'Password'|translate}}"
+                                            autocomplete="off" name="inputPassword3" ng-minlength="6" required>
+                                        <span class="error" ng-show="(userLogin.$submitted || userLogin.inputPassword3.$touched) && (userLogin.inputPassword3.$pristine || userLogin.inputPassword3.$invalid) && (userLogin.inputPassword3.$error.required)">{{'Required'| translate }}</span>
+                                        <span class="error" ng-show="(userLogin.$submitted || userLogin.inputPassword3.$touched) && (userLogin.inputPassword3.$pristine || userLogin.inputPassword3.$invalid) && (userLogin.inputPassword3.$error.minlength)">{{'Must have at least 6 characters'| translate }}</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox" id="keep-me-signed-in">
+                                        <label for="keep-me-signed-in"> {{'keep me signed in' | translate}} </label>
+                                        <button type="submit" class="btn btn-primary btn-xs text-right" ng-disabled="save_btn">{{'Sign in'|translate}}</button>
+                                    </div>
+                                </form>
+
+                                <div class="patients">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <span class="text-uppercase">{{'Client' | translate}}</span>
+                                            <span class="help-block text-capitalize">
+                                                <a href="users/login">{{'Sign In' | translate}} / </a>
+                                                <a href="users/register/patient">{{'Sign Up' | translate}}</a>
+                                            </span>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <img src="/app/images/patient.png" alt="[hospital-2]">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="doctors">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <span class="text-uppercase">{{'Doctors' | translate}}</span>
+                                            <span class="help-block text-capitalize">
+                                                <a href="users/login">{{'Sign In' | translate}} / </a>
+                                                <a href="users/register/doctor">{{'Sign Up' | translate}}</a>
+                                            </span>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <img src="/app/images/doctor-nav.png" alt="[hospital-2]">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="clinics">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <span class="text-uppercase">{{'Hospital/Clinics' | translate}}</span>
+                                            <span class="help-block text-capitalize">
+                                                <a href="users/login">{{'Sign In' | translate}} / </a>
+                                                <a href="users/register/clinic">{{'Sign Up' | translate}}</a>
+                                            </span>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <img src="/app/images/chemical-nav.png" alt="[hospital-2]">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="diagnostics">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <span class="text-uppercase">{{'Diagnostics Center' | translate}}</span>
+                                            <span class="help-block text-capitalize">
+                                                <a href="users/login">{{'Sign In' | translate}}/</a>
+                                                <a href="users/register/diagnostic">{{'Sign Up' | translate}}</a>
+                                            </span>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <img src="/app/images/hospital-devices.png" alt="[hospital-devices]">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </li>
+                    <li class="nav-item dropdown" ng-if="$root.auth.role_id != $root.ConstUserType.SubAccount">
+                        <dashboard-settings></dashboard-settings>
+                    </li>
+                    <li class="nav-item dropdown" ng-if="$root.auth.role_id == $root.ConstUserType.SubAccount">
+                        <subaccount-settings></subaccount-settings>
+                    </li>
+                    <li ng-translate-language-select></li> 
+                    
+                    <li>
+                        <div class="dropdown" id="final-tog">
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="">
+                                <img src="/app/images/toggle.png" alt="[toggle-on]">
+                            </button>
+                            <ul class="dropdown-menu" id="tog-drop">
+                                <li>
+                                    <a href="#">{{ 'Customer Care' | translate }}</a>
+                                    <span class="help-block">
+                                        <i class="fa fa-phone" aria-hidden="true"></i>{{settings.SITE_CONTACT_NUMBER}}</span>
+                                    <span class="help-block">
+                                        <i class="fa fa-envelope-o" aria-hidden="true"></i>{{settings.SITE_CONTACT_EMAIL}}</span>
+                                </li>
+                                <li>
+                                    <a href="pages/18/help">{{ 'Advertise with us' | translate }}</a>
+                                </li>
+                                <li>
+                                    <a href="contactus">{{ 'Help with us' | translate }}</a>
+                                </li>
+                                <li>
+                                    <a href="pages/7/faq"> {{' FAQ ' | translate }}'{{'s' | translate }} </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <!--END:NAVBA-RIGHT-->
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <!--<div subscription-alert ></div>-->
+</header>

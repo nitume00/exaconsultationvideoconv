@@ -1,0 +1,56 @@
+<!-- TABLE -->
+<div class="appointment-block pad-63">
+    <div class="container">
+        <div class="col-md-12 table-block">
+            <div class="appointment-header">
+                <h1 class="">{{'My Branches'|translate}}</h1>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th width="500">{{'Hospital/Clinic'|translate}}</th>
+                            <th width="500">{{'Branch'|translate}}</th>
+                            <th width="500">{{'Address'|translate}}</th>
+                            <th width="500">{{'Phone'|translate}}</th>
+                            <th width="500">{{'Country'|translate}}</th>
+                            <th width="500">{{'City'|translate}}</th>
+                            <th width="500">{{'Status'|translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="my_branch in branches" ng-show="dataLength">
+                            <td> <a href="branches/{{my_branch.branch.id}}/{{my_branch.branch.name | slugify}}" class="text-right">
+                            {{my_branch.clinic_user.user_profile.display_name}}</a></td>
+                            <td> <a href="branches/{{my_branch.branch.id}}/{{my_branch.branch.name | slugify}}" class="text-right">{{my_branch.branch.name |translate}}</a></td>
+                            <td>{{my_branch.branch.address |translate}}</td>
+                            <td>{{my_branch.branch.phone_number |translate}}</td>
+                            <td>{{my_branch.branch.country.name |translate}}</td>
+                            <td>{{my_branch.branch.city.name |translate}}</td>
+                            <td>
+                                <a ng-if="my_branch.branch.is_active == '1'" href="javascript:;" title="Active">
+                                    <i class="fa fa-thumbs-o-up text-success" aria-hidden="true"></i>
+                                </a>
+                                <a ng-if="my_branch.branch.is_active != '1'" href="javascript:;" title="Inactive">
+                                    <i class="fa fa-thumbs-o-down text-danger" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr ng-show="!dataLength">
+                            <td colspan="8">
+                                <p class="hor-space alert alert-danger">{{'No Record Found'|translate}}</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="paging clearfix text-center" ng-show="totalRecords > 0">
+                <uib-pagination previous-text="<" next-text=">" total-items="totalRecords" ng-model="currentPage" max-size="maxSize"
+                    class="pagination-sm" boundary-link-numbers="true" rotate="false" items-per-page="Perpage" ng-click="paginate_search('#userTop', currentPage)"></uib-pagination>
+            </div>
+        </div>
+    </div>
+    <!-- END:Table -->
+</div>
+</div>
+<!-- table -->

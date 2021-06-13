@@ -1,0 +1,214 @@
+<section class="branch-details">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>{{'Create Prescription'|translate}}</h2>
+          <div class="panel panel-default form-group">
+            <div class="panel-body">
+              <div class="row">
+                  <div class="col-md-3">
+                      <label>{{'Name'|translate}}: {{appointment.user.user_profile.display_name}}</label>
+                  </div>
+                  <div class="col-md-2">
+                      <label>{{'Age'|translate}}: 
+                        <span ng-if="appointment.user.user_profile.dob != null" >{{appointment.user.user_profile.dob | ageFilter}} </span> 
+                        <span ng-if="appointment.user.user_profile.dob == null" >{{'Not Mentioned' | translate}} </span> 
+                      </label>
+                  </div>
+                  <div class="col-md-2">
+                      <label>{{'Sex'|translate}}: <span ng-if="appointment.user.user_profile.gender_id == 1">{{'Male' | translate }}</span>
+                        <span ng-if="appointment.user.user_profile.gender_id == 2">{{'Female' | translate }}</span> </label>
+                  </div>
+                  <div class="col-md-2">
+                      <label>{{'Patient ID'|translate}}: {{appointment.user.patient_id}} </label>
+                  </div>
+                  <div class="col-md-3">
+                      <label>{{'Appointment Token'|translate}}: {{appointment.appointment_token}} </label>
+                </div>
+                </div>
+            </div>
+          </div>
+          <form class="branch-form" role="form" name="prescriptionAddFrm" ng-submit="prescriptionAdd(prescriptionAddFrm.$valid, prescriptionAddFrm)" novalidate>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row form-group">
+                    <div class="col-xs-12">
+                      <label>{{'Patient Condition'|translate}}
+                          <span class="req-color">*</span>
+                      </label>
+                      <input type="text" ng-model="data.patient_condition" class="form-control" id="patient_condition" name="patient_condition" required="true">
+                      <span class="error" ng-show="(prescriptionAddFrm.$submitted || prescriptionAddFrm.patient_condition.$touched) && (prescriptionAddFrm.patient_condition.$pristine || prescriptionAddFrm.patient_condition.$invalid) && (prescriptionAddFrm.patient_condition.$error.required)">{{'Required'| translate }} </span>
+                     </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-sm-3">
+                      <label>{{'Weight'|translate}} (Kg)</label>
+                      <input type="text" ng-model="data.weight" class="form-control" id="weight" name="weight" ng-minlength="2" ng-maxlength="4" ng-pattern="/^[0-9]*$/">
+                      <span class="error" ng-show="(prescriptionAddFrm.$submitted || prescriptionAddFrm.weight.$touched) && (prescriptionAddFrm.weight.$pristine || prescriptionAddFrm.weight.$invalid) && (prescriptionAddFrm.weight.$error.minlength)">{{ 'Minimum length is 2' | translate }}</span>
+                      <span class="error" ng-show="(prescriptionAddFrm.$submitted || prescriptionAddFrm.weight.$touched) && (prescriptionAddFrm.weight.$pristine || prescriptionAddFrm.weight.$invalid) && (prescriptionAddFrm.weight.$error.pattern)">{{ 'Enter valid name without number' | translate }}</span>
+                    </div>
+                    <div class="col-sm-3">
+                      <label>{{'BP'|translate}}</label>
+                      <input type="text" ng-model="data.blood_pressure" class="form-control" id="blood_pressure" name="blood_pressure" required="true">
+                    </div>
+                    <div class="col-sm-3">
+                      <label>{{'Pulse'|translate}}</label>
+                      <input type="text" ng-model="data.pulse" class="form-control" id="pulse" name="pulse" required="true">
+                    </div>
+                    <div class="col-sm-3">
+                      <label>{{'Temperature(C/F)'|translate}}</label>
+                      <input type="text" ng-model="data.temperature" class="form-control" id="temperature" name="temperature" required="true">
+                    </div>
+                  </div>  
+                  <div class="row form-group">
+                    <div class="col-xs-12">
+                      <label>{{'Diagnosis'|translate}}</label>
+                        <input type="text" ng-model="data.rx_number" class="form-control" id="rx_number" name="rx_number">
+                    </div>
+                  </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+                <h2 class="text-center">{{'Medicine' | translate}}</h2>
+                <div class="panel-body">
+                  <div class="row form-group" ng-repeat="added_medicine in added_medicines">
+                    <div class="col-xs-12 pad-bot-20">
+                      <span class="text-b text-15 label label-primary">
+                          {{'Medicine'|translate}} #{{$index+1}}
+                      </span>
+                    </div>  
+                    <div class="col-xs-12">
+                        <div class="col-sm-2">
+                          <label>{{'Type'|translate}}</label>
+                          <select ng-model="added_medicine.medicine_type_id" class="form-control" name="medicine_type_id{{$index}}">
+                              <option ng-repeat="medicine_type in medicine_types" value="{{medicine_type.id}}">{{medicine_type.name|translate}}</option>
+                          </select>
+                        </div>
+                        <div class="col-sm-4">
+                          <label>{{'Medicine Name'|translate}}
+                              <span class="req-color">*</span>
+                          </label>
+                          <input type="text" ng-model="added_medicine.name" class="form-control" id="name{{$index}}" name="name{{$index}}" required="true">
+                          <span class="error" ng-show="(prescriptionAddFrm.$submitted || prescriptionAddFrm.name{{$index}}.$touched) && (prescriptionAddFrm.name{{$index}}.$pristine || prescriptionAddFrm.name{{$index}}.$invalid) && (prescriptionAddFrm.name{{$index}}.$error.required)">{{'Required'| translate }} </span>
+                        </div>
+                        <div class="col-sm-2">
+                          <label>{{'Dose'|translate}}</label>
+                          <input type="text" ng-model="added_medicine.dosage" class="form-control" id="dosage{{$index}}" name="dosage{{$index}}">
+                        </div>
+                        <div class="col-sm-2">
+                            <label>{{'Dose Regme'|translate}}</label>
+                            <input type="text" ng-model="added_medicine.dosage_unit" class="form-control" id="dosage_unit{{$index}}" name="dosage_unit{{$index}}">
+                        </div>
+                        <div class="col-sm-2">
+                          <label>{{'Days'|translate}}</label>
+                          <input type="number" name="usage_days{{$index}}" ng-model="added_medicine.usage_days" class="form-control" number-only id="usage_days{{$index}}" min='1'>
+                        </div>
+                        
+                        <div class="col-xs-12 pad-top-20">
+                            <div class="col-sm-5">
+                              <label>{{'Comments'|translate}}</label>
+                              <textarea ng-model="added_medicine.description" name="description{{$index}}" ng-if='text_box' rows="2" cols="50" class="form-control"></textarea>
+                            </div> 
+                            <div class="col-sm-3 pad-top-30">
+                              <label for="is_after_food{{$index}}">
+                                  <input type="radio" id="is_after_food{{$index}}" ng-model="added_medicine.presDay" value="after_food">
+                                  <span>{{'After Food'|translate}}</span>
+                              </label>
+                              <label for="is_before_food{{$index}}">
+                                  <input type="radio" id="is_before_food{{$index}}" ng-model="added_medicine.presDay" value="before_food">
+                                  <span></span>{{'Before Food'|translate}}</span>
+                              </label>
+                            </div> 
+                            <div class="col-sm-4 pad-top-30">
+                              <label for="is_morning">
+                                  <input type="checkbox" ng-model="added_medicine.is_morning" id="is_morning{{$index}}">
+                                  <span>{{'Morning'|translate}}</span>
+                              </label>
+                              <label for="is_noon">
+                                  <input type="checkbox" ng-model="added_medicine.is_noon" id="is_noon{{$index}}">
+                                  <span>{{'Afternoon'|translate}}</span>
+                              </label>
+                              <label for="is_night">
+                                  <input type="checkbox" ng-model="added_medicine.is_night" id="is_night{{$index}}">
+                                  <span>{{'Night'|translate}}</span>
+                              </label>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 pad-top-20">
+                          <div class="pull-right">
+                            <button type="button" class="btn btn-primary" ng-click="AddMedicines();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                            <button class="btn btn-primary right-space-10" ng-click="deleteMedicineArray($index)"
+                            ng-if="!$first"><i class="fa fa-trash" title="delete"></i></button>
+                            </div>  
+                          </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            
+            <div class="panel panel-default">
+              <h2 class="text-center">{{'Test'|translate}}</h2>
+              <div class="panel-body">
+                <div class="row form-group" ng-repeat="added_test in added_tests">
+                  <div class="col-xs-12 pad-bot-20">
+                    <span class="text-b text-15 label label-primary">
+                        {{'Test'|translate}} #{{$index+1}}
+                    </span>
+                  </div>  
+                  <div class="col-xs-12">
+                      <div class="col-sm-5">
+                          <label>{{'Test Name'|translate}}</label>
+                          <input type="text" ng-model="added_test.name" class="form-control" id="name{{$index}}" name="name{{$index}}">
+                          <!-- <span class="error" ng-show="(prescriptionAddFrm.$submitted || prescriptionAddFrm.name{{$index}}.$touched) && (prescriptionAddFrm.name{{$index}}.$pristine || prescriptionAddFrm.name{{$index}}.$invalid) && (prescriptionAddFrm.name{{$index}}.$error.required)">{{'Required'| translate }} </span> -->
+                      </div>
+                      <div class="col-sm-5">
+                        <label>{{'Test Description'|translate}}</label>
+                        <textarea ng-model="added_test.description" name="description{{$index}}" ng-if='text_box' rows="2" cols="50" class="form-control"></textarea>
+                        <!-- <span class="error" ng-show="(prescriptionAddFrm.$submitted || prescriptionAddFrm.description{{$index}}.$touched) && (prescriptionAddFrm.description{{$index}}.$pristine || prescriptionAddFrm.description{{$index}}.$invalid) && (prescriptionAddFrm.description{{$index}}.$error.required)">{{'Required'| translate }} </span> -->
+                      </div>
+                      <div class="col-sm-2 pad-top-30">
+                          <button type="button" class="btn btn-primary right-space-10" ng-click="AddTests();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                          <button class="btn btn-primary" ng-click="deleteTestArray($index)"
+                          ng-if="!$first"><i class="fa fa-trash" title="delete"></i></button>
+                      </div>
+                  </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="panel panel-default">
+                <h2 class="text-center">{{'Advice'|translate}}</h2>
+                <div class="panel-body">
+                  <div class="row form-group" ng-repeat="added_advice in added_advices">
+                    <div class="col-xs-12 pad-bot-20">
+                      <span class="text-b text-15 label label-primary">
+                          {{'Advice'|translate}} #{{$index+1}}
+                      </span>
+                    </div>  
+                    <div class="col-sm-10">
+                      <label>{{'Advice'|translate}}</label>
+                      <textarea ng-model="added_advice.description" name="description{{$index}}" ng-if='text_box' rows="2" cols="50" class="form-control"></textarea>
+                      <!-- <span class="error" ng-show="(prescriptionAddFrm.$submitted || prescriptionAddFrm.description{{$index}}.$touched) && (prescriptionAddFrm.description{{$index}}.$pristine || prescriptionAddFrm.description{{$index}}.$invalid) && (prescriptionAddFrm.description{{$index}}.$error.required)">{{'Required'| translate }} </span> -->
+                    </div>
+                    <div class="col-sm-2 pad-top-30">
+                        <button type="button" class="btn btn-primary right-space-10" ng-click="AddAdvices();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                        <button class="btn btn-primary" ng-click="deleteAdviceArray($index)"
+                        ng-if="!$first"><i class="fa fa-trash" title="delete"></i></button>
+                    </div>
+                    
+                  </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <button title="Submit" type="submit" class="btn btn-green btn-animate  ng-binding"
+                ng-show="!save_btn">{{'Submit'|translate}}</button>
+              <a href="appointments/approved" title="Cancel" type="submit" class="btn btn-danger btn-animate">{{'Cancel'|translate}}</a>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,67 @@
+<div class="navbar-btn clearfix"></div>
+<div class="cleafix">
+	<div class="row" ng-if="plan_selected === false">
+		<div class="alert alert-info" ng-if="current_subscription_plans[0].subscription.is_welcome_plan == 1">
+			<p>{{'You have access to free membership subscription now which will expire on' | translate}} {{current_subscription_plans[0].expiry_date | dateFormat}}.</p>
+			<p>{{'After plan expiry, your profile will not be listed on our website until you make payment to subscribed package.' | translate}}</p>
+		</div>
+		<div class="alert alert-warning" ng-if="current_subscription_plans === undefined">
+			<p>{{'You currently don\'t have subscribe any membership plan. So your listing will not display in website until you subscribe.' | translate}}</p>
+		</div>
+		<div ng-if="current_subscription_plans === undefined">
+			<p><a class="pull-right" href="appointments/approved" title="{{'I will pay later' | translate}}"><i>{{'I will pay later'| translate}} &raquo;</i></a></p>
+		</div>
+	</div>
+	<div class="col-sm-6 well-sm" ng-repeat="plan in subscription_plans.data" ng-if="plan_selected === false && subscription_loader == false">
+		<div class="thumbnail subscription_plans" ng-class="{'subscribe-choosen': current_subscription_plans[0].subscription_id == plan.id}" style="min-height: 225px;">
+			<div class="well-sm">
+				<div class="pull-left">
+					<h4 class="h3">
+						<strong>{{plan.name}}</strong>
+					</h4>
+				</div>
+				<div class="pull-right h3 text-success navbar-btn">
+					{{plan.price | currency : $root.settings.CURRENCY_SYMBOL : 2}}
+						<!-- <amount-display amount='{{plan.price}}' ng-if="plan.price"></amount-display>  -->
+					<span class="small text-success"> / <span>{{plan.interval_unit}}</span>
+					</span>
+					<!-- Already subscribed -->
+					<span ng-if="current_subscription_plans.length > 0 && current_subscription_plans[0].subscription_id == plan.id">
+						<i class="fa fa-check-circle" aria-hidden="true" style="
+								font-size: 33px;
+								color: #b41aea;
+						"></i>
+					</span>
+				</div>
+				<div class="navbar-btn clearfix list-group-item-text"></div>
+				<p class="text-left" ng-bind-html='plan.description | nl2br'></p>
+				<div class="navbar-btn clearfix list-group-item-heading"></div>
+				<!-- Not subscribed -->
+				<a ng-if="$root.isAuth && current_subscription_plans[0].subscription_id != plan.id" class="btn-block btn btn-green btn-animate" ng-click="getSubscribePlan(plan.id)">{{'Select'| translate}}</a>
+				<a ng-if="$root.isAuth && current_subscription_plans[0].subscription_id == plan.id" class="btn-block  btn btn-danger btn-animate" ng-click="cancelPlan(current_subscription_plans[0].id)">{{'Cancel this Subscription' | translate}}</a>
+				<div class="navbar-btn clearfix list-group-item-heading"></div>
+			</div>
+		</div>
+	</div>
+	<div class="loading_container text-center" ng-show="loader === true">
+		<div class="well-lg"></div>
+		<i class="fa fa-pulse fa-3x text-primary fa-spinner"></i>
+		<div class="well-lg"></div>
+	</div>
+	<div class="col-xs-12" ng-if="subscriptions && plan_selected === true && loader == false">
+		<h3 class="text-center">{{'Confirm your Payment'| translate}}</h3>
+		<div class="col-sm-6 well-sm col-sm-offset-3">
+			<div class="thumbnail">
+				<h4>
+					<strong><span class="text-primary">{{subscriptions.name}}</span></strong>
+				</h4>
+				<p ng-bind-html="subscriptions.description | nl2br"></p>
+				<p class="">{{subscriptions.price | currency : $root.settings.CURRENCY_SYMBOL : 2}}
+					<span class="small text-success"> / <span>{{subscriptions.interval_unit}}</span>
+				</p>
+			</div>
+		</div>
+		<div ng-include="'views/gateway.html'" class="col-xs-12"></div>
+	</div>
+</div>
+<div class="well-lg clearfix"></div>

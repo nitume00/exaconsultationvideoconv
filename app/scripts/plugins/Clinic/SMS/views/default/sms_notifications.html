@@ -1,0 +1,41 @@
+<!--START:MODAL-->
+<div class="clearfix">
+    <div class="modal-content clinic-modal">
+        <div class="modal-header">
+            <button type="button" class="close pull-right line-height-28" data-dismiss="modal" ng-click="closemodel()">&times;</button>
+            <h4 class="no-mar top-mar-5">{{'Send SMS Notification' | translate}}</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <!-- START:COLM-6 -->
+                <div class="col-md-12">
+                    <div class="createdoctor">
+                        <form class="form-horizontal adminpg-form" role="form" name="smsFrm" ng-submit="sendSms(data)" novalidate>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>{{'SMS Notification Message' | translate}}</label>
+                                        <textarea ng-model="data.message" name="message" placeholder="{{'SMS Notification Message'| translate}}" rows="8" cols="150"
+                                            class="form-control" ng-maxlength="50" required="true" autofocus></textarea>
+                                        <span class="error" ng-show="(smsFrm.$submitted || smsFrm.message.$touched) && (smsFrm.message.$pristine || smsFrm.message.$invalid) && (smsFrm.message.$error.required)">{{'Required'| translate }} </span>
+                                        <span class="error" ng-show="(smsFrm.$submitted || smsFrm.message.$touched) && (smsFrm.message.$pristine || smsFrm.message.$invalid) && (smsFrm.message.$error.maxlength)">{{ 'Maximum length is 50' | translate }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--START:SUBMIT BUTTON-->
+                            <div class="final-button text-center">
+                                <button type="submit" class="btn btn-primary btn-green">{{'Submit'|translate}}</button>
+                                <button type="button" class="btn btn-danger btn-green" data-dismiss="modal" ng-click="closemodel()">{{'Cancel' | translate}}</button>
+                            </div>
+                            <!--END:SUBMIT BUTTON-->
+                        </form>
+                        <!--END:PATIENT DETAILS FORM-->
+                    </div>
+                    <!-- END:CREATE-PATIENT -->
+                </div>
+                <!--END:COLM-6-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--END:MODAL-->

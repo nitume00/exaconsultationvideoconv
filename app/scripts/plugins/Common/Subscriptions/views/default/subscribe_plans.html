@@ -1,0 +1,6 @@
+<div class="container" ng-controller="subscriptionsPlanController">
+	<div class="well-lg"></div>
+	<div banner position="topBanner" ng-if="$root.settings['site.enabled_plugins'].indexOf('Banner') > -1"></div>
+		<subscriptions-plans></subscriptions-plans>
+	<div banner position="bottomBanner" ng-if="$root.settings['site.enabled_plugins'].indexOf('Banner') > -1"></div>
+</div>

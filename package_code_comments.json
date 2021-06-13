@@ -1,0 +1,141 @@
+{
+  "name": "exaconsultation",
+  "version": "1.0.0",
+  "description": "This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular) version 0.15.1.",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "./node_modules/http-server/bin/http-server -o -p 8886",
+    "start-win": "node .\\node_modules\\http-server\\bin\\http-server  . -p 8886",
+    "mix": "webpack --config ./webpack.mix.js",
+    "mixserve": "webpack-dev-server --open --hot --watch --config ./webpack.mix.js",
+    "build": "webpack --config ./webpack.config.prod.js  --colors",
+    "serve": "webpack-dev-server --open --hot --watch --config ./webpack.config.dev.js",
+    "copy": "cp ./node_modules/rainbow-web-sdk/src/vendors-sdk.min.js ./src/scripts"
+  },
+  "author": "Me",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.0.5",
+    "core-js": "^3.4.5",
+    "css-loader": "^3.2.0",
+    "eslint": "^6.7.1",
+    "eslint-loader": "^3.0.2",
+    "angular-translate": "^2.18.2",										'pascalprecht.translate',								   .config(["$stateProvider", "$urlRouterProvider", "$translateProvider",																		<script src="../node_modules/angular-translate/dist/angular-translate.js"></script>   
+    "angular-translate-handler-log": "^2.18.2",																																																									<script src="../node_modules/angular-translate-handler-log/angular-translate-handler-log.js"></script>
+    "angular-translate-interpolation-messageformat": "^2.18.2",
+    "angular-translate-loader-static-files": "^2.18.2",																																																							<script src="../node_modules/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    "angular-translate-loader-url": "^2.18.2",																																																									<script src="../node_modules/angular-translate-loader-url/angular-translate-loader-url.js"></script>
+    "angular-translate-storage-cookie": "^2.18.2",																																																								<script src="../node_modules/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+    "angular-translate-storage-local": "^2.18.2",																																																								<script src="../node_modules/angular-translate-storage-local/angular-translate-storage-local.js"></script>
+    "file-loader": "^5.0.2",																			
+    "html-loader": "^1.3.2",
+    "html-webpack-plugin": "^3.2.0",
+    "http-server": "^0.11.1",
+    "mini-css-extract-plugin": "^0.8.0",
+    "path": "^0.12.7",
+    "prettier": "^1.19.1",
+    "rainbow-web-sdk": "^1.77.0",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0",
+    "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "@brunoalevato/nggallery": "^1.0.0",																																																										<script src="../node_modules/@brunoalevato/ngGallery/src/js/ngGallery.js"></script>					
+    "@uirouter/angularjs": "^1.0.29",						Used for 'ui.router.state',											Controller: $state																																<script src="../node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
+															'ui.router',														Controller:$state
+																																 .config(["$stateProvider", "$urlRouterProvider", "$translateProvider",
+    "angular": "^1.7.5",																																																														<script src="../node_modules/angular/angular.js"></script>
+     
+        
+    "angular-animate": "^1.7.5",							 'ngAnimate',
+    "angular-cookies": "^1.7.5", 							'ngCookies': Required for Angular-translate local storage			$cookies
+    "angular-dynamic-locale": "^0.1.37",					'tmh.dynamicLocale' 												Controller code:  .config(function(tmhDynamicLocaleProvider) {																					<script src="../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
+																																tmhDynamicLocaleProvider.localeLocationPattern('../app/scripts/l10n/angular-i18n/angular-locale_{{locale}}.js');
+    "angular-file-saver": "^1.1.3",							'ngFileSaver' Required with webpack 																																												<script src="../node_modules/angular-file-saver/dist/angular-file-saver.bundle.min.js"></script>
+    "angular-filter": "^0.5.17",							$filter
+    "angular-resource": "^1.7.5",							'ngResource',																																																		<script src="../node_modules/angular-resource/angular-resource.js"></script>
+    "angular-sanitize": "^1.7.5",							'ngSanitize',
+    "angular-ui-bootstrap": "^1.3.3",						'ui.bootstrap',																																																		<script src="../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+    "angular-ui-switch": "^0.1.1",																																																												<script src="../node_modules/angular-ui-switch/angular-ui-switch.js"></script>																				
+    "bootstrap": "~3.3",																																																														<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>																																																														<link rel="stylesheet" type="text/css" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    "bootstrap-select": "^1.13.18",																																																												<script src="../node_modules/bootstrap-select/dist/js/bootstrap-select.js"></script>
+        
+	
+    "font-awesome": "^4.7.0",																																																													<link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.css" />							
+    "jquery": "^2.1.3",
+    "moment": "^2.15.1",																																																														<script src="../node_modules/moment/min/moment-with-locales.min.js"></script>
+    "ng-bootstrap-select": "^0.5.0",																																																											<script src="../node_modules/ng-bootstrap-select/build/ng-bootstrap-select.js"></script>																																														
+    "ngmap": "*",											Google maps
+	"ngtemplate-loader": "^2.1.0",							Used by webpack.config for loading html templates						{
+																																	test: /\.html$/,
+																																		exclude: [ /applic/, /node_modules/ ],
+																																		use: [
+																																				{ loader: 'ngtemplate-loader?relativeTo=' + __dirname + '/app' },
+																																				{ loader: 'html-loader' }
+																																		]
+																																},	
+
+    "satellizer": "~0.14.0",								'satellizer',																																																		<script src="../node_modules/satellizer/satellizer.js"></script>
+    "ui-select": "^0.18.0"																																																														<script src="../node_modules/ui-select/dist/select.js"></script>																																																													<link rel="stylesheet" href="../node_modules/ui-select/dist/select.css" />
+  }
+}
+
+
+ 
+    <div> <ng-include src="'../app/views/footer.html'"></ng-include></div>    
+        
+     
+        <body ng-app="abs" scroll ng-class="{scroll:boolChangeClass}" class="{{innerPage}} site-loading">
+    <div class="content">
+        <div class="content-inside">
+            <!--START: WRAPPER -->
+            <!-- Script load before show loader end -->
+            <!--<div class="loader">
+                <img src="../app/images/abs-loader.gif" alt="[]">
+            </div>-->
+            <div ng-controller="MainController">
+                <title ng-bind="pageTitle"></title>
+                <!-- Header Start -->
+                <div><ng-include src="'../app/views/header.html'"></ng-include></div>
+                
+                <div class="content">
+                    <div ui-view autoscroll="true"></div>
+                </div>
+
+                <div id="scrollUpContent">
+                    <a ng-click="scrollMoveTop()" class="scrolltop">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+      <!--  -->
+    </div>
+     
+     
+		
+   
+        
+   
+   
+        
+        
+   
+   
+        
+   
+
+    
+    
+   

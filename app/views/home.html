@@ -1,0 +1,268 @@
+<div class="homePage">
+    <!-- Start: Banner -->
+    <div class="banner">
+        <div class="container">
+            <div class="home-search">
+                <h5 class="text-uppercase">{{'Find Your Perfect' | translate}}</h5>
+                <h4 data-uk-scrollspy="{cls:'uk-animation-slide-top', delay:100}">{{'Doctor, Hospital, Fitness Centre, Diagnostic Centre'| translate}}</h4>
+                <p>{{'Book appointments or request for home care' | translate}}</p>
+				<form class="clearfix form-inline home-searchinput" name="homeSearchForm" ng-submit="homesearch(homeSearchForm)" novalidate>
+                    <!--START:RADIO BUTTON-->
+                    <div class="select-specality">
+                        <div class="radio-group">
+                            <input type="radio" id="option-one" name="selector" checked="checked" ng-model="search_field" value="doctor">
+                            <label for="option-one" title="{{'Doctor' | translate}}" class="text-uppercase">{{'Doctor' | translate}}</label>
+                            <input type="radio" id="option-two" name="selector" checked="" ng-model="search_field" value="clinic" ng-click="radioChecked('Clinic')">
+                            <label for="option-two" title="{{'Hospital/Clinic' | translate}}" class="text-uppercase">{{'Hospital/Clinic' | translate}}</label>
+                            <input type="radio" id="option-four" name="selector" checked="" ng-model="search_field" value="diagnostic" ng-click="radioChecked('Diagnostic Center')">
+                            <label for="option-four" title="{{'Diagnostic Centre' | translate}}" class="text-uppercase">{{'Diagnostic Centre' | translate}}</label>
+                        </div>
+                    </div>
+                    <!--END:RADIO BUTTON-->
+                    <div class="overall-form" id="form-search">
+                        <div class="form-group start" ng-show="search_field=='doctor'">
+                            <div class="has-feedback">
+                                <input type="text" class="form-control rad" placeholder="{{'Doctor'| translate}}" name="doctor" ng-model="doctor">
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="search_field=='clinic'">
+                            <div class="has-feedback">
+                                <input type="text" class="form-control" placeholder="{{ placeholder| translate}}" name="clinical_name" ng-model="clinical_name">
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="search_field=='diagnostic'" style="width:400px;">
+                            <div class="has-feedback">
+                                <input type="text" class="form-control" placeholder="{{'Search for Labs ' | translate}}" name="clinical_name" ng-model="clinical_name">
+                            </div>
+                        </div>
+                        <div class="form-group speciality" ng-show="search_field=='doctor' || search_field=='clinic'">
+                            <div class="has-feedback">
+                                <select class="form-control choose-specality" ng-model="specialty_id" name="specialty_id">
+                                    <option value="">{{'Choose a Specialty'| translate}}</option>
+                                    <option ng-repeat="specialty in specialties" value="{{specialty.id}}">{{specialty.name|translate}}</option>
+                                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group speciality">
+                            <div class="has-feedback">
+                                <select ng-model="state_id" ng-selected="state_id == state.id" ng-options="state.id as state.name | translate for state in states" ng-change="changeRegion(state_id)"
+                                    class="form-control choose-city">
+                                    <option value="">{{'Choose a Region'| translate}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group speciality last">
+                            <div class="has-feedback">
+                                <select ng-model="city_id" ng-selected="city_id == city.id" ng-options="city.id as city.name | translate for city in cities" class="form-control choose-city" ng-change="changeState(city_id)">
+                                    <option value="">{{'Choose a Area'| translate}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="popular-search text-left">
+                            <ul class="list-inline" ng-init="pop_specialty=3">
+                                <li>
+                                    <span>{{'Popular searches' | translate}}</span>
+                                </li>
+                                <li ng-repeat="pop_specialty in specialties | limitTo:pop_specialty track by $index">
+                                    <span>
+                                        <a href="javascript:void(0)" ng-click="pageRedirect('search_field=doctor&specialty_id=' + pop_specialty.id)">{{pop_specialty.name | translate}}</a>
+                                    </span>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Others
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li ng-repeat="pop_specialty in specialties | limitTo : specialties.length : 4">
+                                            <a href="#" ng-click="pageRedirect('search_field=doctor&specialty_id=' + pop_specialty.id)">{{pop_specialty.name | translate}}</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="form-btn">
+						<button type="button" class="btn btn-success" ng-click="rbchat()"">{{'Chat Now'|translate}}</button>
+						<button type="button" class="btn btn-success" ng-click="rbvideo()"">{{'Video Now'|translate}}</button>
+                        <button class="btn center-block btn-sblue btn-animate btn-lg text-uppercase" type="submit">
+                            {{'Search' | translate }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End: Banner -->
+
+    <!--START:APPOINMENT AND MEDICAL REPORT-->
+    <div class="appoinment-report">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p>
+                        {{"Have you ever tried to access the services of a medical specialist with little or no success? Is it difficult to book appointments to utilize the services rendered by medical specialists? If the answer is yes, then Exadoctor is here to put an end to your woes. Exadoctor provides the medical service when you need it, where you need it and just at the right time."| translate}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="how-it-work book-appmt" id="how-it-works">
+        <div class="container">
+            <h3 class="text-uppercase">{{'How It Works' | translate}}?</h3>
+            <ul class="list-unstyled row">
+                <li class="col-sm-4">
+                    <div class="doctor-list">
+                        <h4 class="text-uppercase">{{'Search A Doctor/Hospital/Clinic' | translate}}</h4>
+                        <span>
+                            <img src="../app/images/doctor-pre.png" alt="search">
+                        </span>
+                    </div>
+                    <!-- <ul class="clini-appoinment">
+                        <li>
+                            <i class="fa fa-chevron-right" aria-hidden="true"></i> {{'Search your doctor or Hospital/Clinic.' | translate}}</li>
+                        <li>
+                            <i class="fa fa-chevron-right" aria-hidden="true"></i> {{'Phasellus pretium orci sit amet mi you.' | translate}}</li>
+                        <li>
+                            <i class="fa fa-chevron-right" aria-hidden="true"></i> {{'Ullamcorper egestas.Use filters.' | translate}}</li>
+                    </ul> -->
+                </li>
+                <li class="col-sm-4">
+                    <div class="doctor-list">
+                        <h4 class="text-uppercase">{{'Book An Appointment' |translate}}</h4>
+                        <span>
+                            <img src="../app/images/user-pre.png" alt="search">
+                        </span>
+                        <!-- <ul class="clini-appoinment">
+                            <li>
+                                <i class="fa fa-chevron-right" aria-hidden="true"></i> {{'Nullam eget bibendum sem venenatis' | translate}}</li>
+                            <li>
+                                <i class="fa fa-chevron-right" aria-hidden="true"></i> {{'Sed non mattis metus,Integer vel lorem tincidunt,pharetra eros nec, posuere odio.'
+                                | translate}}
+                            </li>
+                            <li>
+                                <i class="fa fa-chevron-right" aria-hidden="true"></i> {{'If you need anything,let us the eget venenatis lacinia justo.' | translate}}</li>
+                        </ul> -->
+                    </div>
+                </li>
+                <li class="col-sm-4">
+                    <div class="doctor-list">
+                        <h4 class="text-uppercase">{{'Avoid Waiting Room' | translate}}</h4>
+                        <span>
+                            <img src="../app/images/doctor-lesson.png" alt="search">
+                        </span>
+                        <!-- <ul class="clini-appoinment">
+                            <li>
+                                <i class="fa fa-chevron-right" aria-hidden="true"></i> {{'Get help finding your spot and instructions when you arrive,all in your appoinment
+                                details,' | translate}}
+                            </li>
+                            <li>
+                                <i class="fa fa-chevron-right" aria-hidden="true"></i> {{'Make edits any times,or cancel up to 24 hours before your appointment.' | translate}}</li>
+                        </ul> -->
+                    </div>
+                </li>
+            </ul>
+            <!--  -->
+            <div class="action-buttons">
+                <button type="button" class="btn btn-primary doc-find mar-top-5 mar-bot-5" ng-click="pageRedirect('search_field=doctor')"> {{'Try Now' | translate}} </button>
+                <button type="button" class="btn btn-primary demo-doc mar-top-5 mar-bot-5" ng-click="openVideo()">
+                    <i class="fa fa-play-circle-o" aria-hidden="true"></i>&nbsp; {{'Watch Video' | translate}}</button>
+            </div>
+            <!--  -->
+        </div>
+     </div>
+ <!--    <div class="making-day-worker" id="making-day-workers">
+        <div class="container">
+            <div class="carousel-block">
+                <h3 class="text-uppercase">{{'What Makes Us Prefered Choice' | translate}}</h3>
+                <img src="../images/clinic-list.png" alt="[neworktime]" title="THE NEWORK TIMES">
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Your next booking -->
+    <div class="your-next-booking" id="your-next-booking">
+        <div class="container">
+            <popular-specialties ng-if="doctorLength"></popular-specialties>
+            <popular-clinics ng-if="clinicLength"></popular-clinics>
+        </div>
+    </div>
+    <!--find:Doctor-->
+
+    <!--START:CLINI/HOSPITAL-->
+    <div class="clini-add">
+        <div class="clinic-photo">
+            <div class="col-md-2 pull-right place-up">
+                <p>{{'Are You a Top' | translate}}</p>
+                <h4 class="text-uppercase">{{'hospital diagonistic center' | translate}}</h4>
+                <div class="join-now">
+                    <a href="users/register/clinic" class="btn btn-success">{{'Join Now' | translate}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END:CLINI/HOSPITAL-->
+
+    <div class="doctor-city">
+        <div class="container">
+            <h2>{{'Find Doctors by...' | translate}}</h2>
+            <div class="row doctor-spec">
+                <div class="col-md-3">
+                    <h4>{{'Region' |translate}}</h4>
+                    <ul class="list-unstyled" ng-init="state=8" ng-scrollbars ng-scrollbars-config="scrollbarConfig">
+                        <li ng-repeat="state in search_states | limitTo:city track by $index">
+                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                            <a href="javascript:void(0)" ng-click="pageRedirect('search_field=doctor&state_id=' + state.id)">{{state.name | translate}}</a>
+                        </li>
+                        <li>
+                            <a class="btn-more" ng-click="$parent.state=states.length" ng-if="state==10">More...</a>
+                            <a class="btn-more" ng-click="$parent.state=10" ng-if="state!=10">Less</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h4> {{'Insurance' | translate}} </h4>
+                    <ul class="list-unstyled" ng-init="insurance=8" ng-scrollbars ng-scrollbars-config="scrollbarConfig">
+                        <li ng-repeat="insurance in search_insurances | limitTo:insurance track by $index">
+                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                            <a href="javascript:void(0)" ng-click="pageRedirect('search_field=doctor&insurance_id=' + insurance.id)">{{insurance.name | translate}}</a>
+                        </li>
+                        <li>
+                            <a class="btn-more" ng-click="$parent.insurance=insurances.length" ng-if="insurance==10">{{'More...' | translate}}</a>
+                            <a class="btn-more" ng-click="$parent.insurance=10" ng-if="insurance!=10">Less</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h4>{{'Specality' | translate}} </h4>
+                    <ul class="list-unstyled" ng-init="specialty=10" ng-scrollbars ng-scrollbars-config="scrollbarConfig">
+                        <li ng-repeat="specialty in search_specialties | limitTo:specialty track by $index">
+                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                            <a href="javascript:void(0)" ng-click="pageRedirect('search_field=doctor&specialty_id=' + specialty.id)">{{specialty.name | translate}}</a>
+                        </li>
+                        <li>
+                            <a class="btn-more" ng-click="$parent.specialty=specialties.length" ng-if="specialty==10">{{'More...' | translate}}</a>
+                            <a class="btn-more" ng-click="$parent.specialty=10" ng-if="specialty!=10">Less</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="register-app">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h4>{{'Register today and get first appoinment!' | translate}}</h4>
+                </div>
+                <div class="col-md-4">
+                    <a href="users/register/patient" class="btn btn-primary dec-find text-uppercase"> {{'appoinment now' | translate}}
+                        <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>

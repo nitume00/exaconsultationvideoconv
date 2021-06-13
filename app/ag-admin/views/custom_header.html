@@ -1,0 +1,9 @@
+<ul class="list-inline navbar-top-links user-dropdown pull-right hidden-xs">
+        <li><a class="" ui-sref="dashboard"><i class="fa fa-user fa-fw"></i>{{header_panel}} Panel</a></li>
+        <li ng-if="auth.role_id ==10"><a class="" href="#/prescriptions/list"><i class="fa fa-user fa-fw"></i>Prescriptions Requested<span class="badge badge-notify">{{prescription_count}}</span></a> </li>
+    <li>
+        <a href="#/users/logout" title="Logout">
+            <i class="fa fa-power-off fa-fw"></i> Logout
+        </a>
+    </li>
+</ul>

@@ -1,0 +1,74 @@
+<div class="appoiment-details">
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>{{'Pay Appointment Fee' | translate}}</h3>
+        </div>
+        <div class="col-md-6">
+            <!-- <div class="app-buttons">
+                <a href="#" ng-if="appointment.appointment_status_id == ConstAppointmentStatus.Cancelled" class="btn btn-green btn-info">{{'Cancelled'| translate}}</a>
+                <a href="#" ng-click="$root.RescheduleNow(appointment.appointment_status_id, appointment.id,appointment.appointment_setting_id)" class="btn btn-green btn-danger" ng-if="appointment.appointment_status_id != ConstAppointmentStatus.Present && (branchinfo.branch_permission.indexOf('AppointmentEdit') !== -1)">{{'Reschedule/Cancel'| translate}}</a>
+                
+                    <a href="#" ng-click="$root.ChangeAppointmentStatus(appointment.id,'present')" class="btn btn-info btn-green" ng-if="appointment.appointment_status_id != ConstAppointmentStatus.Cancelled && appointment.appointment_status_id != ConstAppointmentStatus.Present && appointment.appointment_status_id != ConstAppointmentStatus.Closed">{{'Mark as Arrived'| translate}}</a>
+                
+                    <a href="#" ng-click="$root.ChangeAppointmentStatus(appointment.id,'close')" class="btn btn-warning" ng-if="appointment.appointment_status_id == ConstAppointmentStatus.Present">{{'Mark as Closed'| translate}}</a>
+            </div> -->
+        </div>
+    </div>
+    <!-- START:TABLE-BLOCK -->
+    <div class="table-block">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{{'The appointment is scheduled at' | translate}}</th>
+                        <th>{{appointment.appointment_date | dateFormat}} {{appointment.appointment_time}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{'Appointment Type' | translate}}</td>
+                        <td>
+                            <span class="label label-success">{{appointment.appointment_type.name | translate}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'Where' | translate}}</td>
+                        <td>{{appointment.diagnostic_center_user.user_profile.display_name}}, {{appointment.branch.name}},
+                            {{appointment.branch.city.name}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'Patient Name' | translate}}</td>
+                        <td>{{appointment.patient.user_profile.first_name}} {{appointment.patient.user_profile.last_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{'Email' | translate}}</td>
+                        <td>{{appointment.patient.email}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{'Phone' | translate}}</td>
+                        <td>{{appointment.patient.mobile_code}}{{appointment.patient.mobile}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{'Gender' | translate}}</td>
+                        <td>{{'Male' | translate}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{'Reason for visit' | translate}}</td>
+                        <td>
+                            <p ng-repeat="labtest in appointment.diagnostic_center_tests_patient_diagnostic_test">{{labtest.diagnostic_center_test.lab_test.name}} - {{labtest.diagnostic_center_test.lab_test.description}}</p>
+                        </td>
+                    </tr>
+                    <!--<tr>
+                        <td>{{'Appointment Status' | translate}}</td>
+                        <td>
+                            <span class="label label-warning">{{appointment.appointment_status.name}}</span>
+                        </td>
+                    </tr>-->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div ng-include="'views/gateway.html'" class="col-xs-12"></div>
+</div>

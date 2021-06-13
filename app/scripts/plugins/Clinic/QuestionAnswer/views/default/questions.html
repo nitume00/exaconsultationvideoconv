@@ -1,0 +1,59 @@
+<section class="clearfix pad-63 my_questions appmt-table question-answer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head appointment-header clearfix">
+                    <h1 class="pull-left">{{'My Questions'| translate}}</h1>
+                    <div class="pull-right search-table-field">
+                        <a href="questions/add" class="btn btn-green btn-animate">
+                            <i class="fa fa-plus-circle fa-fw"></i>{{'Add Question'| translate}}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 table-block">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>{{'S.No'| translate}}</th>
+                                <th width="450">{{'Questions'| translate}}</th>
+                                <th>{{'Specialty'| translate}}</th>
+                                <th width="250">{{'Action'| translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="pat_question in questions">
+                                <td> {{$index+1}} </td>
+                                <td class="ques-field">
+                                    <a href="questions/{{pat_question.id}}/{{pat_question.question | slugify}}">{{pat_question.question}}</a>
+                                    <span class="badge bg-primary">{{pat_question.answer_count}}</span>
+                                </td>
+                                <td>
+                                    <span class="specality-doc"> {{pat_question.specialty.name}} </span>
+                                </td>
+                                <td class="action-btn">
+                                    <a href="questions/edit/{{pat_question.id}}" class="btn green">
+                                        <i class="fa fa-pencil"></i> {{'Edit'| translate}}</a>
+                                    <a href="questions/{{pat_question.id}}/{{pat_question.question | slugify}}" class="btn blue">
+                                        <i class="fa fa-desktop"></i> {{'View Answer'| translate}}</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-if="!dataLength && !loader">
+                        <div class="alert alert-danger">
+                            <h4 class="ng-binding text-center">{{'No Questions Found' |translate}}</h4>
+                        </div>
+                    </div>
+                     <div ng-if="loader">
+                       <div ng-include="'views/loader.html'"></div>
+                    </div>
+                     <div class="paging clearfix text-center" ng-show="totalRecords > 0">
+                        <uib-pagination previous-text="<" next-text=">" total-items="totalRecords" ng-model="currentPage" max-size="maxSize"
+                            class="pagination-sm" boundary-link-numbers="true" rotate="false" items-per-page="Perpage" ng-click="paginate_search('#userTop', currentPage)"></uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
